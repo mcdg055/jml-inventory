@@ -59,7 +59,6 @@ export default {
             type: Object,
         },
         success: Object,
-        flash: Object,
     },
     components: {
         PageLayout,
@@ -69,10 +68,9 @@ export default {
         EditBrandForm
     },
     setup(props) {
-        const notify = inject('notify');
         const confirm = inject('confirm');
         let search = ref(props.filters.search);
-
+        /*   let flash = ref(props.flash.success); */
         //watch search changes
         watch(search, debounce(
             function (value) {
@@ -82,19 +80,9 @@ export default {
                 })
             }, 250));
 
-        /* watch(props.flash) */
-
         //reload the content
         let reload = debounce(function () {
-
-            //reset search filter
-            props.filters.search = "";
-
-            //perform http request to the server
-            Inertia.get('/brands', {
-                preserveState: true,
-                replace: true,
-            });
+            Inertia.get('/brands');
         }, 300);
 
         let handleDelete = (brand) => {

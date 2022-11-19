@@ -27,28 +27,23 @@
             <slot></slot>
         </div>
     </div>
+
+    <ui-alert />
 </template>
 
 <script>
 import Nav from "./Navigation/Nav.vue";
-import { UiBrand } from "./UI";
-import { provide, inject, ref } from 'vue';
+import { UiBrand, UiAlert } from "./UI";
+import { provide } from 'vue';
 import { notify, confirm } from "./UI/Alerts/notify";
 export default {
     components: {
-        Nav, UiBrand
+        Nav, UiBrand, UiAlert
     },
     setup() {
-        const swal = inject('$swal');
-
         provide('notify', notify);
         provide('confirm', confirm);
     }
 }
-
-
-
-
-
 
 </script>

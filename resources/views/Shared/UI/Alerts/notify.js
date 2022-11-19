@@ -17,7 +17,7 @@ export const notify = (message = "Action performed successfully", type = 'succes
             break;
     }
 
-    swal.fire({
+    Swal.fire({
         position: 'top-end',
         toast: true,
         icon: type,

@@ -1,6 +1,6 @@
 <template>
     <div v-if="loading"
-        class="h-full w-full grid items-center justify-items-center absolute top-0 left-0 z-10 bg-white">
+        class="h-full w-full grid items-center justify-items-center absolute top-0 left-0 z-10 bg-white/75">
         <div class="lds-ellipsis">
             <div></div>
             <div></div>

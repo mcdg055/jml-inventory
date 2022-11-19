@@ -36,6 +36,10 @@ import Loading from "./Loading.vue"
  */
 import CardLayout from "./Cards/CardLayout.vue";
 
+/**
+ * Alerts
+ */
+import Alert from "./Alerts/Alert.vue";
 
 export {
     Icon,
@@ -78,4 +82,9 @@ export {
      * Cards
      */
     CardLayout,
+
+    /**
+     * Alerts
+     */
+    Alert as UiAlert,
 }

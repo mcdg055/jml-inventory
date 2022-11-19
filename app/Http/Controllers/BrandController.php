@@ -55,11 +55,18 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request)
     {
+
         $data = $request->validated();
 
-        $this->service->add($data);
+        try {
 
-        return Redirect::route("brands.browse");
+            $this->service->add($data);
+        } catch (\Throwable $th) {
+            $errorCode = $th->errorInfo[1];
+            return redirect()->back()->with('error', $this->service->parseError($errorCode, $data));
+        }
+
+        return Redirect::route("brands.browse")->with('success', 'Successfully added a new brand');
     }
 
     /**
@@ -94,7 +101,7 @@ class BrandController extends Controller
 
         $brand->save();
 
-        return Redirect::route("brands.browse");
+        return Redirect::route("brands.browse")->with('success', 'Brand was updated successfully');
     }
 
     /**

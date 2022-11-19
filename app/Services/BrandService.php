@@ -35,16 +35,16 @@ class BrandService
     {
 
         if ($brand = $this->repository->add($brand)) {
-            return ["success" => "Brand has been added successfully!"];
+            return true;
         }
 
-        return ["error" => "Unable to save brand"];
+        return false;
     }
 
     public function update($data, $brand)
     {
         if ($brand = $this->repository->update($brand, $data)) {
-           return true;
+            return true;
         }
 
         return false;
@@ -52,5 +52,20 @@ class BrandService
 
     public function delete(Request $request, Brand $brand)
     {
+    }
+
+    function parseError($error, $data)
+    {
+        $message = "Unable to perform the action";
+        
+        switch ($error) {
+            case 1062:
+                return "dupplicate entry for <i>{$data['name']}</i>";
+                break;
+
+            default:
+                # code...
+                break;
+        }
     }
 }
