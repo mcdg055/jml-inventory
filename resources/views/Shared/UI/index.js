@@ -10,6 +10,9 @@ import Button from "./Buttons/Button.vue";
  */
 import PanelButton from "./Buttons/PanelButton.vue";
 
+/**
+ * Table
+ */
 import Table from "./Tables/Table.vue";
 import TableHeader from "./Tables/TableHeader.vue";
 import TableCell from "./Tables/TableCell.vue";
@@ -25,6 +28,7 @@ import Panel from "./Panels/Panel.vue";
 import SearchInput from "./Forms/SearchInput.vue";
 import Input from "./Forms/Input.vue";
 import Form from "./Forms/Form.vue";
+import Select from "./Forms/Select.vue";
 
 /**
  * Spinners
@@ -40,6 +44,11 @@ import CardLayout from "./Cards/CardLayout.vue";
  * Alerts
  */
 import Alert from "./Alerts/Alert.vue";
+
+/**
+ * Pills
+ */
+import Pill from "./Badges/Pill.vue";
 
 export {
     Icon,
@@ -72,6 +81,7 @@ export {
     SearchInput,
     Input as UiInput,
     Form as UiForm,
+    Select as UiSelect,
 
     /**
      * Spinners
@@ -87,4 +97,9 @@ export {
      * Alerts
      */
     Alert as UiAlert,
+
+    /**
+     * Pills
+     */
+    Pill as UiPill,
 }

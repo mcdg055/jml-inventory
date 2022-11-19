@@ -42,8 +42,8 @@
 
 <script>
 import PageLayout from "../PageLayout.vue";
-import AddBrandForm from "./forms/AddBrandForm.vue";
-import EditBrandForm from "./forms/EditBrandForm.vue";
+import AddBrandForm from "./widgets/AddBrandForm.vue";
+import EditBrandForm from "./widgets/EditBrandForm.vue";
 import { SearchInput, PanelButton } from "../../Shared/Ui";
 import { ref, watch, inject } from "vue";
 import { Inertia } from "@inertiajs/inertia";

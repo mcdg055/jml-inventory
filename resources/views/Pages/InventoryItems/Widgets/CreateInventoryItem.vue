@@ -17,8 +17,8 @@
 </template>
 
 <script setup>
-import PageLayout from "../PageLayout.vue";
-import { UiInput } from "../../Shared/Ui";
+import PageLayout from "../../PageLayout.vue";
+import { UiInput } from "../../../Shared/UI";
 import { useForm } from "@inertiajs/inertia-vue3";
 
 let form = useForm({

@@ -30,7 +30,7 @@ export default {
                 {
                     label: "Inventory Items",
                     path: "/inventory-items",
-                    component: "InventoryItems/InventoryItems",
+                    component: "InventoryItems/InventoryItemsScreen",
                     icon: "boxes-stacked",
                 },
                 {

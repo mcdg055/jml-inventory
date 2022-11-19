@@ -28,7 +28,7 @@ Route::middleware('auth')->group(function () {
         return inertia::render('Home', []);
     })->name("home");
 
-    route::get("/inventory-items", function () {
+    route::get("/users", function () {
         return inertia::render('InventoryItems/InventoryItems', [
             'users' => User::query()
                 ->when(Request::input('search'), function ($query, $search) {

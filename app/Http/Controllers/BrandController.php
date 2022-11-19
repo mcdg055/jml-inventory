@@ -59,7 +59,6 @@ class BrandController extends Controller
         $data = $request->validated();
 
         try {
-
             $this->service->add($data);
         } catch (\Throwable $th) {
             $errorCode = $th->errorInfo[1];
@@ -112,8 +111,12 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        $brand->delete();
+        try {
+            $brand->delete();
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'Unable to delete brand');
+        }
 
-        return Redirect::route("brands.browse");
+        return Redirect::route("brands.browse")->with('success', "Brand was succesfully deleted");
     }
 }
