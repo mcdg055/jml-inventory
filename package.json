@@ -1,0 +1,28 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build"
+    },
+    "devDependencies": {
+        "autoprefixer": "^10.4.13",
+        "axios": "^1.1.2",
+        "laravel-vite-plugin": "^0.6.0",
+        "lodash": "^4.17.19",
+        "postcss": "^8.4.19",
+        "tailwindcss": "^3.2.4",
+        "vite": "^3.0.0"
+    },
+    "dependencies": {
+        "@coreui/vue": "^4.5.0",
+        "@fortawesome/fontawesome-free": "^6.2.0",
+        "@inertiajs/inertia": "^0.11.1",
+        "@inertiajs/inertia-vue3": "^0.6.0",
+        "@vitejs/plugin-vue": "^3.2.0",
+        "@vue/compiler-sfc": "^3.2.45",
+        "sweetalert2": "^11.6.8",
+        "tw-elements": "^1.0.0-alpha12",
+        "vue": "^3.2.45",
+        "vue-sweetalert2": "^5.0.5"
+    }
+}

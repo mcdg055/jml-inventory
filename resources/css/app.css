@@ -1,0 +1,12 @@
+@import "@fortawesome/fontawesome-free/css/all.css";
+@import "./fonts.css";
+@import "./theme.css";
+@import "./global.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    box-sizing: border-box;
+}

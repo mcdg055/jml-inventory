@@ -1,0 +1,29 @@
+@layer components {
+
+    /*
+    * Navigation menu
+    */
+    .nav__nav-item {
+        @apply w-full 
+        py-2 px-5 
+        block 
+        hover:bg-secondary 
+        text-white 
+        transition 
+        ease-in-out 
+        rounded-tl-2xl 
+        rounded-bl-2xl
+    }
+
+    .nav__nav-item--active{
+        @apply bg-secondary 
+        rounded-tl-2xl 
+        rounded-bl-2xl
+    }
+    
+
+    /* sizing */
+    section{
+        @apply max-w-[90%] mx-auto w-full
+    }
+}
