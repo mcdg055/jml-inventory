@@ -48,6 +48,12 @@ class RouteServiceProvider extends ServiceProvider
              */
             Route::middleware('web')
                 ->group(base_path('routes/inventory-items.php'));
+
+            /**
+             * Pass Out
+             */
+            Route::middleware('web')
+                ->group(base_path('routes/pass-outs.php'));
         });
     }
 

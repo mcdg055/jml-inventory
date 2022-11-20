@@ -1,9 +1,11 @@
 <template>
     <page-layout title="Brands" page-heading="Add New Brand" class="bg-gray-100">
         <card-layout>
-            <ui-form uri="/brands/store" :form="form" @cancel="onCancel">
-                <ui-input v-model="form.name" name="name" label="Name" type="text" :error="form.errors.name" />
-            </ui-form>
+            <div class="p-4">
+                <ui-form uri="/brands/store" :form="form" @cancel="onCancel">
+                    <ui-input v-model="form.name" name="name" label="Name" type="text" :error="form.errors.name" />
+                </ui-form>
+            </div>
         </card-layout>
     </page-layout>
 </template>

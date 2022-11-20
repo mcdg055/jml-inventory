@@ -49,6 +49,12 @@ export default {
                     component: "Brands/BrandsScreen",
                     icon: "tag",
                 },
+                {
+                    label: "Pass Out",
+                    path: "/pass-outs",
+                    component: "PassOuts/PassOutsScreen",
+                    icon: "ticket-simple",
+                },
             ]
         }
     },

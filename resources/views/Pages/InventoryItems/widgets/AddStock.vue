@@ -1,37 +1,53 @@
 <template>
     <page-layout :pageHeading="item.name" title="Manage Inventory Item" class="bg-gray-200">
-        <card-layout>
-            <ui-form :uri="`/inventory-items/${item.id}/add-stock`" :form="form" @cancel="onCancel">
-                <div class="border p-2 rounded-lg border-gray-300">
-                    <div class="flex w-full">
+        <div class="flex flex-col gap-8">
+            <card-layout>
+                <template #cardHead>
+                    <h4 class="text-lg font-medium">Item Details</h4>
+                </template>
+                <div>
+                    <div class="flex w-full py-2 px-5">
                         <div class="w-2/6">Item name:</div>
                         <div class="font-bold">{{ item.name }}</div>
                     </div>
-                    <div class="flex w-full">
+                    <div class="flex w-full py-2 px-5 border-t">
                         <div class="w-2/6">Brand:</div>
                         <div class="font-bold">{{ item.brand.name }}</div>
                     </div>
-                    <div class="flex w-full">
+                    <div class="flex w-full py-2 px-5 border-t">
                         <div class="w-2/6">Stocks left:</div>
-                        <div class="font-bold">{{ item.stock }} pcs.</div>
+                        <div class="font-bold text-red-500">{{ item.stock }} pcs.</div>
                     </div>
-                    <div class="flex w-full">
+                    <div class="flex w-full py-2 px-5 border-t">
                         <div class="w-2/6">Critical level:</div>
                         <div class="font-bold">{{ item.critical_level }} pcs.</div>
                     </div>
+                    <div class="flex w-full py-2 px-5 border-t">
+                        <div class="w-2/6">Status:</div>
+                        <div class="font-bold">
+                            <status :is-active="item.is_active" />
+                        </div>
+                    </div>
                 </div>
-                <div class="mt-3">
-                    Add more stock
+            </card-layout>
+
+            <card-layout title="Add Stock">
+                <template #cardHead>
+                    <h4 class="text-lg font-medium">Add more stock</h4>
+                </template>
+                <div class="p-4">
+                    <ui-form :uri="`/inventory-items/${item.id}/add-stock`" :form="form" @cancel="onCancel">
+                        <ui-input v-model="form.stock" label="Quantity" :error="form.errors.stock" />
+                    </ui-form>
                 </div>
-                <ui-input v-model="form.stock" label="Quantity" :error="form.errors.stock" />
-            </ui-form>
-        </card-layout>
+            </card-layout>
+        </div>
     </page-layout>
 </template>
 
 <script setup>
 import PageLayout from "../../PageLayout.vue";
-
+import Status from "../components/Status.vue";
 import { CardLayout, UiForm, UiInput } from "../../../Shared/UI";
 import { useForm } from "@inertiajs/inertia-vue3";
 import { Inertia } from "@inertiajs/inertia";

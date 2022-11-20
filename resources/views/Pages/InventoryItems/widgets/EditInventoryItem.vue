@@ -1,6 +1,9 @@
 <template>
     <page-layout pageHeading="Edit Inventory Item" title="Manage Inventory Item" class="bg-gray-200">
         <card-layout>
+            <template #cardHead>
+                <h4 class="text-lg font-medium">{{item.name}}</h4>
+            </template>
             <inventory-item-form :uri="`/inventory-items/${item.id}/update`" :form="form" />
         </card-layout>
     </page-layout>
@@ -21,7 +24,7 @@ let form = useForm({
     brand_id: props.item.brand_id,
     unit_price: props.item.unit_price,
     critical_level: props.item.critical_level,
-    stock:props.item.stock,
+    stock: props.item.stock,
     is_active: props.item.is_active,
 });
 

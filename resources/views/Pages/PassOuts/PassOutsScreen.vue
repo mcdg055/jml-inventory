@@ -1,11 +1,11 @@
 <template>
-    <page-layout pageHeading="Manage Inventory Items" title="Inventory Items">
-        <ui-table title="Brands" :pagination="inventory_items.links">
+    <page-layout pageHeading="Manage Pass Outs" title="Inventory Items">
+        <ui-table title="Pass outs">
             <!-- header actions -->
             <template #headerActions>
                 <div class="flex justify-between items-center p-2">
                     <div class="flex gap-2">
-                        <ui-link icon="plus" uri="/inventory-items/create" />
+                        <ui-link icon="plus" uri="/pass-outs/create" />
                         <ui-button icon="refresh" @click="reload" />
                     </div>
                     <div>
@@ -16,30 +16,23 @@
             </template>
             <!-- header -->
             <template #tableHeaders>
+                <ui-th text="P.O. #" />
                 <ui-th text="Name" />
-                <ui-th text="Brand" />
-                <ui-th text="Unit Price" />
-                <ui-th text="Stock" />
-                <ui-th text="Status" />
+                <ui-th text="Date" />
+                <ui-th text="Cost" />
                 <ui-th text="Actions" action />
             </template>
             <!-- content -->
             <template #tableContent>
-                <tr v-for="item in inventory_items.data" :key="item.id">
-                    <ui-td :class="{ 'text-danger font-medium': item.stock < item.critical_level }"> {{ item.name }}
-                    </ui-td>
-                    <ui-td> {{ item.brand.name }} </ui-td>
-                    <ui-td> {{ item.unit_price }} </ui-td>
-                    <ui-td :class="{ 'text-danger font-medium': item.stock < item.critical_level }"> {{ item.stock }}
-                    </ui-td>
-                    <ui-td>
-                        <ui-pill :text="item.is_active ? 'active' : 'inactive'"
-                            :variant="item.is_active ? 'success' : 'danger'" />
-                    </ui-td>
+                <tr>
+                    <ui-td>00001</ui-td>
+                    <ui-td>Invitation</ui-td>
+                    <ui-td>10/27/2000</ui-td>
+                    <ui-td>₱ 567.00</ui-td>
                     <ui-td action>
                         <div class="flex gap-2 justify-end">
-                            <ui-link icon="eye" :uri="`/inventory-items/${item.id}`" />
-                            <ui-link icon="edit" :uri="`/inventory-items/${item.id}/edit`" />
+                            <ui-link icon="eye" :uri="`/pass-outs/`" />
+                            <ui-link icon="edit" :uri="`/pass-outs/edit`" />
                             <ui-button icon="trash" @click="handleDelete(item)" />
                         </div>
                     </ui-td>
@@ -67,12 +60,13 @@ let props = defineProps({
 })
 
 const confirm = inject('confirm');
-let search = ref(props.filters.search);
+
+let search = /* ref(props.filters.search) */ null;
 
 //watch search changes
 watch(search, debounce(
     function (value) {
-        Inertia.get('/inventory-items', { search: value }, {
+        Inertia.get('/pass-outs', { search: value }, {
             preserveState: true,
             replace: true,
         })
@@ -80,11 +74,11 @@ watch(search, debounce(
 
 //reload the content
 let reload = debounce(function () {
-    Inertia.get('/inventory-items');
+    Inertia.get('/pass-outs');
 }, 300);
 
 let handleDelete = (inventory_item) => {
-    confirm(`/inventory-items/${inventory_item.id}/delete`, '', `Are you sure you want to delete <b>${inventory_item.name}</b>?`);
+    confirm(`/pass-outs/${inventory_item.id}/delete`, '', `Are you sure you want to delete <b>${inventory_item.name}</b>?`);
 }
 
 </script>

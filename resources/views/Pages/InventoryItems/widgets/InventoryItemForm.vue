@@ -1,13 +1,15 @@
 <template>
-    <ui-form :uri=uri :form="form" @cancel="onCancel">
-        <ui-input v-model="form.name" label="Name" type="text" :error="form.errors.name" />
-        <ui-select v-model="form.brand_id" :options="$page.props.brands" text="Select brand"
-            :error="form.errors.brand_id" />
-        <ui-input v-model="form.unit_price" label="Unit price" :error="form.errors.unit_price" />
-        <ui-input v-if="initialStock" v-model="form.stock" label="Initial Stock" :error="form.errors.stock" />
-        <ui-input v-model="form.critical_level" label="Critical Level" :error="form.errors.critical_level" />
-        <ui-checkbox v-model="form.is_active" text="Is active" checked />
-    </ui-form>
+    <div class="p-4" >
+        <ui-form :uri=uri :form="form" @cancel="onCancel">
+            <ui-input v-model="form.name" label="Name" type="text" :error="form.errors.name" />
+            <ui-select v-model="form.brand_id" :options="$page.props.brands" text="Select brand"
+                :error="form.errors.brand_id" />
+            <ui-input v-model="form.unit_price" label="Unit price" :error="form.errors.unit_price" />
+            <ui-input v-if="initialStock" v-model="form.stock" label="Initial Stock" :error="form.errors.stock" />
+            <ui-input v-model="form.critical_level" label="Critical Level" :error="form.errors.critical_level" />
+            <ui-checkbox v-model="form.is_active" text="Is active" checked />
+        </ui-form>
+    </div>
 </template>
 
 <script setup>

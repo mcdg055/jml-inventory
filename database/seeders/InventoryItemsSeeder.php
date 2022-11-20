@@ -36,5 +36,14 @@ class InventoryItemsSeeder extends Seeder
             'stock' => 50,
             'critical_level' => 10,
         ]);
+
+        InventoryItem::factory()->create([
+            'name' => 'Craft Paper 1 Bundle 20 pcs',
+            'brand_id' => 9,
+            'unit_price' => 44,
+            'stock' => 5,
+            'is_active' => false,
+            'critical_level' => 10,
+        ]);
     }
 }

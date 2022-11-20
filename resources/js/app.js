@@ -4,6 +4,9 @@ import { resolvePageComponent } from 'laravel-vite-plugin/inertia-helpers';
 import VueSweetalert2 from 'vue-sweetalert2';
 import 'sweetalert2/dist/sweetalert2.min.css';
 
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+
 import {
     UiPageHeading,
     Icon,
@@ -35,9 +38,10 @@ createInertiaApp({
         return page;
     },
     setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
+        const myApp = createApp({ render: () => h(App, props) })
             .use(plugin)
             .use(VueSweetalert2)
+            .use(VueAxios, axios)
             /* head/title */
             .component('Head', Head)
 
@@ -63,7 +67,9 @@ createInertiaApp({
 
             /* PageHeading */
             .component('UiPageHeading', UiPageHeading)
-            .mount(el)
+
+        myApp.provide('axios', myApp.config.globalProperties.axios);
+        myApp.mount(el)
     },
     title: title => `JML - ${title}`,
 })

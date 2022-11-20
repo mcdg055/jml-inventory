@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\InventoryItem\AddStockRequest;
-use App\Http\Requests\StoreInventoryItemRequest;
+use App\Http\Requests\InventoryItem\StoreInventoryItemRequest;
 use App\Models\Brand;
 use App\Models\InventoryItem;
 use Illuminate\Http\Request;
@@ -183,5 +183,13 @@ class InventoryItemsController extends Controller
         }
 
         return Redirect::route("inventory-items.browse")->with('success', "The item was succesfully updated");
+    }
+
+    public function test(Request $request)
+    {
+
+        return response()->json([
+            'name' => 'testing',
+        ]);
     }
 }

@@ -1,6 +1,9 @@
 <template>
     <page-layout pageHeading="Add Inventory Item" title="Manage Inventory Item" class="bg-gray-200">
         <card-layout>
+            <template #cardHead>
+                <h4 class="text-lg font-medium">Add New Item</h4>
+            </template>
             <inventory-item-form  uri="/inventory-items/store" :form="form" initial-stock />
         </card-layout>
     </page-layout>

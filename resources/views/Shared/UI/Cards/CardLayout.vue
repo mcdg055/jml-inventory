@@ -1,19 +1,24 @@
 <template>
     <div class="block 
-        p-6 
         rounded-lg 
         shadow-lg 
         bg-white 
         max-w-sm 
-        border 
-        border-gray-100"
-    >
-        <div class="form-group mb-6">
+        overflow-hidden">
+
+        <div v-if="$slots.cardHead" class="p-3 bg-gray-300">
+            <slot name="cardHead" />
+        </div>
+        <div>
             <slot />
         </div>
     </div>
 </template>
 
 <script setup>
-let props = defineProps({});
+let props = defineProps({
+    title: {
+        type: String
+    }
+});
 </script>

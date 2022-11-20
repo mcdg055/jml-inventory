@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
-use App\Http\Requests\StoreBrandRequest;
-use App\Http\Requests\UpdateBrandRequest;
+use App\Http\Requests\Brand\StoreBrandRequest;
+use App\Http\Requests\Brand\UpdateBrandRequest;
 use App\Services\BrandService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;

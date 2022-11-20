@@ -1,10 +1,15 @@
 <template>
     <page-layout title="Brands" page-heading="Edit Brand Details" class="bg-gray-100">
         <card-layout>
-            <ui-form :uri="`/brands/${brand.id}/update`" :form="form" @on-success="onSuccess" @onError="onError"
-                @cancel="onCancel">
-                <ui-input v-model="form.name" name="name" label="Name" type="text" :error="form.errors.name" />
-            </ui-form>
+            <template #cardHead>
+                <h4 class="text-lg font-medium">Update '{{ brand.name }}' details</h4>
+            </template>
+            <div class="p-4">
+                <ui-form :uri="`/brands/${brand.id}/update`" :form="form" @on-success="onSuccess" @onError="onError"
+                    @cancel="onCancel">
+                    <ui-input v-model="form.name" name="name" label="Name" type="text" :error="form.errors.name" />
+                </ui-form>
+            </div>
         </card-layout>
     </page-layout>
 </template>
