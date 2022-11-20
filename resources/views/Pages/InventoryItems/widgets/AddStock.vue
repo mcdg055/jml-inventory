@@ -1,7 +1,7 @@
 <template>
-    <page-layout pageHeading="Update Stock" title="Manage Inventory Item" class="bg-gray-200">
+    <page-layout :pageHeading="item.name" title="Manage Inventory Item" class="bg-gray-200">
         <card-layout>
-            <ui-form :uri="`inventory-items/${item.id}/add-stock`" :form="form" @cancel="onCancel">
+            <ui-form :uri="`/inventory-items/${item.id}/add-stock`" :form="form" @cancel="onCancel">
                 <div class="border p-2 rounded-lg border-gray-300">
                     <div class="flex w-full">
                         <div class="w-2/6">Item name:</div>

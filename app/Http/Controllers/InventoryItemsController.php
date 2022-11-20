@@ -92,9 +92,16 @@ class InventoryItemsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, InventoryItem $inventory_item)
     {
-        //
+        if ($inventory_item->id) {
+
+            $inventory_item['brand'] = $inventory_item->brand;
+
+            return inertia::render('InventoryItems/widgets/AddStock', ['item' => $inventory_item]);
+        }
+
+        return redirect()->back()->with('error', 'Item cannot be found!');
     }
 
     /**
@@ -161,19 +168,7 @@ class InventoryItemsController extends Controller
         return Redirect::route("inventory-items.browse")->with('success', "The item was succesfully deleted");
     }
 
-    public function addStock(Request $request, InventoryItem $inventory_item)
-    {
-        if ($inventory_item->id) {
-
-            $inventory_item['brand'] = $inventory_item->brand;
-
-            return inertia::render('InventoryItems/widgets/AddStock', ['item' => $inventory_item]);
-        }
-
-        return redirect()->back()->with('error', 'Item cannot be found!');
-    }
-
-    public function updateStock(AddStockRequest $request, InventoryItem $inventory_item)
+    public function addStock(AddStockRequest $request, InventoryItem $inventory_item)
     {
         $data = $request->validated();
 
@@ -188,9 +183,5 @@ class InventoryItemsController extends Controller
         }
 
         return Redirect::route("inventory-items.browse")->with('success', "The item was succesfully updated");
-    }
-
-    function getItemBrand(InventoryItem $inventory_item)
-    {
     }
 }

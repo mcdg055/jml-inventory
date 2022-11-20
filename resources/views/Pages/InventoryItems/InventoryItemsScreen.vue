@@ -36,7 +36,7 @@
                     </ui-td>
                     <ui-td action>
                         <div class="flex gap-2 justify-end">
-                            <ui-link icon="eye" :uri="`/inventory-items/${item.id}/add-stock`" />
+                            <ui-link icon="eye" :uri="`/inventory-items/${item.id}`" />
                             <ui-link icon="edit" :uri="`/inventory-items/${item.id}/edit`" />
                             <ui-button icon="trash" @click="handleDelete(item)" />
                         </div>

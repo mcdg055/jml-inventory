@@ -24,7 +24,7 @@ class AddStockRequest extends FormRequest
     public function rules()
     {
         return [
-            'stock' => "required",
+            'stock' => "required|numeric",
         ];
     }
 }
