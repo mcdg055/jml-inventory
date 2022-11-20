@@ -44,7 +44,7 @@ class BrandController extends Controller
      */
     public function create(Request $request)
     {
-        return Inertia::render("Brands/Forms/AddBrandForm");
+        return Inertia::render("Brands/Widgets/AddBrandForm");
     }
 
     /**
@@ -82,7 +82,7 @@ class BrandController extends Controller
             $data["brand"] = $brand;
         }
 
-        return Inertia::render("Brands/Forms/EditBrandForm", ["brand" => $brand]);
+        return Inertia::render("Brands/Widgets/EditBrandForm", ["brand" => $brand]);
     }
 
     /**

@@ -29,7 +29,7 @@ import SearchInput from "./Forms/SearchInput.vue";
 import Input from "./Forms/Input.vue";
 import Form from "./Forms/Form.vue";
 import Select from "./Forms/Select.vue";
-
+import Checkbox from "./Forms/Checkbox.vue"
 /**
  * Spinners
  */
@@ -82,6 +82,7 @@ export {
     Input as UiInput,
     Form as UiForm,
     Select as UiSelect,
+    Checkbox as UiCheckbox,
 
     /**
      * Spinners

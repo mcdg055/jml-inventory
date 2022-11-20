@@ -1,11 +1,11 @@
 <template>
     <div class="flex justify-center">
-        <div class="mb-3 xl:w-96">
-            <select class="form-select appearance-none
+        <div class="w-full">
+            <select class="form-select form-select-lg appearance-none
       block
       w-full
       px-3
-      py-1.5
+      py-4
       text-base
       font-normal
       text-gray-700
@@ -15,18 +15,34 @@
       transition
       ease-in-out
       m-0
-      focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none" aria-label="Default select example">
-                <option selected>Open this select menu</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+
+      focus:text-gray-700 
+      focus:bg-white 
+      focus:border-blue-600 
+      focus:outline-none"
+
+      @change="$emit('update:modelValue', $event.target.value)"
+      >
+                <option value=null selected>{{ text }}</option>
+                <option v-for="option in options" :value="option.id" :selected="option.id===modelValue">{{ option.name }}</option>
             </select>
+            <small v-if="error" v-html="error" class="text-red-500"></small>
         </div>
     </div>
 </template>
 
 <script setup>
-let props = defineProps({
-    options: Object
+defineProps({
+    modelValue: [String, Number],
+    options: Object,
+    text: {
+        type: String,
+        defautlt() {
+            return "Select an option";
+        }
+    },
+    error: String
 });
+
+defineEmits(["update:modelValue"]);
 </script>

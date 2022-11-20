@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('name');
             $table->unsignedBigInteger('brand_id')->nullable()->default(0);
             $table->decimal('unit_price');
-            $table->unsignedBigInteger('stock')->nullable();
+            $table->unsignedBigInteger('stock')->default(0);
             $table->unsignedBigInteger('critical_level');
             $table->boolean('is_active')->default(true);
             

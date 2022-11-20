@@ -26,16 +26,17 @@
             <!-- content -->
             <template #tableContent>
                 <tr v-for="item in inventory_items.data" :key="item.id">
-                    <ui-td> {{ item.name }} </ui-td>
+                    <ui-td :class="{ 'text-danger font-medium': item.stock < item.critical_level }" > {{ item.name }} </ui-td>
                     <ui-td> {{ item.brand.name }} </ui-td>
                     <ui-td> {{ item.unit_price }} </ui-td>
-                    <ui-td> {{ item.stock }} </ui-td>
+                    <ui-td :class="{ 'text-danger font-medium': item.stock < item.critical_level }"> {{ item.stock }} </ui-td>
                     <ui-td>
                         <ui-pill :text="item.is_active ? 'active' : 'inactive'"
                             :variant="item.is_active ? 'success' : 'danger'" />
                     </ui-td>
                     <ui-td action>
                         <div class="flex gap-2 justify-end">
+                            <ui-link icon="eye" :uri="`/inventory-items/${item.id}/add-stock`" />
                             <ui-link icon="edit" :uri="`/inventory-items/${item.id}/edit`" />
                             <ui-button icon="trash" @click="handleDelete(item)" />
                         </div>

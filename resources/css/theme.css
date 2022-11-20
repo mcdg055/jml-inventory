@@ -6,4 +6,8 @@
     .bg-secondary {
         @apply bg-yellow-500
     }
+
+    .text-danger{
+        @apply text-red-500
+    }
 }

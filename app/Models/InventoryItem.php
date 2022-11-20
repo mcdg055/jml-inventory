@@ -12,6 +12,15 @@ class InventoryItem extends Model
 
     protected $table = 'inventory_items';
 
+    protected $fillable=[
+        'name',
+        'brand_id',
+        'unit_price',
+        'stock',
+        'critical_level',
+        'is_active',
+    ];
+
     protected $casts = [
         'is_active' => 'boolean',
     ];

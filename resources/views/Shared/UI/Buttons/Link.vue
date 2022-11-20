@@ -1,6 +1,6 @@
 <template>
     <Link :href="uri"
-        class="py-1 px-2 border rounded-md border-gray-400 hover:bg-gray-800 hover:text-white transition ease-in-out">
+        class="py-1 px-2 border rounded-md border-gray-400 hover:bg-gray-800 hover:text-white transition ease-in-out" tooltip="tooltip">
     <Icon v-if="hasIcon" :icon="icon"></Icon> <span>{{ text }}</span>
     </Link>
 </template>

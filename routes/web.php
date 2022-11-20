@@ -24,53 +24,10 @@ Route::post('login', [LoginController::class, 'store'])->name("login.authenticat
 Route::post('logout', [LoginController::class, 'destroy'])->name("logout")->middleware("auth");
 
 Route::middleware('auth')->group(function () {
+    
     Route::get('/', function () {
         return inertia::render('Home', []);
     })->name("home");
-
-    route::get("/users", function () {
-        return inertia::render('InventoryItems/InventoryItems', [
-            'users' => User::query()
-                ->when(Request::input('search'), function ($query, $search) {
-                    $query->where('name', 'like', "%{$search}%");
-                })
-                ->paginate(10)
-                ->withQueryString()
-                ->through(fn ($user) => [
-                    'id' => $user->id,
-                    'name' => $user->name,
-                    'can' => [
-                        'edit' => Auth::user()->can('update', $user)
-                    ],
-                ]),
-            'filters' => Request::only(['search']),
-            'can' => [
-                'createUser' => Auth::user()->can('create', User::class)
-            ]
-        ]);
-    });
-
-    /* create */
-    route::get("/inventory-items/create", function () {
-        return inertia::render("InventoryItems/CreateInventoryItem");
-    });
-
-    /* insert */
-    route::post("/inventory-items", function () {
-        //validate the request
-        $attributes = Request::validate([
-            'name' => 'required',
-            'email' => ['required', 'email'],
-            'password' => 'required',
-        ]);
-
-
-        //create the user
-        User::create($attributes);
-
-        //redirect to the page
-        return redirect("/inventory-items");
-    });
 
     route::get("/supplies", function () {
         return inertia::render('Supplies');

@@ -6,8 +6,6 @@ use App\Models\Brand;
 use App\Repositories\BrandRepository;
 use Illuminate\Http\Request;
 
-use function PHPUnit\Framework\throwException;
-
 class BrandService
 {
     protected $repository;
