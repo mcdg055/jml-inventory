@@ -31,6 +31,9 @@ let btnVariant = () => {
         case "link":
             return "btn-link";
             break
+        case "bordered":
+            return "btn-bordered";
+            break;
         default:
             break;
     }

@@ -6,7 +6,7 @@
                 <div class="flex justify-between items-center p-2">
                     <div class="flex gap-2">
                         <ui-link icon="plus" uri="/inventory-items/create" />
-                        <ui-button icon="refresh" @click="reload" />
+                        <ui-button icon="refresh" variant="link" @click="reload" />
                     </div>
                     <div>
                         <!-- search -->
@@ -29,7 +29,7 @@
                     <ui-td :class="{ 'text-danger font-medium': item.stock < item.critical_level }"> {{ item.name }}
                     </ui-td>
                     <ui-td> {{ item.brand.name }} </ui-td>
-                    <ui-td> {{ item.unit_price }} </ui-td>
+                    <ui-td>₱ {{ item.unit_price }} </ui-td>
                     <ui-td :class="{ 'text-danger font-medium': item.stock < item.critical_level }"> {{ item.stock }}
                     </ui-td>
                     <ui-td>
@@ -40,7 +40,7 @@
                         <div class="flex gap-2 justify-end">
                             <ui-link icon="eye" :uri="`/inventory-items/${item.id}`" />
                             <ui-link icon="edit" :uri="`/inventory-items/${item.id}/edit`" />
-                            <ui-button icon="trash" @click="handleDelete(item)" />
+                            <ui-button icon="trash" variant="link" @click="handleDelete(item)" />
                         </div>
                     </ui-td>
                 </tr>

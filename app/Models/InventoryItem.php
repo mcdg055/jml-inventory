@@ -12,7 +12,7 @@ class InventoryItem extends Model
 
     protected $table = 'inventory_items';
 
-    protected $fillable=[
+    protected $fillable = [
         'name',
         'brand_id',
         'unit_price',
@@ -25,8 +25,23 @@ class InventoryItem extends Model
         'is_active' => 'boolean',
     ];
 
+    protected $appends = [
+        'number',
+        'name_with_brand'
+    ];
+
     public function brand(): BelongsTo
     {
         return $this->belongsTo(Brand::class);
+    }
+
+    public function getNumberAttribute()
+    {
+        return str_pad($this->id, 6, '0', STR_PAD_LEFT);
+    }
+
+    public function getNameWithBrandAttribute()
+    {
+        return $this->brand->name . " " . $this->name;
     }
 }

@@ -16,7 +16,8 @@
                     </div>
                     <div class="flex w-full py-2 px-5 border-t">
                         <div class="w-2/6">Stocks left:</div>
-                        <div class="font-bold text-red-500">{{ item.stock }} pcs.</div>
+                        <div class="font-bold" :class="{ 'text-red-500': item.stock < item.critical_level }">{{ item.stock }}
+                            pcs.</div>
                     </div>
                     <div class="flex w-full py-2 px-5 border-t">
                         <div class="w-2/6">Critical level:</div>

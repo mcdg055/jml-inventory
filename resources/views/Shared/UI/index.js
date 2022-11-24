@@ -9,6 +9,7 @@ import Button from "./Buttons/Button.vue";
  * Buttons
  */
 import PanelButton from "./Buttons/PanelButton.vue";
+import UiButtonV from "./Buttons/UiButton.vue";
 
 /**
  * Table
@@ -30,6 +31,7 @@ import Input from "./Forms/Input.vue";
 import Form from "./Forms/Form.vue";
 import Select from "./Forms/Select.vue";
 import Checkbox from "./Forms/Checkbox.vue"
+import Textarea from "./Forms/Textarea.vue"
 /**
  * Spinners
  */
@@ -39,7 +41,7 @@ import Loading from "./Loading.vue"
  * Cards
  */
 import CardLayout from "./Cards/CardLayout.vue";
-
+import CardTable from "./Cards/CardTable.vue"
 /**
  * Alerts
  */
@@ -62,6 +64,7 @@ export {
     Link as UiLink,
     Button as UiButton,
     PanelButton,
+    UiButtonV,
 
     /**
      * Table
@@ -83,6 +86,7 @@ export {
     Form as UiForm,
     Select as UiSelect,
     Checkbox as UiCheckbox,
+    Textarea as UiTextarea,
 
     /**
      * Spinners
@@ -93,6 +97,7 @@ export {
      * Cards
      */
     CardLayout,
+    CardTable,
 
     /**
      * Alerts

@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <form @submit.prevent="submit">
-                        <div>
+                        <div class="flex flex-col w-100 gap-3 mb-3">
                             <ui-input v-model="form.email" :error="form.errors.password" name="email"
                                 label="Email Address" type="email" />
                             <ui-input v-model="form.password" :error="form.errors.password" name="password"

@@ -16,6 +16,11 @@ return new class extends Migration
         Schema::create('pass_outs', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->string("short_description");
+            $table->longText('notes')->nullable();
+            $table->tinyInteger('status')->default(0);
+
+            $table->softDeletes();
         });
     }
 

@@ -19,7 +19,7 @@
                 <ui-th text="P.O. #" />
                 <ui-th text="Name" />
                 <ui-th text="Date" />
-                <ui-th text="Cost" />
+                <ui-th text="Total Cost" />
                 <ui-th text="Actions" action />
             </template>
             <!-- content -->
@@ -50,13 +50,7 @@ import { Inertia } from "@inertiajs/inertia";
 import debounce from "lodash/debounce";
 
 let props = defineProps({
-    inventory_items: {
-        type: Object,
-        required: true,
-    },
-    filters: {
-        type: Object,
-    },
+
 })
 
 const confirm = inject('confirm');
@@ -64,13 +58,7 @@ const confirm = inject('confirm');
 let search = /* ref(props.filters.search) */ null;
 
 //watch search changes
-watch(search, debounce(
-    function (value) {
-        Inertia.get('/pass-outs', { search: value }, {
-            preserveState: true,
-            replace: true,
-        })
-    }, 250));
+
 
 //reload the content
 let reload = debounce(function () {

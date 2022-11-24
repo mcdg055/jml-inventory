@@ -1,9 +1,9 @@
 <template>
     <div class="w-full mx-auto bg-white shadow-lg rounded-2xl border border-gray-200 overflow-hidden">
-        <header class="px-5 py-4 border-b border-gray-100 bg-gray-100">
-            <h2 class="font-semibold text-gray-800" v-html="title"></h2>
+        <header v-if="title" class="px-5 py-4 border-b border-gray-100 bg-gray-100">
+            <h4 class="font-semibold text-gray-800" v-html="title"></h4>
         </header>
-        <slot name="headerActions" />
+        <slot v-if="$slots.headerActions" name="headerActions" />
 
         <div class="p-3">
             <div class="overflow-x-auto ">

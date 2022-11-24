@@ -10,7 +10,6 @@
                         <!--  <panel-button icon="plus" :panel-id="ADD_BRAND_FORM_PANEL_ID" /> -->
                         <ui-link icon="plus" uri="/brands/create" />
                         <ui-button icon="refresh" @click="reload" />
-                        <ui-button icon="eye" @click="fetchTest" />
                     </div>
                     <div>
                         <!-- search -->
@@ -72,8 +71,7 @@ export default {
         const confirm = inject('confirm');
         let search = ref(props.filters.search);
         const notify = inject('notify');
-        const axios = inject('axios')  // inject axios
-        /*   let flash = ref(props.flash.success); */
+
         //watch search changes
         watch(search, debounce(
             function (value) {
@@ -92,13 +90,7 @@ export default {
             confirm(`/brands/${brand.id}/delete`, '', `Are you sure you want to delete <b>${brand.name}</b> brand?`);
         }
 
-        let fetchTest = () => {
-            axios.get("/test").then((response) => {
-                console.log(response.data);
-            });
-        }
-
-        return { fetchTest, reload, search, handleDelete }
+        return { reload, search, handleDelete }
     },
 }
 </script>

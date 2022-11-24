@@ -12,6 +12,10 @@ Route::middleware('auth')->group(function () {
      * Brands Router
      */
     Route::controller(PassOutsController::class)->group(function () {
-        Route::match(["GET", "POST"],               '/pass-outs',                                     'index')->name('inventory-items.pass-outs');
+        Route::match(["GET", "POST"],               '/pass-outs',                                     'index')->name('pass-outs.browse');
+        Route::match(["GET", "POST"],               '/pass-outs/create',                              'create')->name('pass-outs.create');
+        Route::match(["GET", "POST"],               '/pass-outs/store',                               'store')->name('pass-outs.store');
+        Route::match(["GET", "POST"],               '/pass-outs/fetch-items',                         'getInventoryItems')->name('pass-outs.store');
+        Route::match(["GET", "POST"],               '/pass-outs/redirect-to-browse',                  'redirectToBrowse')->name('pass-outs.redirect');
     });
 });

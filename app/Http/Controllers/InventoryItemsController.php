@@ -188,8 +188,10 @@ class InventoryItemsController extends Controller
     public function test(Request $request)
     {
 
+        $data = $request->all();
+
         return response()->json([
-            'name' => 'testing',
+            'name' => $data['search'],
         ]);
     }
 }

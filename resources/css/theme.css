@@ -7,7 +7,14 @@
         @apply bg-yellow-500
     }
 
-    .text-danger{
+    .text-danger {
         @apply text-red-500
+    }
+
+    .btn-primary {
+        @apply inline-block px-6 py-2.5 bg-blue-600 text-white font-medium text-xs leading-tight uppercase rounded shadow-md hover:bg-blue-700 hover:shadow-lg focus:bg-blue-700 focus:shadow-lg focus:outline-none focus:ring-0 active:bg-blue-800 active:shadow-lg transition duration-150 ease-in-out
+    }
+    .btn-link, .btn-bordered{
+        @apply py-1 px-2 border rounded-md border-gray-400 hover:bg-gray-800 hover:text-white transition ease-in-out flex items-center gap-1
     }
 }
