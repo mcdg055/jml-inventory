@@ -40,6 +40,7 @@ class InventoryItemsController extends Controller
             ])
             ->when($search_input, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%");
+              
             })
             ->paginate(10)
             ->withQueryString();

@@ -1,6 +1,6 @@
 <template>
     <page-layout pageHeading="Manage Pass Outs" title="Inventory Items">
-        <ui-table title="Pass outs">
+        <ui-table title="Pass outs" :pagination="pass_outs.links">
             <!-- header actions -->
             <template #headerActions>
                 <div class="flex justify-between items-center p-2">
@@ -24,15 +24,14 @@
             </template>
             <!-- content -->
             <template #tableContent>
-                <tr>
-                    <ui-td>00001</ui-td>
-                    <ui-td>Invitation</ui-td>
-                    <ui-td>10/27/2000</ui-td>
-                    <ui-td>₱ 567.00</ui-td>
+                <tr v-for="(item, index) in pass_outs.data">
+                    <ui-td>{{ item.number }}</ui-td>
+                    <ui-td>{{ item.short_description }}</ui-td>
+                    <ui-td>{{ item.created_at }}</ui-td>
+                    <ui-td>[₱ 567.00]</ui-td>
                     <ui-td action>
                         <div class="flex gap-2 justify-end">
-                            <ui-link icon="eye" :uri="`/pass-outs/`" />
-                            <ui-link icon="edit" :uri="`/pass-outs/edit`" />
+                            <ui-link icon="eye" :uri="`/pass-outs/${item.id}`" />
                             <ui-button icon="trash" @click="handleDelete(item)" />
                         </div>
                     </ui-td>
@@ -50,12 +49,24 @@ import { Inertia } from "@inertiajs/inertia";
 import debounce from "lodash/debounce";
 
 let props = defineProps({
-
+    pass_outs: Object,
+    filters: {
+        type: Object,
+    },
 })
 
 const confirm = inject('confirm');
 
-let search = /* ref(props.filters.search) */ null;
+let search = ref(props.filters.search);
+
+//watch search changes
+watch(search, debounce(
+    function (value) {
+        Inertia.get('/pass-outs', { search: value }, {
+            preserveState: true,
+            replace: true,
+        })
+    }, 250));
 
 //watch search changes
 

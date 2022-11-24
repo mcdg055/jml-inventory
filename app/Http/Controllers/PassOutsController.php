@@ -26,9 +26,34 @@ class PassOutsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return Inertia::render('PassOuts/PassOutsScreen');
+        $inputs = $request->all();
+
+        $search_input = "";
+
+        if (isset($inputs['search'])) {
+            $search_input = $inputs['search'];
+        }
+        $pass_outs = $this->model->query()
+            ->with([
+                
+            ])
+            ->when($search_input, function ($query, $search) {
+                $query->where('short_description', 'like', "%{$search}%");
+            })
+            ->paginate(10)
+            ->withQueryString();
+
+        $filters = ['search' => $search_input];
+
+        $data = [
+            'pass_outs' => $pass_outs,
+            'filters' => $filters,
+        ];
+
+
+        return Inertia::render('PassOuts/PassOutsScreen',  $data);
     }
 
     /**

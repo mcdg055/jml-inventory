@@ -30,10 +30,28 @@ class PassOut extends Model
         'short_description',
         'notes',
         'status',
+        'number',
+        'subtotal',
+    ];
+
+    
+    protected $appends = [ 
+        'number',
+        'subtotal',
     ];
 
     public function items() : HasMany
     {
         return $this->hasMany(PassOutItems::class);
+    }
+
+    public function getNumberAttribute()
+    {
+        return str_pad($this->id, 6, '0', STR_PAD_LEFT);
+    }
+
+    public function getSubtotalAttribute()
+    {
+        return "[₱ value]";
     }
 }

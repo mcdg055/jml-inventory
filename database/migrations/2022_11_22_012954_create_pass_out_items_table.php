@@ -21,6 +21,7 @@ return new class extends Migration
             $table->unsignedBigInteger('item_id');
             $table->unsignedBigInteger('pass_out_id');
             $table->unsignedBigInteger('quantity');
+            $table->unsignedBigInteger('subtotal');
 
             $table->foreign('item_id')
                 ->references('id')
