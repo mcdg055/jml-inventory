@@ -7,6 +7,7 @@ use App\Http\Requests\InventoryItem\StoreInventoryItemRequest;
 use App\Models\Brand;
 use App\Models\InventoryItem;
 use Illuminate\Http\Request;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
 
@@ -40,7 +41,6 @@ class InventoryItemsController extends Controller
             ])
             ->when($search_input, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%");
-              
             })
             ->paginate(10)
             ->withQueryString();
@@ -186,13 +186,25 @@ class InventoryItemsController extends Controller
         return Redirect::route("inventory-items.browse")->with('success', "The item was succesfully updated");
     }
 
-    public function test(Request $request)
+    public function decreaseStock(array $data)
     {
+        if ($selected_items = Arr::get($data, 'selected_items')) {
 
-        $data = $request->all();
+            foreach ($selected_items as $key => $value) {
 
-        return response()->json([
-            'name' => $data['search'],
-        ]);
+                if ($inventory_item = InventoryItem::find($value["id"])) {
+
+                    $stock = $inventory_item->stock;
+                    $inventory_item->stock = $stock - $value['quantity'];
+
+                    try {
+                        $inventory_item->save();
+                    } catch (\Throwable $th) {
+                        return ["error" => $th->getMessage()];
+                    }
+                }
+            }
+        }
+        return true;
     }
 }

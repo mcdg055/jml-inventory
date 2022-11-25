@@ -28,7 +28,7 @@
                     <ui-td>{{ item.number }}</ui-td>
                     <ui-td>{{ item.short_description }}</ui-td>
                     <ui-td>{{ item.created_at }}</ui-td>
-                    <ui-td>[₱ 567.00]</ui-td>
+                    <ui-td>{{ item.subtotal }}</ui-td>
                     <ui-td action>
                         <div class="flex gap-2 justify-end">
                             <ui-link icon="eye" :uri="`/pass-outs/${item.id}`" />

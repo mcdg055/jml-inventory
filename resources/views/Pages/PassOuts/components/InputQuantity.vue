@@ -32,7 +32,11 @@
         " 
         :class="errorClass"
         placeholder="Quantity"
-        @input="$emit('update:modelValue', $event.target.value)" />
+        min="1"
+        max="100"
+        @input="$emit('update:modelValue', $event.target.value)"
+        
+        />
   <small v-if="errors" class="text-red-500 font-medium">{{ errors }}</small>
 </template>
 

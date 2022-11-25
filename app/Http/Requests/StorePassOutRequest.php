@@ -28,7 +28,6 @@ class StorePassOutRequest extends FormRequest
         $rules = [];
 
         $inputs = $this->request->all();
-
         $rules['short_description'] = 'required';
         $rules['notes'] = '';
         if ($selected_items = $inputs["selected_items"]) {
@@ -36,6 +35,8 @@ class StorePassOutRequest extends FormRequest
                 $inventory_item = InventoryItem::find($value['id']);
                 $rules['selected_items.' . $key . '.quantity'] = "required|numeric|min:1|lte:" . $inventory_item->stock;
                 $rules['selected_items.' . $key . '.id'] = "";
+                $rules['selected_items.' . $key . '.unit_price'] = "";
+
             }
         } else {
             $rules['selected_items'] = 'required';

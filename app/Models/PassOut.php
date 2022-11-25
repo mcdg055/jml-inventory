@@ -34,13 +34,16 @@ class PassOut extends Model
         'subtotal',
     ];
 
-    
-    protected $appends = [ 
+    protected $casts = [
+        'created_at' => 'datetime:Y-m-d',
+        'updated_at' => 'datetime:Y-m-d'
+    ];
+    protected $appends = [
         'number',
         'subtotal',
     ];
 
-    public function items() : HasMany
+    public function items(): HasMany
     {
         return $this->hasMany(PassOutItems::class);
     }
@@ -52,6 +55,6 @@ class PassOut extends Model
 
     public function getSubtotalAttribute()
     {
-        return "[₱ value]";
+        return "₱ " . $this->items->sum('subtotal');
     }
 }

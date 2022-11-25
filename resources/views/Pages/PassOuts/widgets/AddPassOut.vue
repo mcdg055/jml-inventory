@@ -14,7 +14,7 @@
 
         <card-table class="border mb-6 max-w-[400px]">
             <template #cardHead>
-                <h4 class="font-medium">Add Items</h4>
+                <h4 class="font-medium">Select an item here</h4>
             </template>
             <div class="p-4 min-h-[200px]">
 
@@ -70,7 +70,7 @@
                     <ui-td>
                         <input-quantity v-model="item.quantity" :errors="parseError(index)" />
                     </ui-td>
-                    <ui-td> [₱ 50]</ui-td>
+                    <ui-td> {{ subtotal(item) }}</ui-td>
                     <ui-td action>
                         <div class="flex gap-2 justify-end">
                             <button role="button" type="button" @click="handleDeleteItem(index)" :key="item.id"
@@ -91,7 +91,9 @@
         <template #footer>
             <div class="flex gap-5 justify-end w-full bg-gray-300 p-2">
                 <div class="flex gap-6 items-center">
-                    <pass-out-total />
+                    <div class="text-lg font-semibold text-red-600">
+                      {{ computedTotal() }}
+                    </div>
                     <div class="flex gap-3">
                         <button class="bg-blue-600 text-white py-2 px-5 rounded" @click="handleSubmit">Submit
                             P.O.</button>
@@ -114,7 +116,6 @@ import { Inertia } from "@inertiajs/inertia";
 import debounce from "lodash/debounce";
 
 import axios from 'axios'
-
 
 export default {
     inject: ['notify', 'axios'],
@@ -142,6 +143,9 @@ export default {
                 selected_items: [],
             }
         }
+    },
+    computed: {
+
     },
     methods: {
         handleSearch: debounce(function (value) {
@@ -187,6 +191,30 @@ export default {
             return this.errors[`selected_items.${index}.quantity`] === undefined ? "" : this.errors[key][0];
 
         },
+        subtotal(item) {
+            let subtotal = (item.quantity * item.unit_price).toFixed(2);
+            this.form.total += parseFloat(subtotal);
+            return "₱ " + subtotal;
+        },
+        computedTotal() {
+
+            let total = 0;
+
+            let count = this.form.selected_items.length;
+          
+            if (count > 0) {
+                this.form.selected_items.forEach(element => {
+
+                    let quantity = element.quantity ? element.quantity : 0.0;
+                    let unit_price = element.unit_price ? element.unit_price : 0.0;
+
+                    total += parseFloat(quantity) * parseFloat(unit_price);
+                });
+            }
+           
+            return   `Total: ₱ ${total.toFixed(2)}`;
+        }
+
     },
 }
 

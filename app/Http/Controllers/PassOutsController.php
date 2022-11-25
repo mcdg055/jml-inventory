@@ -15,10 +15,12 @@ class PassOutsController extends Controller
 {
     protected PassOut $model;
     protected PassOutItems $passOutItems;
-    public function __construct(PassOut $model, PassOutItems $passOutItems)
+    protected InventoryItemsController $inventoryItemsController;
+    public function __construct(PassOut $model, PassOutItems $passOutItems, InventoryItemsController $inventoryItemsController)
     {
         $this->model = $model;
         $this->passOutItems = $passOutItems;
+        $this->inventoryItemsController = $inventoryItemsController;
     }
 
     /**
@@ -36,9 +38,7 @@ class PassOutsController extends Controller
             $search_input = $inputs['search'];
         }
         $pass_outs = $this->model->query()
-            ->with([
-                
-            ])
+            ->with([])
             ->when($search_input, function ($query, $search) {
                 $query->where('short_description', 'like', "%{$search}%");
             })
@@ -97,7 +97,7 @@ class PassOutsController extends Controller
             ->whereNotIn('id', $selected)
             ->limit(3)
             ->get();
-            
+
         return $inventory_items;
     }
 
@@ -124,6 +124,7 @@ class PassOutsController extends Controller
             $passOut = $this->model->save();
 
             $this->insertPassOutItems($passOut, $validated);
+            $this->inventoryItemsController->decreaseStock($validated);
         } catch (\Throwable $th) {
             return [
                 "error" => $th->getMessage(),
@@ -144,21 +145,23 @@ class PassOutsController extends Controller
 
     public function proccessPassOutItems($id, $data)
     {
-        $item_id_collection = [];
+        $item_collection = [];
+
         if ($selected_items = $data['selected_items']) {
             foreach ($selected_items as $key => $value) {
 
-                array_push($item_id_collection, [
+                array_push($item_collection, [
                     'item_id' => $value['id'],
                     'quantity' => $value['quantity'],
                     'pass_out_id' => $this->model->id,
+                    'subtotal' => $value['quantity'] * $value['unit_price'],
                     'created_at' => Carbon::now(),
                     'updated_at' => Carbon::now(),
                 ]);
             }
         }
 
-        return $item_id_collection;
+        return $item_collection;
     }
 
     public function redirectToBrowse(Request $request)
