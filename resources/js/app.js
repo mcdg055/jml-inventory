@@ -8,7 +8,6 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 
 import {
-    UiPageHeading,
     Icon,
     UiTable,
     UiTh,
@@ -66,7 +65,6 @@ createInertiaApp({
             .component('UiLoading', UiLoading)
 
             /* PageHeading */
-            .component('UiPageHeading', UiPageHeading)
 
         myApp.provide('axios', myApp.config.globalProperties.axios);
         myApp.mount(el)

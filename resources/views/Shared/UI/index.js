@@ -1,5 +1,4 @@
 import Brand from "./Brand.vue";
-import PageHeading from "./PageHeading.vue";
 import Icon from "./Icon.vue";
 import Pagination from "./Pagination.vue";
 import Link from "./Buttons/Link.vue";
@@ -54,8 +53,7 @@ import Pill from "./Badges/Pill.vue";
 
 export {
     Icon,
-    Brand as UiBrand,
-    PageHeading as UiPageHeading,
+    Brand as UiBrand,   
     Pagination as UiPagination,
 
     /**

@@ -24,6 +24,6 @@
 
     /* sizing */
     section{
-        @apply max-w-[90%] mx-auto w-full
+        @apply container mx-auto
     }
 }

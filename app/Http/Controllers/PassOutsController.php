@@ -176,7 +176,7 @@ class PassOutsController extends Controller
      */
     public function show($id)
     {
-        //
+        return Inertia::render("PassOuts/PassOutScreen");
     }
 
     /**
