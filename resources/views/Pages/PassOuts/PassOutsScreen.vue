@@ -43,7 +43,7 @@
 
 <script setup>
 import PageLayout from "../PageLayout.vue";
-import { SearchInput, UiPill } from "../../Shared/Ui";
+import { SearchInput } from "../../Shared/Ui";
 import { ref, watch, inject } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 import debounce from "lodash/debounce";
@@ -67,9 +67,6 @@ watch(search, debounce(
             replace: true,
         })
     }, 250));
-
-//watch search changes
-
 
 //reload the content
 let reload = debounce(function () {

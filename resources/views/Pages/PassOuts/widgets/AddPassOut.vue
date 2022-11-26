@@ -92,12 +92,13 @@
             <div class="flex gap-5 justify-end w-full bg-gray-300 p-2">
                 <div class="flex gap-6 items-center">
                     <div class="text-lg font-semibold text-red-600">
-                      {{ computedTotal() }}
+                        {{ computedTotal() }}
                     </div>
                     <div class="flex gap-3">
                         <button class="bg-blue-600 text-white py-2 px-5 rounded" @click="handleSubmit">Submit
                             P.O.</button>
-                        <button class="bg-gray-400 text-white py-2 px-5 rounded">Cancel</button>
+                        <button class="bg-gray-400 text-white py-2 px-5 rounded"
+                            @click="handleCancelAction">Cancel</button>
                     </div>
                 </div>
             </div>
@@ -118,7 +119,7 @@ import debounce from "lodash/debounce";
 import axios from 'axios'
 
 export default {
-    inject: ['notify', 'axios'],
+    inject: ['notify', 'notify2', 'axios'],
     components: {
         PageLayout,
         SelectedItemsTable,
@@ -172,7 +173,7 @@ export default {
             axios.post("/pass-outs/store", this.form)
                 .then((response) => {
                     if (response.data.error) {
-                        this.notify(response.data.error, 'error', 60000);
+                        this.notify2.alert(response.data.error, 'error', 60000);
                     }
                     else {
                         Inertia.visit("/pass-outs/redirect-to-browse", { method: 'post', message: response.data.success })
@@ -201,7 +202,7 @@ export default {
             let total = 0;
 
             let count = this.form.selected_items.length;
-          
+
             if (count > 0) {
                 this.form.selected_items.forEach(element => {
 
@@ -211,8 +212,11 @@ export default {
                     total += parseFloat(quantity) * parseFloat(unit_price);
                 });
             }
-           
-            return   `Total: ₱ ${total.toFixed(2)}`;
+
+            return `Total: ₱ ${total.toFixed(2)}`;
+        },
+        handleCancelAction() {
+            this.notify2.redirect(this.form.selected_items, "/pass-outs");
         }
 
     },

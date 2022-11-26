@@ -28,6 +28,12 @@ export default {
                     icon: "house",
                 },
                 {
+                    label: "Pass Outs",
+                    path: "/pass-outs",
+                    component: "PassOuts/PassOutsScreen",
+                    icon: "ticket-simple",
+                },
+                {
                     label: "Inventory Items",
                     path: "/inventory-items",
                     component: "InventoryItems/InventoryItemsScreen",
@@ -48,12 +54,6 @@ export default {
                     path: "/brands",
                     component: "Brands/BrandsScreen",
                     icon: "tag",
-                },
-                {
-                    label: "Pass Out",
-                    path: "/pass-outs",
-                    component: "PassOuts/PassOutsScreen",
-                    icon: "ticket-simple",
                 },
             ]
         }

@@ -45,7 +45,7 @@ class PassOut extends Model
 
     public function items(): HasMany
     {
-        return $this->hasMany(PassOutItems::class);
+        return $this->hasMany(PassOutItem::class);
     }
 
     public function getNumberAttribute()

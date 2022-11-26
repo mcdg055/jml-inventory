@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StorePassOutRequest;
 use App\Models\InventoryItem;
 use App\Models\PassOut;
-use App\Models\PassOutItems;
+use App\Models\PassOutItem;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redirect;
@@ -14,9 +14,9 @@ use Inertia\Inertia;
 class PassOutsController extends Controller
 {
     protected PassOut $model;
-    protected PassOutItems $passOutItems;
+    protected PassOutItem $passOutItems;
     protected InventoryItemsController $inventoryItemsController;
-    public function __construct(PassOut $model, PassOutItems $passOutItems, InventoryItemsController $inventoryItemsController)
+    public function __construct(PassOut $model, PassOutItem $passOutItems, InventoryItemsController $inventoryItemsController)
     {
         $this->model = $model;
         $this->passOutItems = $passOutItems;
@@ -174,7 +174,7 @@ class PassOutsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function read(Request $request, PassOut $pass_out)
     {
         return Inertia::render("PassOuts/PassOutScreen");
     }
@@ -211,5 +211,11 @@ class PassOutsController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function editPassOutItem(Request $request, PassOutItem $pass_out_item)
+    {
+        
+        return $pass_out_item;
     }
 }

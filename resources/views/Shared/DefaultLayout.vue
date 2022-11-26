@@ -2,7 +2,7 @@
 
     <Head title="Inventory" />
     <div class="h-full flex items-stretch">
-        <div class="w-2/12 bg-primary flex flex-col pt-3 gap-5 jusitfy-between">
+        <div class="2xl:w-3/12 xl:w-4/12 bg-primary flex flex-col pt-3 gap-5 jusitfy-between">
             <ui-brand />
             <Nav />
 
@@ -35,7 +35,7 @@
 import Nav from "./Navigation/Nav.vue";
 import { UiBrand, UiAlert } from "./UI";
 import { provide } from 'vue';
-import { notify, confirm } from "./UI/Alerts/notify";
+import { notify, notify2, confirm } from "./UI/Alerts/notify";
 export default {
     components: {
         Nav, UiBrand, UiAlert
@@ -43,6 +43,7 @@ export default {
     setup() {
         provide('notify', notify);
         provide('confirm', confirm);
+        provide('notify2', notify2);
     }
 }
 
