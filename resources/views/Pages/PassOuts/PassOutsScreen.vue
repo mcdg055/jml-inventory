@@ -26,9 +26,9 @@
             <template #tableContent>
                 <tr v-for="(item, index) in pass_outs.data">
                     <ui-td>{{ item.number }}</ui-td>
-                    <ui-td>{{ item.short_description }}</ui-td>
+                    <ui-td>{{ item.name }}</ui-td>
                     <ui-td>{{ item.created_at }}</ui-td>
-                    <ui-td>{{ item.subtotal }}</ui-td>
+                    <ui-td>{{ item.total }}</ui-td>
                     <ui-td action>
                         <div class="flex gap-2 justify-end">
                             <ui-link icon="eye" :uri="`/pass-outs/${item.id}`" />

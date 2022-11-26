@@ -3,11 +3,11 @@
 
         <card-table class="border mb-6 max-w-[400px]">
             <template #cardHead>
-                <h4 class="font-medium">Pass Out Description</h4>
+                <h4 class="font-medium">Pass Out Details</h4>
             </template>
             <div class="flex flex-col gap-3 p-3">
-                <ui-input v-model="form.short_description"
-                    :error="errors.short_description ? errors.short_description : ''" label="Short Description" />
+                <ui-input v-model="form.name"
+                    :error="errors.name ? errors.name : ''" label="Pass out name" />
                 <ui-textarea v-model="form.notes" label="Notes" placeholder="Brief note about the pass out" />
             </div>
         </card-table>
@@ -139,7 +139,7 @@ export default {
             errors: [],
             loading: true,
             form: {
-                short_description: "",
+                name: "",
                 notes: "",
                 selected_items: [],
             }

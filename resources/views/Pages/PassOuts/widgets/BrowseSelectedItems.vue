@@ -45,11 +45,27 @@
             </tr>
         </template>
     </ui-table>
-    <ui-panel v-if="visible" title="Edit Item Quantity" @close="handlePanelClose"></ui-panel>
+    <ui-panel v-if="visible" title="Edit Pass Out Item" @close="handlePanelClose">
+        <template #heading>
+            <h4 class="text-lg font-semibold">Update Item name quantity</h4>
+            <p class="text-sm">Lorem ipsum dolor sit amet consectetur, adipisicing elit. At provident quis omnis
+                molestias! Suscipit, labore!</p>
+        </template>
+
+        <ui-input placeholder="quantity" label="Quantity" type="number" />
+
+        <template #footer>
+            <div class="text-center flex flex-col">
+                <button>Submit</button>
+                <button>Cancel</button>
+            </div>
+        </template>
+    </ui-panel>
 </template>
 
 <script setup>
 import { SearchInput, CardTable, UiButton, UiInput, UiTextarea, UiPanel } from "../../../Shared/UI";
+import InputQuantity from "../components/InputQuantity.vue";
 import { ref, watch, inject } from "vue";
 import debounce from "lodash/debounce";
 
@@ -60,10 +76,10 @@ let props = defineProps({
     },
 })
 
-let visible = ref(true);
+let visible = ref(false);
 
 const notify2 = inject('notify2');
-const axios = inject ("axios");
+const axios = inject("axios");
 
 let search = ref(/* props.filters.search */"");
 
@@ -84,12 +100,14 @@ let reload = () => {
 
 }
 
+let item = ref([]);
+
 let handleEditItem = () => {
+    /* axios.post("/pass-outs/{pass_out}/item/{item}", {pass_out: ""}) */
     visible.value = true;
-    
 }
 
-let handlePanelClose= ()=>{
+let handlePanelClose = () => {
     visible.value = false;
 }
 </script>

@@ -28,7 +28,7 @@ class StorePassOutRequest extends FormRequest
         $rules = [];
 
         $inputs = $this->request->all();
-        $rules['short_description'] = 'required';
+        $rules['name'] = 'required';
         $rules['notes'] = '';
         if ($selected_items = $inputs["selected_items"]) {
             foreach ($selected_items as $key => $value) {
@@ -48,7 +48,7 @@ class StorePassOutRequest extends FormRequest
     public function messages()
     {
         $messages = [];
-        $messages['short_description.required'] = 'Please enter short description.';
+        $messages['name.required'] = 'Please enter short description.';
         $inputs = $this->request->all();
         if ($selected_items = $inputs["selected_items"]) {
             foreach ($selected_items as $key => $value) {

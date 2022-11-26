@@ -9,7 +9,6 @@
         px-3
         py-1.5
         text-base
-        font-normal
         text-gray-700
         bg-white bg-clip-padding
         border border-solid border-gray-300

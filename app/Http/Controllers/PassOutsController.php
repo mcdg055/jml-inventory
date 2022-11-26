@@ -40,7 +40,7 @@ class PassOutsController extends Controller
         $pass_outs = $this->model->query()
             ->with([])
             ->when($search_input, function ($query, $search) {
-                $query->where('short_description', 'like', "%{$search}%");
+                $query->where('name', 'like', "%{$search}%");
             })
             ->paginate(10)
             ->withQueryString();
@@ -176,7 +176,10 @@ class PassOutsController extends Controller
      */
     public function read(Request $request, PassOut $pass_out)
     {
-        return Inertia::render("PassOuts/PassOutScreen");
+        $data = [
+            'item' => $pass_out
+        ];
+        return Inertia::render("PassOuts/PassOutScreen", $data);
     }
 
     /**
@@ -215,7 +218,6 @@ class PassOutsController extends Controller
 
     public function editPassOutItem(Request $request, PassOutItem $pass_out_item)
     {
-        
         return $pass_out_item;
     }
 }

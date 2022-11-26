@@ -2,7 +2,7 @@
 
     <Head title="Inventory" />
     <div class="h-full flex items-stretch">
-        <div class="2xl:w-3/12 xl:w-4/12 bg-primary flex flex-col pt-3 gap-5 jusitfy-between">
+        <div class="w-2/12 bg-primary flex flex-col pt-3 gap-5 jusitfy-between">
             <ui-brand />
             <Nav />
 
@@ -23,7 +23,7 @@
                 </Link>
             </div>
         </div>
-        <div class="grow">
+        <div class="grow-0 shrink-0 w-10/12">
             <slot></slot>
         </div>
     </div>

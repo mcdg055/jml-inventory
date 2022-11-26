@@ -16,7 +16,7 @@ class PassOut extends Model
     protected $table = "pass_outs";
 
     protected $fillable = [
-        'short_description',
+        'name',
         'notes',
         'status',
     ];
@@ -27,11 +27,12 @@ class PassOut extends Model
         'updated_at',
         'deleted_at',
 
-        'short_description',
+        'name',
         'notes',
         'status',
         'number',
-        'subtotal',
+        'total_items',
+        'total',
     ];
 
     protected $casts = [
@@ -40,7 +41,8 @@ class PassOut extends Model
     ];
     protected $appends = [
         'number',
-        'subtotal',
+        'total_items',
+        'total',
     ];
 
     public function items(): HasMany
@@ -53,8 +55,13 @@ class PassOut extends Model
         return str_pad($this->id, 6, '0', STR_PAD_LEFT);
     }
 
-    public function getSubtotalAttribute()
+    public function getTotalAttribute()
     {
         return "₱ " . $this->items->sum('subtotal');
+    }
+
+    public function getTotalItemsAttribute()
+    {
+        return $this->items->sum('quantity');
     }
 }
