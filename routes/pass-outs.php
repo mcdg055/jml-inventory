@@ -18,10 +18,12 @@ Route::middleware('auth')->group(function () {
         Route::match(["GET", "POST"],               '/pass-outs/fetch-items',                               'getInventoryItems')->name('pass-outs.get-inventory-items');
         Route::match(["GET", "POST"],               '/pass-outs/redirect-to-browse',                        'redirectToBrowse')->name('pass-outs.redirect');
         Route::match(["GET", "POST"],               '/pass-outs/{pass_out}',                                'read')->name('pass-outs.show');
+        Route::delete(                              '/pass-outs/{pass_out}/delete',                         'destroy')->name('pass-outs.delete');
+        
         Route::match(["GET", "POST"],               '/pass-outs/item/{pass_out_item}',                      'readPassOutItem')->name('pass-outs.item.read');
         Route::match(["GET", "POST"],               '/pass-outs/{pass_out}/item/{pass_out_item}/edit',      'updatePassOutItem')->name('pass-outs.item.update');
-        Route::delete(                              '/pass-outs/{pass_out}/item/{pass_out_item}/delete',    'deletePassOutItem')->name('pass-outs.item.delete');
+        Route::delete(                              '/pass-outs/item/{pass_out_item}/delete',               'deletePassOutItem')->name('pass-outs.item.delete');
         Route::match(["GET", "POST"],               '/pass-outs/{pass_out}/refresh',                        'refreshPassOut')->name('pass-outs.pass-out.refresh');
-        Route::match(["GET", "POST"],               '/pass-outs/{pass_out}/read-items',                     'readPassOutItems')->name('pass-outs.items.read');
+        Route::match(["GET", "POST"],               '/pass-outs/{pass_out}/items/browse',                   'browsePassOutItems')->name('pass-outs.items.browse');
     });
 });

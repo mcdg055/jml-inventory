@@ -67,8 +67,9 @@
 
 <script setup>
 import { SearchInput, UiButton, UiInput, UiPanel } from "../../../Shared/UI";
-import { ref, watch, inject } from "vue";
+import { ref, watch, inject, onMounted } from "vue";
 import debounce from "lodash/debounce";
+import { Inertia } from "@inertiajs/inertia";
 
 const notify2 = inject('notify2');
 const axios = inject("axios");
@@ -88,6 +89,16 @@ let pass_out_item = ref(null);
 let pass_out_items = ref(props.items);
 let pass_out_quantity_error = ref(null);
 
+let loadPassOutItems = () => {
+    axios.post(`/pass-outs/${props.passOutId}/items/browse`).then((response) => {
+        pass_out_items.value = response.data;
+    })
+}
+
+onMounted(() => {
+    loadPassOutItems();
+})
+
 //watch search changes
 watch(search, debounce(
     function (value) {
@@ -98,8 +109,17 @@ watch(search, debounce(
     }, 250));
 
 let handleDeleteItem = (id) => {
-    notify2.delete(`/pass-outs/${props.passOutId}/item/${id}/delete`);
+    notify2.confirm(() => {
+        axios.delete(`/pass-outs/item/${id}/delete`).then((response) => {
+            if (response.data.success) {
+                Inertia.visit(`/pass-outs/${props.passOutId}`, { success: "Pass out item was successfully deleted!" });
+            } else {
+                notify2.alert(response.data.error, 'error');
+            }
+        })
+    });
 }
+
 
 
 let reload = () => {
@@ -126,9 +146,8 @@ let handleSubmitEdit = (id) => {
 
     axios.post(`/pass-outs/${props.passOutId}/item/${id}/edit`, pass_out_item.value)
         .then((response) => {
-            console.log(response);
             if (response.error) {
-                this.notify2.alert(response.data.error, 'error', 60000);
+                this.notify2.alert(response.data.error, 'error');
             }
             else {
                 loading.value = false;

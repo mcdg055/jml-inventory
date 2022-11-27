@@ -150,8 +150,6 @@ export default {
             axios.post("/pass-outs/fetch-items", { search: value, selected: this.form.selected_items })
                 .then((response) => {
                     this.inventory_items = response.data;
-
-                    /* console.log(this.inventory_items); */
                 }).finally(() => {
                     this.loading = false;
                 })

@@ -99,6 +99,7 @@ class PassOutsController extends Controller
                 }
             ])
             ->whereNotIn('id', $selected)
+            ->where('stock', '>', 0)
             ->limit(3)
             ->get();
 
@@ -107,7 +108,6 @@ class PassOutsController extends Controller
 
     public function getInventoryItems(Request $request)
     {
-
         $inputs = $request->all();
 
         return $this->fillData($inputs);
@@ -183,13 +183,13 @@ class PassOutsController extends Controller
      */
     public function read(Request $request, PassOut $pass_out)
     {
-        $pass_out->load([
-            'items',
-            'items.inventory_item',
-            'items.inventory_item.brand',
-        ]);
+        $message = [];
+        $data = $request->all();
+        if (isset($data['success'])) {
 
-        return Inertia::render("PassOuts/PassOutScreen", ['pass_out' => PassOutResource::make($pass_out)]);
+            $message['success'] = $data["success"];
+        }
+        return Inertia::render("PassOuts/PassOutScreen", ['pass_out' => new PassOutResource($pass_out)])->with($message);
     }
 
     /**
@@ -221,9 +221,15 @@ class PassOutsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, PassOut $pass_out)
     {
-        //
+        try {
+            $pass_out->delete();
+        } catch (\Throwable $th) {
+            return Redirect::route("pass-outs.browse")->with('error', $th->getMessage());
+        }
+
+        return Redirect::route("pass-outs.browse")->with('success', "Pass out successfully deleted!");
     }
 
     public function readPassOutItem(Request $request, PassOutItem $pass_out_item)
@@ -295,10 +301,24 @@ class PassOutsController extends Controller
         return PassOutItemResource::collection($pass_out_items);
     }
 
-    public function deletePassOutItem(Request $request, PassOut $pass_out, PassOutItem $pass_out_item)
+    public function deletePassOutItem(Request $request, PassOutItem $pass_out_item)
     {
-        $pass_out_item->delete();
 
-        return Redirect::route("pass-outs.show", $pass_out->id)->with(['success' => "Item successfully deleted from the pass out", "pass_out" => $pass_out->id]);
+        try {
+            $pass_out_item->delete();
+        } catch (\Throwable $th) {
+            return ['error' => $th->getMessage()];
+        }
+
+        return ['success' => "Item successfully deleted from the pass out"];
+    }
+
+    public function browsePassOutItems(Request $request, PassOut $pass_out)
+    {
+        $pass_out->load('items', 'items.inventory_item');
+
+        $pass_out_items = $pass_out->items;
+
+        return PassOutItemResource::collection($pass_out_items);
     }
 }

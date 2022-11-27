@@ -131,6 +131,7 @@ export const notify2 = {
         switch (type) {
             case "error":
                 background = BG_ERROR;
+                duration = 60000;
                 break;
             default:
                 background = BG_SUCCESS;
@@ -148,5 +149,25 @@ export const notify2 = {
             iconColor: "#fff",
             timer: duration
         });
-    }
+    },
+    confirm: (
+        callback,
+        title = "Are you sure?",
+        html = "You won't be able to revert this!",
+        confirmButtonText = "Yes, delete it!"
+    ) => {
+        Swal.fire({
+            title: title,
+            html: html,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: confirmButtonText
+        }).then((result) => {
+            if (result.isConfirmed) {
+                callback();
+            }
+        })
+    },
 }

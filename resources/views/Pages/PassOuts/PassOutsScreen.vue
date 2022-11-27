@@ -24,15 +24,15 @@
             </template>
             <!-- content -->
             <template #tableContent>
-                <tr v-for="(item, index) in pass_outs.data">
-                    <ui-td>{{ item.number }}</ui-td>
-                    <ui-td>{{ item.name }}</ui-td>
-                    <ui-td>{{ item.created_at }}</ui-td>
-                    <ui-td>{{ item.total }}</ui-td>
+                <tr v-for="(pass_out, index) in pass_outs.data">
+                    <ui-td>{{ pass_out.number }}</ui-td>
+                    <ui-td>{{ pass_out.name }}</ui-td>
+                    <ui-td>{{ pass_out.created_at }}</ui-td>
+                    <ui-td>{{ pass_out.total }}</ui-td>
                     <ui-td action>
                         <div class="flex gap-2 justify-end">
-                            <ui-link icon="eye" :uri="`/pass-outs/${item.id}`" />
-                            <ui-button variant="bordered" icon="trash" @click="handleDelete(item)" />
+                            <ui-link icon="eye" :uri="`/pass-outs/${pass_out.id}`" />
+                            <ui-button variant="bordered" icon="trash" @click="handleDelete(pass_out)" />
                         </div>
                     </ui-td>
                 </tr>
@@ -73,8 +73,8 @@ let reload = debounce(function () {
     Inertia.get('/pass-outs');
 }, 300);
 
-let handleDelete = (inventory_item) => {
-    confirm(`/pass-outs/${inventory_item.id}/delete`, '', `Are you sure you want to delete <b>${inventory_item.name}</b>?`);
+let handleDelete = (pass_out) => {
+    confirm(`/pass-outs/${pass_out.id}/delete`, '', `Are you sure you want to delete <b>${pass_out.name}</b>?`);
 }
 
 </script>
