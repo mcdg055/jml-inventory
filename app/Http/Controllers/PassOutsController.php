@@ -306,6 +306,7 @@ class PassOutsController extends Controller
 
         try {
             $pass_out_item->delete();
+            $this->inventoryItemsController->increaseStock($pass_out_item->quantity, $pass_out_item->inventory_item);
         } catch (\Throwable $th) {
             return ['error' => $th->getMessage()];
         }
