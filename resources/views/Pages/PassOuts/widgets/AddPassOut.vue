@@ -6,8 +6,7 @@
                 <h4 class="font-medium">Pass Out Details</h4>
             </template>
             <div class="flex flex-col gap-3 p-3">
-                <ui-input v-model="form.name"
-                    :error="errors.name ? errors.name : ''" label="Pass out name" />
+                <ui-input v-model="form.name" :error="errors.name ? errors.name : ''" label="Pass out name" />
                 <ui-textarea v-model="form.notes" label="Notes" placeholder="Brief note about the pass out" />
             </div>
         </card-table>
@@ -95,10 +94,8 @@
                         {{ computedTotal() }}
                     </div>
                     <div class="flex gap-3">
-                        <button class="bg-blue-600 text-white py-2 px-5 rounded" @click="handleSubmit">Submit
-                            P.O.</button>
-                        <button class="bg-gray-400 text-white py-2 px-5 rounded"
-                            @click="handleCancelAction">Cancel</button>
+                        <ui-button class="btn-primary" variant="primary" text="Submit P.O." @click="handleSubmit" />
+                        <ui-button class="btn-cancel" variant="cancel" text="Cancel" @click="handleCancelAction" />
                     </div>
                 </div>
             </div>

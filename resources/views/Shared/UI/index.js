@@ -8,7 +8,6 @@ import Button from "./Buttons/Button.vue";
  * Buttons
  */
 import PanelButton from "./Buttons/PanelButton.vue";
-import UiButtonV from "./Buttons/UiButton.vue";
 
 /**
  * Table
@@ -62,7 +61,6 @@ export {
     Link as UiLink,
     Button as UiButton,
     PanelButton,
-    UiButtonV,
 
     /**
      * Table

@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePassOutRequest;
+use App\Http\Requests\UpdatePassOutItemRequest;
+use App\Http\Resources\PassOutItemResource;
+use App\Http\Resources\PassOutResource;
 use App\Models\InventoryItem;
 use App\Models\PassOut;
 use App\Models\PassOutItem;
@@ -10,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class PassOutsController extends Controller
 {
@@ -120,11 +124,14 @@ class PassOutsController extends Controller
         $validated = $request->validated();
 
         try {
+
             $this->model->fill($validated);
+
             $passOut = $this->model->save();
 
             $this->insertPassOutItems($passOut, $validated);
-            $this->inventoryItemsController->decreaseStock($validated);
+
+            $this->inventoryItemsController->decreaseMultipleStock($validated);
         } catch (\Throwable $th) {
             return [
                 "error" => $th->getMessage(),
@@ -176,10 +183,13 @@ class PassOutsController extends Controller
      */
     public function read(Request $request, PassOut $pass_out)
     {
-        $data = [
-            'item' => $pass_out
-        ];
-        return Inertia::render("PassOuts/PassOutScreen", $data);
+        $pass_out->load([
+            'items',
+            'items.inventory_item',
+            'items.inventory_item.brand',
+        ]);
+
+        return Inertia::render("PassOuts/PassOutScreen", ['pass_out' => PassOutResource::make($pass_out)]);
     }
 
     /**
@@ -216,8 +226,79 @@ class PassOutsController extends Controller
         //
     }
 
-    public function editPassOutItem(Request $request, PassOutItem $pass_out_item)
+    public function readPassOutItem(Request $request, PassOutItem $pass_out_item)
     {
+        $pass_out_item->load('inventory_item');
+
+        return new PassOutItemResource($pass_out_item);
+    }
+
+    public function updatePassOutItem(UpdatePassOutItemRequest $request, PassOut $pass_out, PassOutItem $pass_out_item)
+    {
+        $data = $request->validated();
+
+        try {
+
+            $inventory_item = $this->updateInventoryItemStock($data['quantity'], $pass_out_item);
+
+            $pass_out_item = $this->calculateNewQuantity($data['quantity'], $pass_out_item);
+
+            $pass_out_item->save();
+        } catch (\Throwable $th) {
+            return [
+                "error" => $th->getMessage(),
+            ];
+        }
+
+        $items = $pass_out->items;
+        $items->load('inventory_item');
+
+        return PassOutItemResource::collection($items);
+    }
+
+    /**
+     * Calculate the new quantity
+     *
+     * @param int $newQuantity
+     * @param PassOutItem $pass_out_item
+     * @return PassOutItem
+     */
+    public function calculateNewQuantity($newQuantity, PassOutItem $pass_out_item)
+    {
+        $pass_out_item->quantity = $newQuantity;
+        $pass_out_item->subtotal = $newQuantity * $pass_out_item->inventory_item->unit_price;
+
         return $pass_out_item;
+    }
+
+    public function updateInventoryItemStock($newQuantity, PassOutItem $pass_out_item)
+    {
+        $oldQuantity = $pass_out_item->quantity;
+
+        if ($oldQuantity > $newQuantity) {
+            $difference = $oldQuantity - $newQuantity;
+            $inventory_item = $this->inventoryItemsController->increaseStock($difference, $pass_out_item->inventory_item);
+        } else {
+            $difference = $newQuantity - $oldQuantity;
+            $inventory_item = $this->inventoryItemsController->decreaseStock($difference, $pass_out_item->inventory_item);
+        }
+
+        return $inventory_item;
+    }
+
+    public function readPassOutItems(Request $request, PassOut $pass_out)
+    {
+        $pass_out->load('items', 'items.inventory_item');
+
+        $pass_out_items = $pass_out->items;
+
+        return PassOutItemResource::collection($pass_out_items);
+    }
+
+    public function deletePassOutItem(Request $request, PassOut $pass_out, PassOutItem $pass_out_item)
+    {
+        $pass_out_item->delete();
+
+        return Redirect::route("pass-outs.show", $pass_out->id)->with(['success' => "Item successfully deleted from the pass out", "pass_out" => $pass_out->id]);
     }
 }

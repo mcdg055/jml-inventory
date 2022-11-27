@@ -6,7 +6,7 @@
         </template>
         <div class="p-3 text-sm flex flex-col">
             <div class="flex p-2 border-b gap-3">
- 
+
                 <div class="w-4/12 flex">
                     <div class="font-medium w-1/2">
                         Pass Out Name:
@@ -20,7 +20,7 @@
                         Total Items:
                     </div>
                     <div class="w-1/2">
-                        {{item.total_items}}
+                        {{ item.total_items }}
                     </div>
                 </div>
                 <div class="w-4/12 flex">
@@ -28,7 +28,7 @@
                         Total Cost:
                     </div>
                     <div class="w-1/2">
-                        {{item.total}}
+                        {{ item.total }}
                     </div>
                 </div>
             </div>
@@ -38,7 +38,7 @@
                         Pass Out Number:
                     </div>
                     <div class="w-1/2">
-                        #{{ item.number }}
+                        {{ item.number }}
                     </div>
                 </div>
                 <div class="w-4/12 flex">
@@ -46,7 +46,7 @@
                         Date Created:
                     </div>
                     <div class="w-1/2">
-                        {{item.created_at}}
+                        {{ item.created_at }}
                     </div>
                 </div>
             </div>

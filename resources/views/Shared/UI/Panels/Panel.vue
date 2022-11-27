@@ -11,17 +11,22 @@
         </div>
 
         <div class="offcanvas-body flex-grow p-4 overflow-y-auto text-gray-900 flex flex-col">
-            <!-- panel heading -->
-            <div v-if="$slots.heading" class="mb-3">
-                <slot name="heading" />
-            </div>
-            <!-- panel body -->
-            <div>
-                <slot />
-            </div>
-            <!-- panel footer -->
-            <div v-if="$slots.footer" class="mt-auto">
-                <slot name="footer"/>
+            <div class="flex flex-col h-full relative">
+                <div v-if="!loading" class="h-full flex flex-col">
+                    <!-- panel heading -->
+                    <div v-if="$slots.heading" class="mb-3">
+                        <slot name="heading" />
+                    </div>
+                    <!-- panel body -->
+                    <div>
+                        <slot />
+                    </div>
+                    <!-- panel footer -->
+                    <div v-if="$slots.footer" class="mt-auto">
+                        <slot name="footer" />
+                    </div>
+                </div>
+                <ui-loading :loading="loading" />
             </div>
         </div>
     </div>
@@ -34,6 +39,7 @@ const emits = defineEmits(["close"])
 
 defineProps({
     title: String,
+    loading: Boolean,
 })
 
 const handlePanelClose = () => {

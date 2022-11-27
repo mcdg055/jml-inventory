@@ -173,38 +173,64 @@ class InventoryItemsController extends Controller
     {
         $data = $request->validated();
 
-        $stock = $data['stock'];
-
-        $stock += $inventory_item->stock;
         try {
-            $inventory_item->stock = $stock;
-            $inventory_item->save();
+            $this->increaseStock($data["stock"], $inventory_item);
         } catch (\Throwable $th) {
-            return redirect()->back()->with('error', 'Unable to add item stock');
+            return redirect()->back()->with('error', $th->getMessage());
         }
 
         return Redirect::route("inventory-items.browse")->with('success', "The item was succesfully updated");
     }
 
-    public function decreaseStock(array $data)
+    public function decreaseMultipleStock(array $data)
     {
         if ($selected_items = Arr::get($data, 'selected_items')) {
 
             foreach ($selected_items as $key => $value) {
 
-                if ($inventory_item = InventoryItem::find($value["id"])) {
-
-                    $stock = $inventory_item->stock;
-                    $inventory_item->stock = $stock - $value['quantity'];
+                if ($item = InventoryItem::find($value["id"])) {
 
                     try {
-                        $inventory_item->save();
+                        $this->decreaseStock($value['quantity'], $item);
                     } catch (\Throwable $th) {
                         return ["error" => $th->getMessage()];
                     }
                 }
             }
         }
+
         return true;
+    }
+
+    public function increaseStock($new_stock, InventoryItem $inventory_item)
+    {
+        $new_stock += $inventory_item->stock;
+
+        $inventory_item->stock = $new_stock;
+
+        return $this->updateInventoryStock($inventory_item);
+    }
+
+    public function decreaseStock($quantity_used, InventoryItem $inventory_item)
+    {
+        $stock = $inventory_item->stock;
+        $inventory_item->stock = $stock - $quantity_used;
+
+        return $this->updateInventoryStock($inventory_item);
+    }
+
+    public function caculateNewStock($quantity, InventoryItem $inventory_item)
+    {
+    }
+
+    public function updateInventoryStock(InventoryItem $inventory_item)
+    {
+        try {
+            $inventory_item->save();
+        } catch (\Throwable $th) {
+            return ["error" => $th->getMessage()];
+        }
+       
+        return $inventory_item;
     }
 }

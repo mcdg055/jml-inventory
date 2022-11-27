@@ -5,8 +5,8 @@
             <template #headerActions>
                 <div class="flex justify-between items-center p-2">
                     <div class="flex gap-2">
-                        <ui-link icon="plus" uri="/pass-outs/create" />
-                        <ui-button icon="refresh" @click="reload" />
+                        <ui-button variant="link" icon="plus" uri="/pass-outs/create" />
+                        <ui-button variant="bordered" icon="refresh" @click="reload" />
                     </div>
                     <div>
                         <!-- search -->
@@ -32,7 +32,7 @@
                     <ui-td action>
                         <div class="flex gap-2 justify-end">
                             <ui-link icon="eye" :uri="`/pass-outs/${item.id}`" />
-                            <ui-button icon="trash" @click="handleDelete(item)" />
+                            <ui-button variant="bordered" icon="trash" @click="handleDelete(item)" />
                         </div>
                     </ui-td>
                 </tr>

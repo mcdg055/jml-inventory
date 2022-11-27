@@ -11,15 +11,15 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class BrandFactory extends Factory
 {
     /**
+     * @var $model
+     */
+    protected $model = Brand::class;
+
+    /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
-
-     /**
-      * @var $model
-      */
-    protected $model = Brand::class;
 
     public function definition()
     {

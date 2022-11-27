@@ -18,7 +18,12 @@ class PassOutItem extends Model
         'pass_out_id',
         'quantity',
     ];
-
+    protected $visible = [
+        'id',
+        'item_id',
+        'pass_out_id',
+        'quantity',
+    ];
 
     public function pass_out(): BelongsTo
     {

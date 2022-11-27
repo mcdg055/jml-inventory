@@ -1,6 +1,6 @@
 <template>
-    <Component :is="variant === 'link' ? 'Link' : 'button'" type="submit" data-mdb-ripple="true"
-        data-mdb-ripple-color="light" :class="btnVariant()">
+    <Component :is="variant === 'link' ? 'Link' : 'button'" type="submit" :href="uri" data-mdb-ripple="true"
+        data-mdb-ripple-color="light" :class="'btn-'+variant">
         <icon v-if="icon" :icon="icon" />
         {{ text }}
     </Component>
@@ -8,6 +8,7 @@
 
 <script setup>
 import { Icon } from "../../UI"
+import { computed } from "vue";
 
 let props = defineProps({
     icon: String,
@@ -20,19 +21,7 @@ let props = defineProps({
     variant: String,
     default() {
         return "primary";
-    }
+    },
+    uri: String,
 });
-
-let btnVariant = () => {
-    switch (props.variant) {
-        case "primary":
-            return "btn-primary"
-            break;
-        case "link":
-            return "btn-link";
-            break
-        default:
-            break;
-    }
-}
 </script>

@@ -1,7 +1,7 @@
 <template>
     <page-layout pageHeading="Pass Out Details" title="Inventory Items">
-        <pass-out-details :item="item" />
-        <browse-selected-items />
+        <pass-out-details :item="pass_out" />
+        <browse-selected-items :items="pass_out.items" :passOutId="pass_out.id"/>
     </page-layout>
 </template>
 
@@ -11,7 +11,7 @@ import BrowseSelectedItems from "./widgets/BrowseSelectedItems.vue";
 import PassOutDetails from "./widgets/PassOutDetails.vue";
 
 let props = defineProps({
-    item: {
+    pass_out: {
         type: Object,
         required: true
     },
