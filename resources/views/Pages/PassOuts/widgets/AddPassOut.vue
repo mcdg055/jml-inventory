@@ -20,16 +20,16 @@
                 <div class="flex gap-3 mx-w-sm items-stretch align-center">
                     <div class="relative w-full">
                         <search-input v-model="search" @input="handleSearch(search)" placeholder="searh item here" />
-                        <ul v-if="search.length && inventory_items.length && !loading"
+                        <ul v-if="loading || (inventory_items === null && search.length)"
+                            class="absolute divide-y border rounded shadow-lg divide w-full bg-white overflow-hidden">
+                            <li class="p-2 truncate transition cursor-pointer nowrap hover:bg-gray-300">Loading ...
+                            </li>
+                        </ul>
+                        <ul v-else-if="search.length && inventory_items.length && !loading"
                             class="absolute divide-y border rounded shadow-lg divide w-full bg-white overflow-hidden">
                             <li v-for="(item, index) in inventory_items" :key="item.id"
                                 class="p-2 truncate transition cursor-pointer nowrap hover:bg-gray-300"
                                 @click="handleSelectItem(index)">{{ item.name_with_brand }}</li>
-                        </ul>
-                        <ul v-else-if="search.length && loading"
-                            class="absolute divide-y border rounded shadow-lg divide w-full bg-white overflow-hidden">
-                            <li class="p-2 truncate transition cursor-pointer nowrap hover:bg-gray-300">Loading ...
-                            </li>
                         </ul>
                         <ul v-else-if="search.length && !inventory_items.length && !loading"
                             class="absolute divide-y border rounded shadow-lg divide w-full bg-white overflow-hidden">
@@ -131,10 +131,10 @@ export default {
     data() {
         return {
             search: "",
-            inventory_items: [],
+            inventory_items: null,
             selected_items: [],
             errors: [],
-            loading: true,
+            loading: false,
             form: {
                 name: "",
                 notes: "",
@@ -161,7 +161,7 @@ export default {
             this.inventory_items[index]['quantity'] = 0;
             this.form.selected_items.push(this.inventory_items[index]);
 
-            this.inventory_items.splice(index, 1);
+            this.inventory_items = null;
         },
         handleDeleteItem(index) {
             this.form.selected_items.splice(index, 1);
