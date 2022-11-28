@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorePassOutRequest;
+use App\Http\Requests\UpdatePassOutDetailsRequest;
 use App\Http\Requests\UpdatePassOutItemRequest;
 use App\Http\Resources\PassOutItemResource;
 use App\Http\Resources\PassOutResource;
@@ -198,21 +199,31 @@ class PassOutsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, PassOut $pass_out)
     {
-        //
+        return new PassOutResource($pass_out);
     }
 
     /**
-     * Update the specified resource in storage.
+     * Update Pass Out details
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @param PassOut $pass_out
+     * @return void
      */
-    public function update(Request $request, $id)
+    public function update(UpdatePassOutDetailsRequest $request, PassOut $pass_out)
     {
-        //
+        $data = $request->validated();
+
+        $pass_out->fill($data);
+
+        try {
+            $pass_out->save();
+        } catch (\Throwable $th) {
+            return ['error' => $th->getMessage()];
+        }
+
+        return new PassOutResource($pass_out);
     }
 
     /**
@@ -244,7 +255,6 @@ class PassOutsController extends Controller
         $data = $request->validated();
 
         try {
-
             $inventory_item = $this->updateInventoryItemStock($data['quantity'], $pass_out_item);
 
             $pass_out_item = $this->calculateNewQuantity($data['quantity'], $pass_out_item);
@@ -303,7 +313,6 @@ class PassOutsController extends Controller
 
     public function deletePassOutItem(Request $request, PassOutItem $pass_out_item)
     {
-
         try {
             $pass_out_item->delete();
             $this->inventoryItemsController->increaseStock($pass_out_item->quantity, $pass_out_item->inventory_item);

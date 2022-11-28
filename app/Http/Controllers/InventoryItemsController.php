@@ -185,16 +185,9 @@ class InventoryItemsController extends Controller
     public function decreaseMultipleStock(array $data)
     {
         if ($selected_items = Arr::get($data, 'selected_items')) {
-
             foreach ($selected_items as $key => $value) {
-
                 if ($item = InventoryItem::find($value["id"])) {
-
-                    try {
-                        $this->decreaseStock($value['quantity'], $item);
-                    } catch (\Throwable $th) {
-                        return ["error" => $th->getMessage()];
-                    }
+                    $this->decreaseStock($value['quantity'], $item);
                 }
             }
         }
@@ -219,10 +212,6 @@ class InventoryItemsController extends Controller
         return $this->updateInventoryStock($inventory_item);
     }
 
-    public function caculateNewStock($quantity, InventoryItem $inventory_item)
-    {
-    }
-
     public function updateInventoryStock(InventoryItem $inventory_item)
     {
         try {
@@ -230,7 +219,7 @@ class InventoryItemsController extends Controller
         } catch (\Throwable $th) {
             return ["error" => $th->getMessage()];
         }
-       
+
         return $inventory_item;
     }
 }

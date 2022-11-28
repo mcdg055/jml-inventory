@@ -17,7 +17,7 @@
         ease-in-out
         m-0
         focus:text-gray-700 focus:bg-white focus:border-blue-600 focus:outline-none
-        " rows="3" @input="$emit('update:modelValue', $event.target.value)" :placeholder="placeholder"></textarea>
+        " rows="3" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" :placeholder="placeholder"></textarea>
     </div>
 
 </template>

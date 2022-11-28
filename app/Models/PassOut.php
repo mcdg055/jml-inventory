@@ -37,7 +37,8 @@ class PassOut extends Model
 
     protected $casts = [
         'created_at' => 'datetime:Y-m-d',
-        'updated_at' => 'datetime:Y-m-d'
+        'updated_at' => 'datetime:Y-m-d',
+        'total'=>'float',
     ];
     protected $appends = [
         'number',
@@ -57,7 +58,7 @@ class PassOut extends Model
 
     public function getTotalAttribute()
     {
-        return "₱ " . $this->items->sum('subtotal');
+        return $this->items->sum('subtotal');
     }
 
     public function getTotalItemsAttribute()

@@ -18,6 +18,8 @@ Route::middleware('auth')->group(function () {
         Route::match(["GET", "POST"],               '/pass-outs/fetch-items',                               'getInventoryItems')->name('pass-outs.get-inventory-items');
         Route::match(["GET", "POST"],               '/pass-outs/redirect-to-browse',                        'redirectToBrowse')->name('pass-outs.redirect');
         Route::match(["GET", "POST"],               '/pass-outs/{pass_out}',                                'read')->name('pass-outs.show');
+        Route::match(["GET", "POST"],               '/pass-outs/{pass_out}/edit',                           'edit')->name('pass-outs.edit');
+        Route::match(["GET", "POST"],               '/pass-outs/{pass_out}/update',                         'update')->name('pass-outs.update');
         Route::delete(                              '/pass-outs/{pass_out}/delete',                         'destroy')->name('pass-outs.delete');
         
         Route::match(["GET", "POST"],               '/pass-outs/item/{pass_out_item}',                      'readPassOutItem')->name('pass-outs.item.read');
