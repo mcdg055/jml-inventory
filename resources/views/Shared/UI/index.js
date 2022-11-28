@@ -15,7 +15,7 @@ import PanelButton from "./Buttons/PanelButton.vue";
 import Table from "./Tables/Table.vue";
 import TableHeader from "./Tables/TableHeader.vue";
 import TableCell from "./Tables/TableCell.vue";
-
+import ApiTable from "./Tables/ApiTable.vue";
 /**
  * Panels
  */
@@ -68,6 +68,7 @@ export {
     Table as UiTable,
     TableHeader as UiTh,
     TableCell as UiTd,
+    ApiTable as UiApiTable,
 
     /**
      * Panles

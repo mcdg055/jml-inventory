@@ -1,10 +1,10 @@
 <template>
-    <ui-api-table title="Pass Out Items" :uri="`/pass-outs/${props.passOutId}/items/browse`" :search="search">
-        <template #headerActions="{ reload }">
+    <ui-table title="Pass Out Items" :loading="gettingItems">
+        <template #headerActions>
             <div class="flex justify-between items-center p-2">
                 <div class="flex gap-2">
                     <ui-button variant="link" icon="plus" uri="/pass-outs/create" />
-                    <ui-button variant="bordered" icon="refresh" @click="reload" />
+                    <ui-button variant="bordered" icon="refresh" @click="loadPassOutItems" />
                 </div>
                 <div>
                     <!-- search -->
@@ -22,8 +22,8 @@
             <ui-th text="Actions" action />
         </template>
         <!-- content -->
-        <template v-slot="{ data }">
-            <tr v-for="(item, index) in data">
+        <template #tableContent>
+            <tr v-for="(item, index) in pass_out_items">
                 <ui-td> {{ index }} </ui-td>
                 <ui-td> {{ item.inventory_item.number }} </ui-td>
                 <ui-td>{{ item.inventory_item.name_with_brand }}</ui-td>
@@ -44,7 +44,7 @@
                 </ui-td>
             </tr>
         </template>
-    </ui-api-table>
+    </ui-table>
     <ui-panel v-if="visible" title="Edit Pass Out Item" @close="handlePanelClose" :loading="loading">
         <template #heading>
             <div>
@@ -75,19 +75,43 @@ const notify2 = inject('notify2');
 const axios = inject("axios");
 
 let props = defineProps({
+    items: Object,
     passOutId: [Number, String],
     filters: {
         type: Object,
     },
 })
 
-let search = ref("");
-
 let visible = ref(false);
 let loading = ref(true);
+let gettingItems = ref(false);
+let search = ref(/* props.filters.search */"");
 let pass_out_item = ref(null);
-
+let pass_out_items = ref(props.items);
 let pass_out_quantity_error = ref(null);
+
+let loadPassOutItems = debounce(function () {
+    pass_out_items.value = null;
+    gettingItems.value = true;
+    axios.post(`/pass-outs/${props.passOutId}/items/browse`).then((response) => {
+        pass_out_items.value = response.data;
+    }).finally(() => {
+        gettingItems.value = false;
+    })
+}, 200)
+
+onMounted(() => {
+    loadPassOutItems();
+})
+
+//watch search changes
+watch(search, debounce(
+    function (value) {
+        Inertia.get('/pass-outs', { search: value }, {
+            preserveState: true,
+            replace: true,
+        })
+    }, 250));
 
 let handleDeleteItem = (id) => {
     notify2.confirm(() => {
@@ -101,6 +125,12 @@ let handleDeleteItem = (id) => {
     });
 }
 
+
+
+let reload = () => {
+
+}
+
 let handleEditItem = (id) => {
     loading.value = true;
     visible.value = true;
@@ -109,6 +139,7 @@ let handleEditItem = (id) => {
     }).finally(() => {
         loading.value = false;
     })
+
 }
 
 let handlePanelClose = () => {
