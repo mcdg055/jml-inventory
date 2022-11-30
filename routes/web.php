@@ -28,12 +28,4 @@ Route::middleware('auth')->group(function () {
     Route::get('/', function () {
         return inertia::render('Home', []);
     })->name("home");
-
-    route::get("/supplies", function () {
-        return inertia::render('Supplies');
-    });
-
-    route::get("/suppliers", function () {
-        return inertia::render('Suppliers');
-    });
 });

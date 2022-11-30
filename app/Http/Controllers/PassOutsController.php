@@ -325,9 +325,25 @@ class PassOutsController extends Controller
 
     public function browsePassOutItems(Request $request, PassOut $pass_out)
     {
-        $pass_out->load('items', 'items.inventory_item');
+        $search = "";
 
-        $pass_out_items = $pass_out->items;
+        if ($request->search) {
+            $search = $request->search;
+        }
+        $id = $pass_out->getKey();
+        $pass_out_items = PassOutItem::where('pass_out_id', $pass_out->getKey())
+            ->with([
+                'inventory_item',
+                'inventory_item.brand',
+            ])
+            ->whereHas('inventory_item', function ($query) use ($search) {
+                $query->where('name', "LIKE", "%$search%")
+                    ->with('brand')
+                    ->orWhereHas('brand', function ($query) use ($search) {
+                        $query->where('name', "LIKE", "%$search%");
+                    });
+            })
+            ->get();
 
         return PassOutItemResource::collection($pass_out_items);
     }

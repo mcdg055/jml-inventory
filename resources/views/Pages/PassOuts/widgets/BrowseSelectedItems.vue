@@ -1,16 +1,7 @@
 <template>
-    <ui-api-table title="Pass Out Items" :uri="`/pass-outs/${props.passOutId}/items/browse`" :search="search">
-        <template #headerActions="{ reload }">
-            <div class="flex justify-between items-center p-2">
-                <div class="flex gap-2">
-                    <ui-button variant="link" icon="plus" uri="/pass-outs/create" />
-                    <ui-button variant="bordered" icon="refresh" @click="reload" />
-                </div>
-                <div>
-                    <!-- search -->
-                    <search-input v-model="search" />
-                </div>
-            </div>
+    <ui-api-table title="Pass Out Items" :uri="`/pass-outs/${props.passOutId}/items/browse`" search-input reload>
+        <template #headerActions>
+            <!-- <ui-button variant="link" icon="plus" uri="/pass-outs/create" /> -->
         </template>
         <template #tableHeaders>
             <ui-th text="#" />
@@ -28,18 +19,12 @@
                 <ui-td> {{ item.inventory_item.number }} </ui-td>
                 <ui-td>{{ item.inventory_item.name_with_brand }}</ui-td>
                 <ui-td> ₱ {{ item.inventory_item.unit_price }} </ui-td>
-                <ui-td>
-                    {{ item.quantity }}
-                </ui-td>
+                <ui-td>{{ item.quantity }} </ui-td>
                 <ui-td> ₱ {{ item.subtotal }}</ui-td>
                 <ui-td action>
                     <div class="flex gap-2 justify-end">
-                        <ui-button variant="bordered" icon="edit" @click="handleEditItem(item.id)">
-
-                        </ui-button>
-                        <ui-button variant="bordered" icon="times" @click="handleDeleteItem(item.id)">
-
-                        </ui-button>
+                        <ui-button variant="bordered" icon="edit" @click="handleEditItem(item.id)" />
+                        <ui-button variant="bordered" icon="times" @click="handleDeleteItem(item.id)" />
                     </div>
                 </ui-td>
             </tr>
@@ -66,9 +51,8 @@
 </template>
 
 <script setup>
-import { SearchInput, UiButton, UiInput, UiPanel, UiApiTable } from "../../../Shared/UI";
-import { ref, watch, inject, onMounted } from "vue";
-import debounce from "lodash/debounce";
+import { UiButton, UiInput, UiPanel, UiApiTable } from "../../../Shared/UI";
+import { ref, inject } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 
 const notify2 = inject('notify2');
@@ -80,8 +64,6 @@ let props = defineProps({
         type: Object,
     },
 })
-
-let search = ref("");
 
 let visible = ref(false);
 let loading = ref(true);

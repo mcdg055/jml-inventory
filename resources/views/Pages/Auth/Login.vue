@@ -55,7 +55,9 @@
                             transition 
                             duration-150 
                             ease-in-out 
-                            w-full" data-mdb-ripple="true" data-mdb-ripple-color="light">
+                            w-full" data-mdb-ripple="true" data-mdb-ripple-color="light"
+                            :disabled="form.processing"
+                            >
                             Sign in
                         </button>
 

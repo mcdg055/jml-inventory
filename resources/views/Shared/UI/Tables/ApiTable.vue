@@ -6,11 +6,11 @@
         <div class="flex justify-between items-center p-2">
             <div class="flex gap-2">
                 <slot v-if="$slots.headerActions" name="headerActions" />
-                <ui-button v-if="reload" variant="bordered" icon="refresh" @click="reload" />
+                <ui-button v-if="reload" variant="bordered" icon="refresh" @click="loadData()" />
             </div>
             <div>
                 <!-- search -->
-                <search-input v-if="searchInput" t v-model="search" />
+                <search-input v-if="searchInput" v-model="search" />
             </div>
         </div>
 
@@ -30,7 +30,7 @@
                                 </div>
                             </td>
                         </tr>
-                        <slot :data="pass_out_items" />
+                        <slot :data="data" />
                     </tbody>
                 </table>
             </div>
@@ -72,26 +72,26 @@ let props = defineProps({
     },
 })
 
-let pass_out_items = ref(null);
+let data = ref(null);
 let loading = ref(false);
 let search = ref("");
 
-let loadPassOutItems = debounce(function (value = "") {
-    pass_out_items.value = null;
+let loadData = debounce(function (value = "") {
+    data.value = null;
     loading.value = true;
     axios.post(props.uri, { search: value }).then((response) => {
-        pass_out_items.value = response.data;
+        data.value = response.data;
     }).finally(() => {
         loading.value = false;
     })
 }, 200)
 
 onMounted(() => {
-    loadPassOutItems();
+    loadData();
 })
 
 //watch search changes
-watch(search, loadPassOutItems);
+watch(search, loadData);
 
 let hasPagination = props.pagination ? true : false;
 
