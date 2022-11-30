@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Supplier\StoreSupplierRequest;
 use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -28,7 +29,7 @@ class SupplierController extends Controller
 
     public function browse(Request $request)
     {
-    
+
         $inputs = $request->all();
         $search_input = "";
 
@@ -40,8 +41,8 @@ class SupplierController extends Controller
             ->when($search_input, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%");
             })->get();
-          /*   ->paginate(10) */
-          /*   ->withQueryString(); */
+        /*   ->paginate(10) */
+        /*   ->withQueryString(); */
 
         return SupplierResource::collection($suppliers);
     }
@@ -62,9 +63,19 @@ class SupplierController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreSupplierRequest $request)
     {
-        //
+        $data = $request->validated();
+
+        $this->supplier->fill($data);
+
+        try {
+            $this->supplier->save();
+        } catch (\Throwable $th) {
+            return ['error' => $th->getMessage()];
+        }
+
+        return ['success' => "Supplier was successfully added!"];
     }
 
     /**

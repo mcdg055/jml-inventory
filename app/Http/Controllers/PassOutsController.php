@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorePassOutRequest;
-use App\Http\Requests\UpdatePassOutDetailsRequest;
-use App\Http\Requests\UpdatePassOutItemRequest;
+use App\Http\Requests\PassOut\StorePassOutRequest;
+use App\Http\Requests\PassOut\UpdatePassOutDetailsRequest;
+use App\Http\Requests\PassOut\UpdatePassOutItemRequest;
 use App\Http\Resources\PassOutItemResource;
 use App\Http\Resources\PassOutResource;
 use App\Models\InventoryItem;

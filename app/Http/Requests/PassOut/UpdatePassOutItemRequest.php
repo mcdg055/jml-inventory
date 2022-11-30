@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests;
+namespace App\Http\Requests\PassOut;
 
 use App\Models\InventoryItem;
 use Illuminate\Foundation\Http\FormRequest;

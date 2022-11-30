@@ -15,6 +15,7 @@ Route::middleware('auth')->group(function () {
     Route::controller(SupplierController::class)->group(function () {
         Route::match(["GET", "POST"],               '/suppliers',                                           'index')->name('suppliers.screen');
         Route::match(["GET", "POST"],               '/suppliers/browse',                                    'browse')->name('suppliers.browse');
+        Route::post(                                '/suppliers/add',                                       'store')->name('suppliers.store');
        
     });
 });
