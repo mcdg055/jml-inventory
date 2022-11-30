@@ -3,8 +3,17 @@
         <header v-if="title" class="px-5 py-4 border-b border-gray-100 bg-gray-100">
             <h4 class="font-semibold text-gray-800" v-html="title"></h4>
         </header>
+        <div class="flex justify-between items-center p-2">
+            <div class="flex gap-2">
+                <slot v-if="$slots.headerActions" name="headerActions" />
+                <ui-button v-if="reload" variant="bordered" icon="refresh" @click="reload" />
+            </div>
+            <div>
+                <!-- search -->
+                <search-input v-if="searchInput" t v-model="search" />
+            </div>
+        </div>
 
-        <slot v-if="$slots.headerActions" name="headerActions" :reload="loadPassOutItems" />
         <div class="p-3">
             <div class="overflow-x-auto ">
                 <table class="table-auto w-full">
@@ -38,27 +47,39 @@
 import UiPagination from "../Pagination.vue";
 import { ref, watch, inject, onMounted } from "vue";
 import debounce from "lodash/debounce";
+import { SearchInput, UiButton, UiInput, UiPanel, UiApiTable } from "../../../Shared/UI";
 
 const axios = inject("axios");
 
 let props = defineProps({
     title: String,
     pagination: Object,
-    search: String,
     uri: {
         type: String,
         required: true,
+    },
+    searchInput: {
+        type: Boolean,
+        default() {
+            return false;
+        }
+    },
+    reload: {
+        type: Boolean,
+        default() {
+            return false;
+        }
     },
 })
 
 let pass_out_items = ref(null);
 let loading = ref(false);
-let search = ref(props.search);
+let search = ref("");
 
-let loadPassOutItems = debounce(function () {
+let loadPassOutItems = debounce(function (value = "") {
     pass_out_items.value = null;
     loading.value = true;
-    axios.post(props.uri).then((response) => {
+    axios.post(props.uri, { search: value }).then((response) => {
         pass_out_items.value = response.data;
     }).finally(() => {
         loading.value = false;
@@ -70,15 +91,7 @@ onMounted(() => {
 })
 
 //watch search changes
-watch(() => props.search, debounce(
-    function (value) {
-
-        axios.post(props.uri, { search: value }).then((response) => {
-            pass_out_items.value = response.data;
-        }).finally(() => {
-            loading.value = false;
-        })
-    }, 250));
+watch(search, loadPassOutItems);
 
 let hasPagination = props.pagination ? true : false;
 
