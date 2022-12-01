@@ -101,6 +101,7 @@ class PassOutsController extends Controller
             ])
             ->whereNotIn('id', $selected)
             ->where('stock', '>', 0)
+            ->where('is_active', PassOut::ACTIVE)
             ->limit(3)
             ->get();
 

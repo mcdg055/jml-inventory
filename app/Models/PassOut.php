@@ -10,8 +10,8 @@ class PassOut extends Model
 {
     use HasFactory;
 
-    const PASS_OUT_STATUS_DRAFT = 0;
-    const PASS_OUT_STATUS_COMPLETED = 0;
+    const INACTIVE = 0;
+    const ACTIVE = 1;
 
     protected $table = "pass_outs";
 

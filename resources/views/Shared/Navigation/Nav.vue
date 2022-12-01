@@ -42,11 +42,13 @@ export default {
                 {
                     label: "Supplies",
                     path: "/supplies",
+                    component: "Supplies/SuppliesScreen",
                     icon: "truck-ramp-box",
                 },
                 {
                     label: "Suppliers",
                     path: "/suppliers",
+                    component: "Suppliers/SuppliersScreen",
                     icon: "truck",
                 },
                 {
