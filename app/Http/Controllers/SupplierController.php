@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Supplier\StoreSupplierRequest;
+use App\Http\Requests\Supplier\UpdateSupplierRequest;
 use App\Http\Resources\SupplierResource;
 use App\Models\Supplier;
 use Illuminate\Http\Request;
@@ -40,9 +41,10 @@ class SupplierController extends Controller
         $suppliers = $this->supplier->query()
             ->when($search_input, function ($query, $search) {
                 $query->where('name', 'like', "%{$search}%");
-            })->get();
-        /*   ->paginate(10) */
-        /*   ->withQueryString(); */
+                $query->orWhere('contact_person', 'like', "%{$search}%");
+                $query->orWhere('contact_number', 'like', "%{$search}%");
+            })
+            ->get();
 
         return SupplierResource::collection($suppliers);
     }
@@ -86,7 +88,7 @@ class SupplierController extends Controller
      */
     public function show(Supplier $supplier)
     {
-        //
+        return new SupplierResource($supplier);
     }
 
     /**
@@ -107,9 +109,18 @@ class SupplierController extends Controller
      * @param  \App\Models\Supplier  $supplier
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Supplier $supplier)
+    public function update(UpdateSupplierRequest $request, Supplier $supplier)
     {
-        //
+        $data = $request->validated();
+
+        try {
+            $supplier->fill($data);
+            $supplier->save();
+        } catch (\Throwable $th) {
+            return ['error' => $th->getMessage()];
+        }
+
+        return ['success' => "Supplier was successfully updated!"];
     }
 
     /**

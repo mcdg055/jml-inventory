@@ -1,5 +1,5 @@
 <template>
-    <ui-api-table title="Pass Out Items" :uri="`/suppliers/browse`" search-input reload>
+    <ui-api-table title="Suppliers" :uri="`/suppliers/browse`" search-input reload :key=key>
         <template #headerActions>
             <ui-button variant="bordered" icon="plus" @click="handleAddSupplier" />
         </template>
@@ -61,32 +61,41 @@ import { Inertia } from "@inertiajs/inertia";
 const notify2 = inject('notify2');
 const axios = inject("axios");
 
-let visible = ref(false);
-
 let props = defineProps({});
-
+let key = ref(0);
+let visible = ref(false);
 let loading = ref(true);
 
-let form = reactive({
+let errors_init_val = {
+    name: null,
+    contact_number: null,
+    contact_person: null,
+    is_active: null,
+};
+
+let form_init_val = {
     name: null,
     contact_number: null,
     contact_person: null,
     is_active: true,
-    errors: {
-        name: null,
-        contact_number: null,
-        contact_person: null,
-        is_active: null,
-    }
-})
+    errors: errors_init_val
+};
+
+let form = reactive(form_init_val);
 
 let handleAddSupplier = () => {
     visible.value = true;
     loading.value = false;
 };
 
-let handleEditSupplier = () => {
-
+let handleEditSupplier = (id) => {
+    visible.value = true;
+    loading.value = true;
+    axios.post(`suppliers/${id}/show`).then(function (response) {
+        form = response.data;
+        form = Object.assign({ errors: errors_init_val }, form);
+        loading.value = false;
+    });
 };
 
 let handleDeleteSupplier = () => {
@@ -99,20 +108,27 @@ let handlePanelClose = () => {
 
 let handleSubmitAddSupplier = () => {
     loading.value = true;
-    axios.post('suppliers/add', form).then((response) => {
-        if (response.error) {
-            this.notify2.alert(response.data.error, 'error');
-        }
-        else {
+
+    let uri = form.id ? `/suppliers/${form.id}/update` : 'suppliers/add';
+    axios.post(uri, form).then((response) => {
+        if (response.data.success) {
             loading.value = false;
             visible.value = false;
-            notify2.alert("Supplier was successfully added");
+            notify2.alert(response.data.success);
+            key.value++;
+            form.value = { form_init_val };
+        }
+        else {
+            this.notify2.alert(response.data.error, 'error');
         }
     }).catch((error) => {
+        if (error.response !== undefined) {
+            form.errors = error.response.data.errors;
+        }
         loading.value = false;
-        form.errors = error.response.data.errors;
-        //pass_out_quantity_error.value = error.response.data.errors.quantity[0];
     })
 };
+
+
 
 </script>
