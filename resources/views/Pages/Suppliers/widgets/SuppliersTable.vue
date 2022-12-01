@@ -98,8 +98,17 @@ let handleEditSupplier = (id) => {
     });
 };
 
-let handleDeleteSupplier = () => {
-
+let handleDeleteSupplier = (id) => {
+    notify2.confirm(() => {
+        axios.delete(`suppliers/${id}/delete`).then((response) => {
+            if (response.data.success) {
+                notify2.alert(response.data.success);
+                key.value++;
+            } else {
+                notify2.alert(response.data.error, 'error');
+            }
+        })
+    });
 };
 
 let handlePanelClose = () => {

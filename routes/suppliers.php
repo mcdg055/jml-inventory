@@ -17,7 +17,8 @@ Route::middleware('auth')->group(function () {
         Route::match(["GET", "POST"],               '/suppliers/browse',                                    'browse')->name('suppliers.browse');
         Route::post(                                '/suppliers/add',                                       'store')->name('suppliers.store');
         Route::post(                                '/suppliers/{supplier}/show',                           'show')->name('suppliers.edit');
-        Route::post(                                '/suppliers/{supplier}/update',                         'update')->name('suppliers.edit');
+        Route::post(                                '/suppliers/{supplier}/update',                         'update')->name('suppliers.update');
+        Route::delete(                              '/suppliers/{supplier}/delete',                         'destroy')->name('suppliers.delete');
        
     });
 });

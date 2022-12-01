@@ -131,6 +131,12 @@ class SupplierController extends Controller
      */
     public function destroy(Supplier $supplier)
     {
-        //
+        try {
+            $supplier->delete();
+        } catch (\Throwable $th) {
+            return ['error' => $th->getMessage()];
+        }
+
+        return ['success' => "Supplier was successfully deleted!"];
     }
 }
