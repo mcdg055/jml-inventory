@@ -24,7 +24,7 @@ class StoreSupplierRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|regex:/^[\pL\s\-]+$/u',
+            'name' => 'required',
             'contact_person' => 'required|regex:/^[\pL\s\-]+$/u',
             'contact_number' =>  'phone:PH',
             'is_active' => '',

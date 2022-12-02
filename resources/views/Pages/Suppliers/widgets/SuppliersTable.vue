@@ -46,7 +46,7 @@
         <template #footer>
             <div class="text-center flex flex-col gap-3">
                 <ui-button variant="primary" text="submit" @click="handleSubmitAddSupplier()" />
-                <ui-button variant="cancel" text="cancel" @click="() => visible = false" />
+                <ui-button variant="cancel" text="cancel" @click="handlePanelClose" />
             </div>
         </template>
     </ui-panel>
@@ -73,15 +73,13 @@ let errors_init_val = {
     is_active: null,
 };
 
-let form_init_val = {
+let form = reactive({
     name: null,
     contact_number: null,
     contact_person: null,
     is_active: true,
     errors: errors_init_val
-};
-
-let form = reactive(form_init_val);
+});
 
 let handleAddSupplier = () => {
     visible.value = true;
@@ -112,6 +110,14 @@ let handleDeleteSupplier = (id) => {
 };
 
 let handlePanelClose = () => {
+    notify2.alert("closed");
+    form = reactive({
+        name: null,
+        contact_number: null,
+        contact_person: null,
+        is_active: true,
+        errors: errors_init_val
+    });
     visible.value = false;
 }
 
@@ -125,7 +131,6 @@ let handleSubmitAddSupplier = () => {
             visible.value = false;
             notify2.alert(response.data.success);
             key.value++;
-            form.value = { form_init_val };
         }
         else {
             this.notify2.alert(response.data.error, 'error');
