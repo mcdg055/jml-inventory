@@ -5,7 +5,6 @@
         </template>
         <template #tableHeaders>
             <ui-th text="#" />
-            <ui-th text="ID#" />
             <ui-th text="Name" />
             <ui-th text="Contact Number" />
             <ui-th text="Contact Person" />
@@ -16,7 +15,6 @@
         <template v-slot="{ data }">
             <tr v-for="(supplier, index) in data">
                 <ui-td> {{ index }} </ui-td>
-                <ui-td> {{ supplier.number }} </ui-td>
                 <ui-td> {{ supplier.name }} </ui-td>
                 <ui-td> {{ supplier.contact_number }}</ui-td>
                 <ui-td> {{ supplier.contact_person }} </ui-td>
