@@ -110,7 +110,6 @@ let handleDeleteSupplier = (id) => {
 };
 
 let handlePanelClose = () => {
-    notify2.alert("closed");
     form = reactive({
         name: null,
         contact_number: null,
