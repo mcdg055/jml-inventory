@@ -6,7 +6,7 @@
         <div class="flex justify-between items-center p-2">
             <div class="flex gap-2">
                 <slot v-if="$slots.headerActions" name="headerActions" />
-                <ui-button v-if="reload" variant="bordered" icon="refresh" @click="loadData()" />
+                <ui-button tooltip="Reload table" v-if="reload" variant="bordered" icon="refresh" @click="loadData()" />
             </div>
             <div>
                 <!-- search -->
@@ -15,7 +15,7 @@
         </div>
 
         <div class="p-3">
-            <div class="overflow-x-auto ">
+            <div class="">
                 <table class="table-auto w-full">
                     <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
                         <tr>

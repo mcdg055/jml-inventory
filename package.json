@@ -18,12 +18,14 @@
         "@fortawesome/fontawesome-free": "^6.2.0",
         "@inertiajs/inertia": "^0.11.1",
         "@inertiajs/inertia-vue3": "^0.6.0",
+        "@popperjs/core": "^2.11.6",
         "@vitejs/plugin-vue": "^3.2.0",
         "@vue/compiler-sfc": "^3.2.45",
         "sweetalert2": "^11.6.8",
         "tw-elements": "^1.0.0-alpha12",
         "vue": "^3.2.45",
         "vue-axios": "^3.5.2",
-        "vue-sweetalert2": "^5.0.5"
+        "vue-sweetalert2": "^5.0.5",
+        "vue3-popper": "^1.5.0"
     }
 }

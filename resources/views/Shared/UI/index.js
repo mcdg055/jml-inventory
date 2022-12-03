@@ -50,6 +50,11 @@ import Alert from "./Alerts/Alert.vue";
  */
 import Pill from "./Badges/Pill.vue";
 
+/**
+ * Tooltips
+ */
+import Tooltip from "./Tooltips/Tooltip.vue";
+
 export {
     Icon,
     Brand as UiBrand,   
@@ -105,4 +110,9 @@ export {
      * Pills
      */
     Pill as UiPill,
+
+    /**
+     * Tooltips
+     */
+    Tooltip as UiToolTip,
 }
