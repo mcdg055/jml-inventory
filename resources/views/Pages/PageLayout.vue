@@ -3,7 +3,7 @@
 
         <Head :title="title"></Head>
         <!-- heading -->
-        <section class="flex justify-between items-center border-b">
+        <section class="flex justify-between items-center border-b px-6">
             <h1 class="text-3xl font-bold py-6 text-left" v-text="pageHeading"></h1>
             <div class="px-4 py-2">
                 Hi, <span class="font-semibold">{{ username }}</span>!
@@ -11,7 +11,10 @@
         </section>
         <!-- body -->
         <section class="overflow-auto" :class="{ 'mb-3': !$slots.footer }">
-            <slot />
+            <div class="m-6">
+                <slot />
+
+            </div>
         </section>
 
         <!-- footer -->

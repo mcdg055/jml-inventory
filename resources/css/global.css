@@ -23,6 +23,6 @@
 
     /* sizing */
     section{
-        @apply max-w-[95%] w-full mx-auto
+        @apply w-full mx-auto
     }
 }
