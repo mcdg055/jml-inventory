@@ -8,8 +8,8 @@
                     <div class="flex gap-2">
                         <!-- actions -->
                         <!--  <panel-button icon="plus" :panel-id="ADD_BRAND_FORM_PANEL_ID" /> -->
-                        <ui-link icon="plus" uri="/brands/create" />
-                        <ui-button icon="refresh" @click="reload" />
+                        <ui-button variant="link" icon="plus" uri="/brands/create" />
+                        <ui-button variant="bordered" icon="refresh" @click="reload" />
                     </div>
                     <div>
                         <!-- search -->
@@ -30,8 +30,8 @@
                     </ui-td>
                     <ui-td action>
                         <div class="flex gap-2 justify-end">
-                            <ui-link icon="edit" :uri="`/brands/${brand.id}/edit`" />
-                            <ui-button icon="trash" @click="handleDelete(brand)" />
+                            <ui-button variant="link" icon="edit" :uri="`/brands/${brand.id}/edit`" />
+                            <ui-button variant="bordered" icon="trash" @click="handleDelete(brand)" />
                         </div>
                     </ui-td>
                 </tr>

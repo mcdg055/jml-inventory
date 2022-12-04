@@ -5,8 +5,8 @@
             <template #headerActions>
                 <div class="flex justify-between items-center p-2">
                     <div class="flex gap-2">
-                        <ui-link icon="plus" uri="/inventory-items/create" />
-                        <ui-button icon="refresh" variant="link" @click="reload" />
+                        <ui-button icon="plus" variant="link" uri="/inventory-items/create" />
+                        <ui-button icon="refresh" variant="bordered" @click="reload" />
                     </div>
                     <div>
                         <!-- search -->

@@ -8,7 +8,7 @@
     @inertiaHead
 </head>
 
-<body class='h-full'>
+<body class='h-full overflow-hidden'>
     <div id='app' class="h-full" data-page="{{ json_encode($page) }}"></div>
 </body>
 
