@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Http\Traits\WithSelect;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -9,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class InventoryItem extends Model
 {
     use HasFactory;
+    use WithSelect;
 
     protected $table = 'inventory_items';
 
@@ -27,7 +29,7 @@ class InventoryItem extends Model
 
     protected $appends = [
         'number',
-        'name_with_brand'
+        'name_with_brand',
     ];
 
     public function brand(): BelongsTo
@@ -44,4 +46,5 @@ class InventoryItem extends Model
     {
         return $this->brand->name . " " . $this->name;
     }
+
 }

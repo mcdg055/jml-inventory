@@ -2,11 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\SupplierResource;
+use App\Models\Supplier;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class SupplyController extends Controller
 {
+
+    protected SupplierController $supplierController;
+
+    public function __construct(SupplierController $supplierController)
+    {
+        $this->supplierController = $supplierController;
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +23,8 @@ class SupplyController extends Controller
      */
     public function index(Request $request)
     {
-       return Inertia::render("Supplies/SuppliesScreen");
+
+        return Inertia::render("Supplies/SuppliesScreen", ['suppliers' =>$this->supplierController->getSuppliers()]);
     }
 
     /**

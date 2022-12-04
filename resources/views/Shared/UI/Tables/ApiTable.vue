@@ -45,7 +45,7 @@
 
 <script setup>
 import UiPagination from "../Pagination.vue";
-import { ref, watch, inject, onMounted } from "vue";
+import { ref, watch, inject, onMounted, reactive } from "vue";
 import debounce from "lodash/debounce";
 import { SearchInput, UiButton, UiInput, UiPanel, UiApiTable } from "../../../Shared/UI";
 
@@ -57,6 +57,10 @@ let props = defineProps({
     uri: {
         type: String,
         required: true,
+    },
+    uriParams: {
+        type: Object,
+        required: false,
     },
     searchInput: {
         type: Boolean,
@@ -77,9 +81,10 @@ let loading = ref(false);
 let search = ref("");
 
 let loadData = debounce(function (value = "") {
+    let params = Object.assign({ search: value }, props.uriParams);
     data.value = null;
     loading.value = true;
-    axios.post(props.uri, { search: value }).then((response) => {
+    axios.post(props.uri, params).then((response) => {
         data.value = response.data;
     }).finally(() => {
         loading.value = false;

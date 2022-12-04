@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\InventoryItem\AddStockRequest;
 use App\Http\Requests\InventoryItem\StoreInventoryItemRequest;
+use App\Http\Resources\InventoryItemResource;
 use App\Models\Brand;
 use App\Models\InventoryItem;
 use Illuminate\Http\Request;
@@ -103,6 +104,11 @@ class InventoryItemsController extends Controller
         }
 
         return redirect()->back()->with('error', 'Item cannot be found!');
+    }
+
+    public function read(Request $request, InventoryItem $inventory_item)
+    {
+        return new InventoryItemResource($inventory_item);
     }
 
     /**
@@ -221,5 +227,30 @@ class InventoryItemsController extends Controller
         }
 
         return $inventory_item;
+    }
+
+    public function getInventoryItems(Request $request)
+    {
+        $inputs = $request->all();
+        $search_input = "";
+        $selected = [];
+
+        if (isset($inputs['search'])) {
+            $search_input = $inputs['search'];
+        }
+        if (isset($inputs['selected'])) {
+            $selected = $inputs['selected'];
+        }
+        
+
+        $query = $this->model->query()
+            ->when($search_input, function ($query, $search) {
+                $query->where('name', 'like', "%{$search}%");
+            })
+            ->whereNotIn('id', $selected)
+            ->limit(10)
+            ->get();
+
+        return InventoryItemResource::collection($query);
     }
 }

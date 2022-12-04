@@ -13,9 +13,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('supply_items', function (Blueprint $table) {
+        Schema::create('supplies_supply_items', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->unsignedBigInteger('supply_id');
+            $table->unsignedBigInteger('item_id');
+            $table->decimal('subtotal');
+
+            $table->softDeletes();
+
+            $table->foreign('supply_id')->references('id')->on('supplies')->onDelete('cascade');
+            $table->foreign('item_id')->references('id')->on('inventory_items')->onDelete('cascade');
         });
     }
 

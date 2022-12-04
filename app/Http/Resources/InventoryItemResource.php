@@ -23,6 +23,7 @@ class InventoryItemResource extends JsonResource
             'unit_price' => $this->unit_price,
             'stock' => $this->stock,
             'critical_level' => $this->critical_level,
+            'selected' => $this->selected,
         ];
     }
 }

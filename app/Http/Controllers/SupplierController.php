@@ -49,6 +49,11 @@ class SupplierController extends Controller
         return SupplierResource::collection($suppliers);
     }
 
+    public function getSuppliers()
+    {
+       return SupplierResource::collection($this->supplier->query()->get());
+    }
+
     /**
      * Show the form for creating a new resource.
      *

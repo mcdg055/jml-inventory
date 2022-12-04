@@ -78,16 +78,10 @@ class PassOutsController extends Controller
     {
 
         $search_input = "";
-        $selected = [];
+        $selected = $this->getInventoryItemsIds($inputs);
 
         if (isset($inputs['search'])) {
             $search_input = $inputs['search'];
-        }
-
-        if (isset($inputs["selected"]) && count($inputs['selected']) > 0) {
-            foreach ($inputs["selected"] as $key => $value) {
-                $selected[] = $inputs['selected'][$key]['id'];
-            }
         }
 
         $inventory_items = InventoryItem::query()
@@ -106,6 +100,17 @@ class PassOutsController extends Controller
             ->get();
 
         return $inventory_items;
+    }
+
+    public function getInventoryItemsIds($data)
+    {
+        $selected = [];
+        if (isset($data["selected"]) && count($data['selected']) > 0) {
+            foreach ($data["selected"] as $key => $value) {
+                $selected[] = $data['selected'][$key]['id'];
+            }
+        }
+        return $selected;
     }
 
     public function getInventoryItems(Request $request)
