@@ -6,7 +6,7 @@
         <slot v-if="$slots.headerActions" name="headerActions" />
 
         <div class="p-3">
-            <div class="overflow-x-auto ">
+            <div class="">
                 <table class="table-auto w-full">
                     <thead class="text-xs font-semibold uppercase text-gray-400 bg-gray-50">
                         <tr>

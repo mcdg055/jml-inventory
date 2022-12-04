@@ -91,11 +91,11 @@
             <div class="flex gap-5 justify-end w-full bg-gray-300 p-2">
                 <div class="flex gap-6 items-center">
                     <div class="text-lg font-semibold text-red-600">
-                        {{ computedTotal() }}
+                        {{ computedTotal }}
                     </div>
                     <div class="flex gap-3">
-                        <ui-button class="btn-primary" variant="primary" text="Submit P.O." @click="handleSubmit" />
-                        <ui-button class="btn-cancel" variant="cancel" text="Cancel" @click="handleCancelAction" />
+                        <ui-button variant="primary" text="Submit P.O." @click="handleSubmit" />
+                        <ui-button variant="cancel" text="Cancel" @click="handleCancelAction" />
                     </div>
                 </div>
             </div>
@@ -143,7 +143,24 @@ export default {
         }
     },
     computed: {
+        computedTotal() {
 
+            let total = 0;
+
+            let count = this.form.selected_items.length;
+
+            if (count > 0) {
+                this.form.selected_items.forEach(element => {
+
+                    let quantity = element.quantity ? element.quantity : 0.0;
+                    let unit_price = element.unit_price ? element.unit_price : 0.0;
+
+                    total += parseFloat(quantity) * parseFloat(unit_price);
+                });
+            }
+
+            return `Total: ₱ ${total.toFixed(2)}`;
+        },
     },
     methods: {
         handleSearch: debounce(function (value) {
@@ -192,24 +209,7 @@ export default {
             this.form.total += parseFloat(subtotal);
             return "₱ " + subtotal;
         },
-        computedTotal() {
 
-            let total = 0;
-
-            let count = this.form.selected_items.length;
-
-            if (count > 0) {
-                this.form.selected_items.forEach(element => {
-
-                    let quantity = element.quantity ? element.quantity : 0.0;
-                    let unit_price = element.unit_price ? element.unit_price : 0.0;
-
-                    total += parseFloat(quantity) * parseFloat(unit_price);
-                });
-            }
-
-            return `Total: ₱ ${total.toFixed(2)}`;
-        },
         handleCancelAction() {
             this.notify2.redirect(this.form.selected_items, "/pass-outs");
         }

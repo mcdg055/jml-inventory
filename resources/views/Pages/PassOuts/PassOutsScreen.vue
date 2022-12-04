@@ -28,10 +28,10 @@
                     <ui-td>{{ pass_out.number }}</ui-td>
                     <ui-td>{{ pass_out.name }}</ui-td>
                     <ui-td>{{ pass_out.created_at }}</ui-td>
-                    <ui-td>  ₱ {{ (pass_out.total).toFixed(2) }}</ui-td>
+                    <ui-td> ₱ {{ (pass_out.total).toFixed(2) }}</ui-td>
                     <ui-td action>
                         <div class="flex gap-2 justify-end">
-                            <ui-link icon="eye" :uri="`/pass-outs/${pass_out.id}`" />
+                            <ui-button variant="link" icon="eye" :uri="`/pass-outs/${pass_out.id}`" />
                             <ui-button variant="bordered" icon="trash" @click="handleDelete(pass_out)" />
                         </div>
                     </ui-td>

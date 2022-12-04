@@ -1,6 +1,6 @@
 <template>
-    <Popper :content="content" class="tooltip--dark" hover openDelay="300" closeDelay="100"
-      >
+    <Popper :content="content" class="tooltip--dark" hover openDelay="300" closeDelay="100">
+
         <slot />
     </Popper>
 </template>
