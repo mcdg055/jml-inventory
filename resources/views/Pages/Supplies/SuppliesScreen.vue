@@ -14,7 +14,8 @@
 
             <select-inventory-items-table @select-item="HandledSelectItem" :uri-params="uriParams" :key="key" />
 
-            <selected-inventory-items-table :inventory_items="selectedInventoryItems" />
+            <selected-inventory-items-table :inventory_items="selectedInventoryItems" @computed-total="updateTotal"
+                @delete-item="handleDeleteItem" />
 
         </div>
 
@@ -22,7 +23,7 @@
             <div class="flex gap-5 justify-end w-full bg-gray-300 p-2">
                 <div class="flex gap-6 items-center">
                     <div class="text-lg font-semibold text-red-600">
-                        {{ computedTotal }}
+                        {{ total }}
                     </div>
                     <div class="flex gap-3">
                         <ui-button variant="primary" text="Submit P.O." @click="handleSubmit" />
@@ -61,6 +62,8 @@ let uriParams = reactive({
     selected: inventory_items_id,
 })
 
+let total = ref("TOTAL: ₱ 0.00")
+
 let HandledSelectItem = (id) => {
     inventory_items_id.value.push(id);
     axios.get(`/inventory-items/${id}/read`).then((response) => {
@@ -71,11 +74,22 @@ let HandledSelectItem = (id) => {
 
 }
 
+function handleDeleteItem(index) {
+    selectedInventoryItems.value.splice(index, 1);
+    inventory_items_id.value.splice(index, 1);
+    console.log(selectedInventoryItems.value);
+    key.value++;
+}
+
 let handleEditSupplier = () => {
 
 }
 let handleDeleteSupplier = () => {
 
+}
+
+function updateTotal(value) {
+    total.value = value;
 }
 
 let handleSubmit = () => {
@@ -85,24 +99,5 @@ let handleSubmit = () => {
 let handleCancelAction = () => {
 
 }
-
-let computedTotal = computed(() => {
-
-    let total = 0;
-
-    /* let count = this.form.selected_items.length;
-    
-    if (count > 0) {
-        this.form.selected_items.forEach(element => {
-    
-            let quantity = element.quantity ? element.quantity : 0.0;
-            let unit_price = element.unit_price ? element.unit_price : 0.0;
-    
-            total += parseFloat(quantity) * parseFloat(unit_price);
-        });
-    }
-     */
-    return `Total: ₱ ${total.toFixed(2)}`;
-});
 
 </script>
