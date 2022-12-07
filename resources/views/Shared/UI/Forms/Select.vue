@@ -41,7 +41,7 @@ defineProps({
             return "Select an option";
         }
     },
-    error: String
+    error: [String, Array]
 });
 
 defineEmits(["update:modelValue"]);

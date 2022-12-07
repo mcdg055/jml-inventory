@@ -58,7 +58,7 @@ class StorePassOutRequest extends FormRequest
                 $messages['selected_items.' . $key . '.quantity.lte']  = "Must not exceed {$inventory_item->stock} items.";
             }
         } else {
-            $rules['selected_items.required'] = 'Please select pass out item/s.';
+            $messages['selected_items.required'] = 'Please select pass out item/s.';
         }
 
         return $messages;

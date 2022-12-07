@@ -8,13 +8,15 @@
                     <h4 class="font-medium">Select a Supplier</h4>
                 </template>
                 <div class="flex flex-col gap-3 p-3  max-w-[400px]">
-                    <ui-select :options="suppliers" text="Select a supplier" />
+                    <ui-select v-model="form.supplier" :options="suppliers" :error="form.errors.supplier"
+                        text="Select a supplier" />
+                    <ui-textarea v-model="form.notes" placeholder="Notes" :error="form.errors.notes"></ui-textarea>
                 </div>
             </card-table>
 
             <select-inventory-items-table @select-item="HandledSelectItem" :uri-params="uriParams" :key="key" />
 
-            <selected-inventory-items-table :inventory_items="selectedInventoryItems" @computed-total="updateTotal"
+            <selected-inventory-items-table :inventory_items="form.items" :errors="form.errors" @computed-total="updateTotal"
                 @delete-item="handleDeleteItem" />
 
         </div>
@@ -26,7 +28,7 @@
                         {{ total }}
                     </div>
                     <div class="flex gap-3">
-                        <ui-button variant="primary" text="Submit P.O." @click="handleSubmit" />
+                        <ui-button variant="primary" text="Receive Supply" @click="handleSubmit" />
                         <ui-button variant="cancel" text="Cancel" @click="handleCancelAction" />
                     </div>
                 </div>
@@ -43,12 +45,24 @@ import { inject, reactive, computed, ref } from "vue";
 import {
     CardTable,
     UiSelect,
+    UiTextarea
 } from "../../Shared/UI";
 
 const notify = inject('notify2');
 const axios = inject('axios');
 
 let key = ref(0);
+
+let form = reactive({
+    supplier: null,
+    notes: null,
+    items: [],
+    errors: {
+        supplier: null,
+        notes: null,
+        items: [],
+    }
+})
 
 let inventory_items_id = ref([]);
 
@@ -68,36 +82,38 @@ let HandledSelectItem = (id) => {
     inventory_items_id.value.push(id);
     axios.get(`/inventory-items/${id}/read`).then((response) => {
         let item = Object.assign({ quantity: 0 }, response.data);
-        selectedInventoryItems.value.push(item);
+        form.items.push(item);
         key.value++;
     });
-
 }
 
 function handleDeleteItem(index) {
-    selectedInventoryItems.value.splice(index, 1);
+    form.items.splice(index, 1);
     inventory_items_id.value.splice(index, 1);
-    console.log(selectedInventoryItems.value);
     key.value++;
-}
-
-let handleEditSupplier = () => {
-
-}
-let handleDeleteSupplier = () => {
-
 }
 
 function updateTotal(value) {
     total.value = value;
 }
 
-let handleSubmit = () => {
+function handleSubmit() {
+    axios.post('/supplies/add', form, {
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    }).then((response) => {
+        console.log(response);
+    }, error => {
+        form.errors = error.response.data.errors;
+        notify.alert(error.response.data.message, 'error');
+    }).finally(() => {
 
+    });
 }
 
-let handleCancelAction = () => {
-
+function handleCancelAction() {
+    
 }
 
 </script>

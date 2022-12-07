@@ -241,7 +241,6 @@ class InventoryItemsController extends Controller
         if (isset($inputs['selected'])) {
             $selected = $inputs['selected'];
         }
-        
 
         $query = $this->model->query()
             ->when($search_input, function ($query, $search) {

@@ -17,7 +17,7 @@
                 <ui-td>{{ inventory_item.number }}</ui-td>
                 <ui-td>{{ inventory_item.name }}</ui-td>
                 <ui-td> ₱ {{ inventory_item.unit_price }}</ui-td>
-                <ui-td><input-quantity v-model="inventory_item.quantity" /></ui-td>
+                <ui-td><input-quantity v-model="inventory_item.quantity" :errors="parseError(index)" /></ui-td>
                 <ui-td> ₱ {{ calculateSubtotal(inventory_item.quantity, inventory_item.unit_price) }}</ui-td>
                 <ui-td action>
                     <div class="flex gap-2 justify-end">
@@ -34,6 +34,7 @@
 import InputQuantity from "./InputQuantity.vue";
 let props = defineProps({
     inventory_items: [Array, Object],
+    errors: [Array, Object],
 });
 
 const emits = defineEmits(['computedTotal', 'deleteItem']);
@@ -45,6 +46,12 @@ function calculateSubtotal(quantity, unit_price) {
     calculateTotal();
 
     return total.toFixed(2);
+}
+
+function parseError(index) {
+    var key = `items.${index}.quantity`;
+
+    return props.errors[`items.${index}.quantity`] === undefined ? "" : props.errors[key][0];
 }
 
 function calculateTotal() {
