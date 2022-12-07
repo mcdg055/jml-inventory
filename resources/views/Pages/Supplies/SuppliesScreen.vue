@@ -8,7 +8,7 @@
                     <h4 class="font-medium">Select a Supplier</h4>
                 </template>
                 <div class="flex flex-col gap-3 p-3  max-w-[400px]">
-                    <ui-select v-model="form.supplier" :options="suppliers" :error="form.errors.supplier"
+                    <ui-select v-model="form.supplier_id" :options="suppliers" :error="form.errors.supplier"
                         text="Select a supplier" />
                     <ui-textarea v-model="form.notes" placeholder="Notes" :error="form.errors.notes"></ui-textarea>
                 </div>
@@ -54,7 +54,7 @@ const axios = inject('axios');
 let key = ref(0);
 
 let form = reactive({
-    supplier: null,
+    supplier_id: null,
     notes: null,
     items: [],
     errors: {

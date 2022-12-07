@@ -15,9 +15,8 @@ return new class extends Migration
     {
         Schema::create('supplies', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('supplier_id');
-            $table->unsignedBigInteger('total');
             $table->timestamps();
+            $table->unsignedBigInteger('supplier_id');
         });
     }
 

@@ -28,7 +28,7 @@ class StoreSupplyRequest extends FormRequest
 
         $rules = [];
 
-        $rules['supplier'] =  'required';
+        $rules['supplier_id'] =  'required';
         $rules['notes'] =  '';
 
         if ($selected_items = $inputs["items"]) {
@@ -45,7 +45,7 @@ class StoreSupplyRequest extends FormRequest
     public function messages()
     {
         $messages = [];
-        $messages['supplier'] = 'Please select a supplier';
+        $messages['supplier_id'] = 'Please select a supplier';
         $inputs = $this->request->all();
         if ($selected_items = $inputs["items"]) {
             foreach ($selected_items as $key => $value) {

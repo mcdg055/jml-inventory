@@ -11,6 +11,9 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 class InventoryItemFactory extends Factory
 {
 
+    /**
+     * @var InventoryItem $model
+     */
     protected $model = InventoryItem::class;
 
     /**
