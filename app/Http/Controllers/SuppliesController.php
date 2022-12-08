@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Supplies\StoreSupplyRequest;
-use App\Http\Resources\SupplierResource;
 use App\Http\Resources\SupplyResource;
 use App\Models\Supplier;
 use App\Models\Supply;
+use App\Services\SupplyService;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
@@ -14,16 +14,18 @@ use Inertia\Inertia;
 
 use function PHPUnit\Framework\throwException;
 
-class SupplyController extends Controller
+class SuppliesController extends Controller
 {
 
     protected SupplierController $supplierController;
     protected Supply $model;
+    protected SupplyService $service;
 
-    public function __construct(SupplierController $supplierController, Supply $supply)
+    public function __construct(SupplyService $service, SupplierController $supplierController, Supply $supply)
     {
         $this->supplierController = $supplierController;
         $this->model = $supply;
+        $this->service = $service;
     }
     /**
      * Display a listing of the resource.
@@ -32,8 +34,9 @@ class SupplyController extends Controller
      */
     public function index(Request $request)
     {
-
-        return Inertia::render("Supplies/SuppliesScreen", ['suppliers' => $this->supplierController->getSuppliers()]);
+        
+        
+        return Inertia::render("Supplies/SuppliesScreen");
     }
 
     /**
@@ -41,9 +44,11 @@ class SupplyController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $data['suppliers'] = $this->supplierController->getSuppliers();
+
+        return Inertia::render("Supplies/AddSupplyScreen", $data);
     }
 
     /**
@@ -56,31 +61,11 @@ class SupplyController extends Controller
     {
         $inputs = $request->validated();
 
-        $supply = $this->model->fill($inputs);
-
-        $supply = $this->fillRelations($inputs, $supply);
-
-        try {
-            $supply->save();
-        } catch (\Throwable $th) {
-            return ['error' => $th->getMessage()];
-        }
-        return new SupplyResource($supply);
+        return new SupplyResource($this->service->add($inputs));
     }
 
-    function fillRelations($data, Supply $supply)
+    function syncRelations($data, Supply $supply)
     {
-        if ($supplier_id = Arr::get($data, 'supplier_id')) {
-            $supplier = Supplier::findOrFail($supplier_id);
-
-            $supply->supplier()->associate($supplier);
-        }
-
-        if ($user = auth()->user()) {
-            $supply->receiver()->associate($user);
-        }
-
-        return $supply;
     }
 
     /**

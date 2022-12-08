@@ -16,11 +16,12 @@ return new class extends Migration
         Schema::create('supplies_supply_items', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
+            $table->softDeletes();
+
             $table->unsignedBigInteger('supply_id');
             $table->unsignedBigInteger('item_id');
-            $table->decimal('subtotal');
-
-            $table->softDeletes();
+            $table->unsignedBigInteger('quantity');
+            $table->decimal('unit_price');
 
             $table->foreign('supply_id')->references('id')->on('supplies')->onDelete('cascade');
             $table->foreign('item_id')->references('id')->on('inventory_items')->onDelete('cascade');
