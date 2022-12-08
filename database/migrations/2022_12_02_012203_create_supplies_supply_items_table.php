@@ -14,17 +14,10 @@ return new class extends Migration
     public function up()
     {
         Schema::create('supplies_supply_items', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-            $table->softDeletes();
-
-            $table->unsignedBigInteger('supply_id');
-            $table->unsignedBigInteger('item_id');
+            $table->foreignId('inventory_item_id')->constrained('inventory_items');
+            $table->foreignId('supply_id')->constrained('supplies');
             $table->unsignedBigInteger('quantity');
             $table->decimal('unit_price');
-
-            $table->foreign('supply_id')->references('id')->on('supplies')->onDelete('cascade');
-            $table->foreign('item_id')->references('id')->on('inventory_items')->onDelete('cascade');
         });
     }
 

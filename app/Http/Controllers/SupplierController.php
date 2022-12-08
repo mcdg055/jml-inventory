@@ -55,16 +55,6 @@ class SupplierController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -94,17 +84,6 @@ class SupplierController extends Controller
     public function show(Supplier $supplier)
     {
         return new SupplierResource($supplier);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Supplier  $supplier
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Supplier $supplier)
-    {
-        //
     }
 
     /**

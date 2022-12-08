@@ -11,9 +11,4 @@ class SupplyItem extends Model
     use HasFactory;
 
     protected $table = "supplies_supply_items";
-
-    public function supply(): BelongsToMany
-    {
-        return $this->belongsToMany(Supply::class, 'supplies');
-    }
 }

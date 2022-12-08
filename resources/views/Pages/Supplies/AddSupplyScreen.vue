@@ -42,7 +42,7 @@ import PageLayout from "../PageLayout.vue";
 import SelectInventoryItemsTable from "./widgets/SelectInventoryItemsTable.vue";
 import SelectedInventoryItemsTable from "./components/SelectedInventoryItemsTable.vue";
 
-import { inject, reactive, computed, ref } from "vue";
+import { inject, reactive, ref } from "vue";
 import { Inertia } from "@inertiajs/inertia";
 
 import {
@@ -116,7 +116,7 @@ function handleSubmit() {
 }
 
 function handleCancelAction() {
-
+    Inertia.visit("/supplies")
 }
 
 </script>

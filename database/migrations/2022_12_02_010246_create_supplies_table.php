@@ -17,6 +17,11 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->unsignedBigInteger('supplier_id');
+            $table->string('notes')->nullable();
+            $table->unsignedBigInteger('received_by');
+            
+            $table->foreign('supplier_id')->references('id')->on('suppliers')->onDelete('NO ACTION');
+            $table->foreign('received_by')->references('id')->on('users')->onDelete('NO ACTION');
         });
     }
 

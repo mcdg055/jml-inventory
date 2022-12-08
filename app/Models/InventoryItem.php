@@ -6,6 +6,7 @@ use App\Http\Traits\WithSelect;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class InventoryItem extends Model
 {
@@ -37,6 +38,11 @@ class InventoryItem extends Model
         return $this->belongsTo(Brand::class);
     }
 
+    public function supply(): BelongsToMany
+    {
+        return $this->belongsToMany(Supply::class, 'supplies_supply_items');
+    }
+
     public function getNumberAttribute()
     {
         return str_pad($this->id, 6, '0', STR_PAD_LEFT);
@@ -46,5 +52,4 @@ class InventoryItem extends Model
     {
         return $this->brand->name . " " . $this->name;
     }
-
 }

@@ -8,15 +8,20 @@ use Illuminate\Http\Request;
 
 class SupplyService
 {
-    protected $repository;
+    protected SupplyRepository $repository;
 
     public function __construct(SupplyRepository $repository)
     {
         $this->repository = $repository;
     }
 
-    public function browse(Request $request)
+    public function browse($data)
     {
+        $supplies = $this->repository->browse($data);
+
+        $supplies->load(['supplier', 'receiver', 'items']);
+
+        return $supplies;
     }
 
     public function read(Request $request, Supply $supply)

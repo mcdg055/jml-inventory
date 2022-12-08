@@ -21,6 +21,18 @@ class SupplyRepository
 
     public function browse($inputs)
     {
+        $search_input = "";
+
+        if (isset($inputs['search'])) {
+            $search_input = $inputs['search'];
+        }
+
+        $supplies = $this->model->query()
+            ->when($search_input, function ($query, $search) {
+                //$query->where('name', 'like', "%{$search}%");
+            })
+            ->get();
+        return $supplies;
     }
 
     public function read(Request $request, Brand $brand)
@@ -74,7 +86,7 @@ class SupplyRepository
             foreach ($items as $key => $value) {
                 $item = InventoryItem::findOrFail($value['id']);
                 $items[$key]['unit_price'] = $item->unit_price;
-                $items[$key]['item_id'] = $item->id;
+                $items[$key]['inventory_item_id'] = $item->id;
                 unset($items[$key]['id']);
             }
 

@@ -40,6 +40,7 @@ class PassOut extends Model
         'updated_at' => 'datetime:Y-m-d',
         'total'=>'float',
     ];
+    
     protected $appends = [
         'number',
         'total_items',

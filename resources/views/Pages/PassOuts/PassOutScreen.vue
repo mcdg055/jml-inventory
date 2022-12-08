@@ -1,5 +1,5 @@
 <template>
-    <page-layout pageHeading="Pass Out Details" title="Inventory Items">
+    <page-layout pageHeading="Pass Out Details" title="Pass Outs">
         <pass-out-details :item="pass_out" />
         <browse-selected-items :passOutId="pass_out.id" />
     </page-layout>
