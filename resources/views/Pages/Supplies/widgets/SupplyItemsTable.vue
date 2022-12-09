@@ -7,7 +7,7 @@
             <ui-th text="Item" />
             <ui-th text="Unit Cost" />
             <ui-th text="Quantity" />
-            <ui-th text="Total Cost" />
+            <ui-th text="Subtotal" />
             <ui-th text="Actions" action />
         </template>
         <!-- content -->

@@ -3,8 +3,8 @@
         <template #cardHead>
             <div class="flex w-full items-center">
                 <div>
-                    <h4 class="font-medium text-xl"> [Supplier Name]</h4>
-                    <div class="font-regular">[Supply #00001]</div>
+                    <h4 class="font-medium text-xl"> {{ supply.supplier.name }}</h4>
+                    <div class="font-regular">#{{ supply.number }}</div>
                 </div>
                 <div class="ml-auto">
                     <ui-button variant="bordered" icon="edit" @click="() => { }" />
