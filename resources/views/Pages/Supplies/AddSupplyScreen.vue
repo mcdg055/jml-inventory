@@ -73,8 +73,6 @@ let props = defineProps({
     suppliers: Object
 });
 
-let selectedInventoryItems = ref([]);
-
 let uriParams = reactive({
     selected: inventory_items_id,
 })

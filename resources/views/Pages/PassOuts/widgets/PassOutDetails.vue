@@ -101,9 +101,9 @@
 </template>
 
 <script setup>
-import { ref, watch, inject, computed, reactive } from "vue";
+import { ref, inject, computed, reactive } from "vue";
 import { CardTable } from "../../../Shared/Ui";
-import { SearchInput, UiButton, UiInput, UiPanel, UiTextarea } from "../../../Shared/UI";
+import { UiButton, UiInput, UiPanel, UiTextarea } from "../../../Shared/UI";
 
 const notify2 = inject('notify2');
 const axios = inject('axios');

@@ -35,8 +35,9 @@ class SupplyRepository
         return $supplies;
     }
 
-    public function read(Request $request, Brand $brand)
+    public function read(array $data, Supply $supply)
     {
+        
     }
     public function insert($data)
     {
@@ -84,10 +85,16 @@ class SupplyRepository
     {
         if ($items = Arr::get($data, 'items')) {
             foreach ($items as $key => $value) {
+
                 $item = InventoryItem::findOrFail($value['id']);
+
                 $items[$key]['unit_price'] = $item->unit_price;
                 $items[$key]['inventory_item_id'] = $item->id;
+
                 unset($items[$key]['id']);
+
+                $item->stock += $value['quantity'];
+                $item->save();  
             }
 
             $supply->items()->sync($items);

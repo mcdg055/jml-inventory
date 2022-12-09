@@ -22,7 +22,7 @@
 
                     <ui-td action>
                         <div class="flex gap-2 justify-end">
-                            <ui-button tooltip="View Details" variant="bordered" icon="eye" />
+                            <ui-button tooltip="View Details" variant="link" :uri="`/supplies/${supply.id}`" icon="eye" />
                             <ui-button tooltip="Delete Record" variant="bordered" icon="trash"
                                 @click="handleDelete(supplier.id)" />
                         </div>

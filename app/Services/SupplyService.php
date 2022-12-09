@@ -24,8 +24,10 @@ class SupplyService
         return $supplies;
     }
 
-    public function read(Request $request, Supply $supply)
+    public function read($data, Supply $supply)
     {
+        $supply->load(['supplier','items']);
+        return $supply;
     }
 
     public function edit(Request $request, Supply $supply)

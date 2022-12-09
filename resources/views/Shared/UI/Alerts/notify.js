@@ -131,7 +131,6 @@ export const notify2 = {
         switch (type) {
             case "error":
                 background = BG_ERROR;
-                duration = 60000;
                 break;
             default:
                 background = BG_SUCCESS;
