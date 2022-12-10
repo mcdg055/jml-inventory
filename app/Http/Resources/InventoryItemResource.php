@@ -19,7 +19,7 @@ class InventoryItemResource extends JsonResource
             'number' => $this->number,
             'name' => $this->name,
             'name_with_brand' => $this->name_with_brand,
-            'brand' => new BrandResource($this->whenLoaded('brand')),
+            'brand' => BrandResource::make($this->whenLoaded('brand')),
             'unit_price' => $this->unit_price,
             'stock' => $this->stock,
             'critical_level' => $this->critical_level,

@@ -97,7 +97,7 @@
 </template>
 
 <script setup>
-import {UiInput, UiPanel} from "shared-ui";
+import { UiInput, UiPanel } from "shared-ui";
 import { CardTable } from '../../../Shared/UI';
 import { computed, ref } from 'vue';
 
@@ -110,16 +110,16 @@ let props = defineProps({
 
 let calculatedTotal = computed(() => {
     let total = 0;
-    props.supply.items.forEach(element => {
-        total += element.pivot.quantity * element.pivot.unit_price;
+    props.supply.supply_items.forEach(element => {
+        total += element.quantity * element.unit_price;
     });
     return `₱ ${(total).toFixed(2)}`;
 })
 
 let computedTotalItems = computed(() => {
     let total = 0;
-    props.supply.items.forEach(element => {
-        total += element.pivot.quantity;
+    props.supply.supply_items.forEach(element => {
+        total += element.quantity;
     });
     return total;
 })

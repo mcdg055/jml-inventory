@@ -6,6 +6,7 @@ use App\Models\Brand;
 use App\Models\InventoryItem;
 use App\Models\Supplier;
 use App\Models\Supply;
+use App\Models\SupplyItem;
 use Exception;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Request;
@@ -64,6 +65,20 @@ class SupplyRepository
 
     public function delete(Request $request, Brand $brand)
     {
+    }
+
+    function updateSupplyItemQuantity($data, SupplyItem $supply_item){
+        if($quantity = Arr::get($data, 'quantity')){
+            $supply_item->quantity = $quantity;
+        }
+
+        try {
+           $supply_item->save();
+        } catch (\Throwable $th) {
+            throw new Exception($th->getMessage(), 1);
+        }
+
+        return $supply_item;
     }
 
     function fillRelations($data, Supply $supply)

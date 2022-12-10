@@ -1,6 +1,6 @@
 {
   "name": "shared-ui",
-  "description": "UI compoments package",
+  "description": "UI components package",
   "private": true,
   "version": "1.0.0",
   "main": "index.js",

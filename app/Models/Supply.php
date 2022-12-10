@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Supply extends Model
 {
@@ -35,7 +36,12 @@ class Supply extends Model
 
     public function items(): BelongsToMany
     {
-        return $this->belongsToMany(InventoryItem::class, 'supplies_supply_items')->withPivot('unit_price', 'quantity');
+        return $this->belongsToMany(InventoryItem::class, 'supplies_supply_items')->withPivot('id', 'unit_price', 'quantity');
+    }
+
+    public function supply_items(): HasMany
+    {
+        return $this->hasMany(SupplyItem::class);
     }
 
     public function getNumberAttribute()

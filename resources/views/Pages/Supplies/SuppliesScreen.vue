@@ -17,7 +17,7 @@
                     <ui-td class="text-gray-400"> {{ index + 1 }} </ui-td>
                     <ui-td> {{ supply.number }} </ui-td>
                     <ui-td> {{ supply.supplier.name }} </ui-td>
-                    <ui-td> {{ calculateTotal(supply.items) }} </ui-td>
+                    <ui-td> {{ calculateTotal(supply.supply_items) }} </ui-td>
                     <ui-td> {{ supply.created_at }} </ui-td>
 
                     <ui-td action>
@@ -55,7 +55,7 @@ function handleDelete(index) {
 function calculateTotal(items) {
     let total = 0;
     items.forEach(element => {
-        total += element.pivot.quantity * element.pivot.unit_price;
+        total += element.quantity * element.unit_price;
     });
     return `₱ ${(total).toFixed(2)}`;
 }

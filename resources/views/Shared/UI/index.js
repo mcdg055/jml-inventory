@@ -20,7 +20,7 @@ import ApiTable from "./Tables/ApiTable.vue";
  * Panels
  */
 import Panel from "./Panels/Panel.vue";
-
+import panelScript from "./Panels/panelScript";
 /**
  * Forms
  */
@@ -79,6 +79,7 @@ export {
      * Panles
      */
     Panel as UiPanel,
+    panelScript,
 
     /**
      * Forms

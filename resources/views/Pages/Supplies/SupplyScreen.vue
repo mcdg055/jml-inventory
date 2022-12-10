@@ -2,7 +2,7 @@
     <page-layout pageHeading="Supply Details" title="Supplies">
         <div class="flex gap-5 flex-col">
             <supply-details :supply="supply" />
-            <supply-items-table :supply-items="supply.items" />
+            <supply-items-table :supply-id="supply.id" :supply-items="supply.supply_items" />
         </div>
     </page-layout>
 </template>

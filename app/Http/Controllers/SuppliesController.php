@@ -2,9 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Supplier\UpdateSupplierRequest;
 use App\Http\Requests\Supplies\StoreSupplyRequest;
+use App\Http\Requests\Supplies\UpdateSupplyItemQuantityRequest;
+use App\Http\Resources\SupplyItemResource;
 use App\Http\Resources\SupplyResource;
+use App\Http\Traits\FlashMessage;
 use App\Models\Supply;
+use App\Models\SupplyItem;
 use App\Services\SupplyService;
 use Exception;
 use Illuminate\Http\Request;
@@ -13,6 +18,8 @@ use Inertia\Inertia;
 
 class SuppliesController extends Controller
 {
+    use FlashMessage;
+
     protected SupplierController $supplierController;
     protected SupplyService $service;
 
@@ -26,11 +33,7 @@ class SuppliesController extends Controller
 
     public function index(Request $request)
     {
-        $inputs = $request->all();
-        $data = [];
-        if ($flash = Arr::get($inputs, "flash")) {
-            $data['flash'] = $flash;
-        }
+        $data = $this->getFlashMessage($request, []);
 
         return Inertia::render("Supplies/SuppliesScreen", $data);
     }
@@ -61,25 +64,38 @@ class SuppliesController extends Controller
 
     public function show(Request $request, Supply $supply)
     {
+        $data = $this->getFlashMessage($request, []);
+
         $supply = $this->service->read($request->all(), $supply);
 
-        return Inertia::render("Supplies/SupplyScreen", ['supply' => new SupplyResource($supply)]);
+        $data['supply'] = new SupplyResource($supply);
+
+        return Inertia::render("Supplies/SupplyScreen", $data);
     }
 
 
     public function edit($id)
     {
-        //
     }
 
 
     public function update(Request $request, $id)
     {
-        //
     }
 
     public function destroy($id)
     {
         //
+    }
+
+    public function readSupplyItem(Request $request, Supply $supply, SupplyItem $supply_item)
+    {
+        return new SupplyItemResource($this->service->readSupplyItem($request->all(), $supply_item));
+    }
+
+    public function editSupplyItemQuantity(UpdateSupplyItemQuantityRequest $request, Supply $supply, SupplyItem $supply_item)
+    {
+        $inputs = $request->validated();
+        return new SupplyItemResource($this->service->updateSupplyItemQuantity($inputs, $supply_item));
     }
 }

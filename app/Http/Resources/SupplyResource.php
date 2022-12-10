@@ -2,7 +2,6 @@
 
 namespace App\Http\Resources;
 
-use App\Models\InventoryItem;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SupplyResource extends JsonResource
@@ -21,7 +20,7 @@ class SupplyResource extends JsonResource
             'updated_at' => $this->updated_at->toDateString(),
             'number' => $this->number,
             'notes' => $this->notes,
-            'items' => SupplyItemResource::collection($this->whenLoaded('items')),
+            'supply_items' => SupplyItemResource::collection($this->whenLoaded('supply_items')),
             'supplier' => new SupplierResource($this->whenLoaded('supplier')),
             'receiver' => new UserResource($this->whenLoaded('receiver')),
         ];
