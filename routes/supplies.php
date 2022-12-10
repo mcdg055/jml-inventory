@@ -20,4 +20,5 @@ Route::middleware('auth')->group(function () {
 
     Route::match(["GET", "POST"],   '/supplies/{supply}/supply-item/{supply_item}' ,         [SuppliesController::class,     'readSupplyItem'])->name('supplies.supply.supply-item.read');
     Route::post(                    '/supplies/{supply}/supply-item/{supply_item}/edit',     [SuppliesController::class,     'editSupplyItemQuantity'])->name('supplies.supply.supply-item.edit');
+    Route::delete(                  '/supplies/{supply}/supply-item/{supply_item}/delete',   [SuppliesController::class,     'deleteSupplyItem'])->name('supplies.supply.supply-item.delete');
 });

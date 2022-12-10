@@ -65,4 +65,14 @@ class SupplyService
         return $this->repository->updateSupplyItemQuantity($data, $supply_item);
     }
 
+    public function deleteSupplyitem(SupplyItem $supply_item)
+    {
+        if($this->repository->deleteSupplyitem($supply_item))
+        {
+            return ['success'=>'Supply item was successfully deleted!'];
+        }
+
+        return ['error'=>'Unable to delete supply item'];
+    }
+
 }

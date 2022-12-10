@@ -98,4 +98,9 @@ class SuppliesController extends Controller
         $inputs = $request->validated();
         return new SupplyItemResource($this->service->updateSupplyItemQuantity($inputs, $supply_item));
     }
+
+    public function deleteSupplyItem(Request $requset, Supply $supply, SupplyItem $supply_item)
+    {
+        return $this->service->deleteSupplyitem($supply_item);
+    }
 }

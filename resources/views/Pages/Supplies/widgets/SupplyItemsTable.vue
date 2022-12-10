@@ -23,7 +23,8 @@
                     <div class="flex gap-2 justify-end">
                         <ui-button tooltip="Edit this item" variant="bordered" icon="edit"
                             @click="handleEditAction(item.id)" />
-                        <ui-button tooltip="Remove this item from supply" variant="bordered" icon="times" @click="" />
+                        <ui-button tooltip="Remove this item from supply" variant="bordered" icon="times"
+                            @click="handleDeleteAction(item.id)" />
                     </div>
                 </ui-td>
             </tr>
@@ -43,8 +44,8 @@
             type="number" />
         <template #footer>
             <div class="text-center flex flex-col gap-3">
-                <ui-button variant="primary" text="submit" @click="handleSubmitEdit()" />
-                <ui-button variant="cancel" text="cancel" @click="() => visible = false" />
+                <ui-button variant="primary" text="submit" @click="handleSubmitEdit" />
+                <ui-button variant="cancel" text="cancel" @click="handlePanelClose" />
             </div>
         </template>
     </ui-panel>
@@ -107,6 +108,24 @@ function handleSubmitEdit() {
         notify.alert(errors.message, "error");
         form.errors = errors.response.data.errors;
         loading.value = false;
+    });
+}
+
+function handleDeleteAction(id) {
+    notify.confirm(() => {
+        axios.delete(`/supplies/${props.supplyId}/supply-item/${id}/delete`).then((response) => {
+            if (response.data.success) {
+                Inertia.post(`/supplies/${props.supplyId}`, {
+                    flash: {
+                        success: response.data.success,
+                    }
+                });
+            } else {
+                notify.alert(response.data.error, 'error');
+            }
+        }, errors => {
+            notify.alert(errors.message, "error");
+        })
     });
 }
 

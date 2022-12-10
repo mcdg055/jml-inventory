@@ -38,7 +38,6 @@ class SupplyRepository
 
     public function read(array $data, Supply $supply)
     {
-        
     }
     public function insert($data)
     {
@@ -67,18 +66,30 @@ class SupplyRepository
     {
     }
 
-    function updateSupplyItemQuantity($data, SupplyItem $supply_item){
-        if($quantity = Arr::get($data, 'quantity')){
+    function updateSupplyItemQuantity($data, SupplyItem $supply_item)
+    {
+        if ($quantity = Arr::get($data, 'quantity')) {
             $supply_item->quantity = $quantity;
         }
 
         try {
-           $supply_item->save();
+            $supply_item->save();
         } catch (\Throwable $th) {
             throw new Exception($th->getMessage(), 1);
         }
 
         return $supply_item;
+    }
+
+    public function deleteSupplyitem(SupplyItem $supply_item)
+    {
+        try {
+            $result = $supply_item->delete();
+        } catch (\Throwable $th) {
+            throw new Exception($th->getMessage(), 1);
+        }
+
+        return $result;
     }
 
     function fillRelations($data, Supply $supply)
@@ -109,7 +120,7 @@ class SupplyRepository
                 unset($items[$key]['id']);
 
                 $item->stock += $value['quantity'];
-                $item->save();  
+                $item->save();
             }
 
             $supply->items()->sync($items);
