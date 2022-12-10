@@ -97,6 +97,7 @@
 </template>
 
 <script setup>
+import {UiInput, UiPanel} from "shared-ui";
 import { CardTable } from '../../../Shared/UI';
 import { computed, ref } from 'vue';
 

@@ -21,7 +21,7 @@
         "@popperjs/core": "^2.11.6",
         "@vitejs/plugin-vue": "^3.2.0",
         "@vue/compiler-sfc": "^3.2.45",
-        "shared-ui": "file:resources/views/shared/ui",
+        "shared-ui": "file:resources/views/Shared/Ui",
         "sweetalert2": "^11.6.8",
         "tw-elements": "^1.0.0-alpha12",
         "vue": "^3.2.45",
