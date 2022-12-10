@@ -7,12 +7,12 @@
                     <div class="font-regular">#{{ supply.number }}</div>
                 </div>
                 <div class="ml-auto">
-                    <ui-button variant="bordered" icon="edit" @click="() => { }" />
+                    <ui-button variant="bordered" icon="edit" @click="handleEditAction" />
                 </div>
             </div>
         </template>
-        <div class="p-3 text-sm flex flex-col">
-            <div class="flex p-2 border-b gap-3">
+        <div class="p-3 text-sm flex flex-col divide-y">
+            <div class="flex p-2 gap-3">
                 <div class="w-4/12 flex">
                     <div class="font-medium w-1/2">
                         Supplier:
@@ -38,7 +38,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex p-2 border-b gap-3">
+            <div class="flex p-2  gap-3">
                 <div class="w-4/12 flex">
                     <div class="font-medium w-1/2">
                         Supply #:
@@ -64,7 +64,7 @@
                     </div>
                 </div>
             </div>
-            <div class="flex p-2 border-b w-full grow-0 shrink-0">
+            <div class="flex p-2 w-full grow-0 shrink-0">
                 <div class="w-6/12 flex">
                     <div class="font-medium w-4/12  grow-0 shrink-0">
                         Notes:
@@ -76,11 +76,32 @@
             </div>
         </div>
     </card-table>
+
+    <ui-panel v-if="visible" title="Edit Supply Item" @close="handlePanelClose" :loading="loading">
+        <template #heading>
+            <div>
+                <h4 class="text-lg font-semibold">Update [item] quantity</h4>
+                <p class="text-sm">Lorem ipsum dolor sit amet consectetur, adipisicing elit. At provident quis omnis
+                    molestias! Suscipit, labore!</p>
+            </div>
+
+        </template>
+        <ui-input placeholder="quantity" label="Quantity" type="number" />
+        <template #footer>
+            <div class="text-center flex flex-col gap-3">
+                <ui-button variant="primary" text="submit" @click="handleSubmitEdit(pass_out_item.id)" />
+                <ui-button variant="cancel" text="cancel" @click="() => visible = false" />
+            </div>
+        </template>
+    </ui-panel>
 </template>
 
 <script setup>
 import { CardTable } from '../../../Shared/UI';
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
+
+let visible = ref(false);
+let loading = ref(true);
 
 let props = defineProps({
     supply: Object,
@@ -101,5 +122,18 @@ let computedTotalItems = computed(() => {
     });
     return total;
 })
+
+function handleEditAction() {
+    loading.value = false;
+    visible.value = true;
+}
+
+function handlePanelClose() {
+    visible.value = false;
+}
+
+function handleSubmitEdit() {
+
+}
 
 </script>

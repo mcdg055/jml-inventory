@@ -1,0 +1,15 @@
+{
+  "name": "shared-ui",
+  "version": "1.0.0",
+  "description": "UI compoments package",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "ui",
+    "components"
+  ],
+  "author": "Martin C. De Guzman",
+  "license": "ISC"
+}
