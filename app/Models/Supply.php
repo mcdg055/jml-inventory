@@ -46,6 +46,6 @@ class Supply extends Model
 
     public function getNumberAttribute()
     {
-        return str_pad($this->id, 6, '0', STR_PAD_LEFT);
+        return str_pad($this->id, 8, '0', STR_PAD_LEFT);
     }
 }

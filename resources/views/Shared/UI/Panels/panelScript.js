@@ -1,10 +1,13 @@
-import { ref } from "vue";
+import { markRaw, ref } from "vue";
 
 export default function panelScript() {
     const visible = ref(false);
     const loading = ref(false);
+    const component = markRaw({});
+    const props = ref({});
+    function openPanel(params = {}) {
+        component.value = params.component ?? {};
 
-    function openPanel() {
         loading.value = false;
         visible.value = true;
     }
@@ -13,5 +16,14 @@ export default function panelScript() {
         visible.value = false;
     }
 
-    return { closePanel, openPanel, visible, loading }
+    const panel = {
+        open: (params = {}) => {
+            component.value = params.component ?? {};
+            props.value = params.props ?? {};
+            loading.value = false;
+            visible.value = true;
+        },
+    }
+
+    return { closePanel, openPanel, visible, loading, component, props, panel }
 }

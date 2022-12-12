@@ -5,6 +5,11 @@ import Link from "./Buttons/Link.vue";
 import Button from "./Buttons/Button.vue";
 
 /**
+ * Containers
+ */
+import BasicContainer from "./Containers/BasicContainer.vue";
+
+/**
  * Buttons
  */
 import PanelButton from "./Buttons/PanelButton.vue";
@@ -16,11 +21,13 @@ import Table from "./Tables/Table.vue";
 import TableHeader from "./Tables/TableHeader.vue";
 import TableCell from "./Tables/TableCell.vue";
 import ApiTable from "./Tables/ApiTable.vue";
+
 /**
  * Panels
  */
 import Panel from "./Panels/Panel.vue";
 import panelScript from "./Panels/panelScript";
+
 /**
  * Forms
  */
@@ -30,6 +37,7 @@ import Form from "./Forms/Form.vue";
 import Select from "./Forms/Select.vue";
 import Checkbox from "./Forms/Checkbox.vue"
 import Textarea from "./Forms/Textarea.vue"
+
 /**
  * Spinners
  */
@@ -40,6 +48,7 @@ import Loading from "./Loading.vue"
  */
 import CardLayout from "./Cards/CardLayout.vue";
 import CardTable from "./Cards/CardTable.vue"
+
 /**
  * Alerts
  */
@@ -57,8 +66,13 @@ import Tooltip from "./Tooltips/Tooltip.vue";
 
 export {
     Icon,
-    Brand as UiBrand,   
+    Brand as UiBrand,
     Pagination as UiPagination,
+
+    /**
+     * Containers
+     */
+    BasicContainer,
 
     /**
      * Buttons

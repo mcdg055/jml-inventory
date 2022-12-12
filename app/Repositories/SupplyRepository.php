@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Http\Controllers\InventoryItemsController;
 use App\Models\Brand;
 use App\Models\InventoryItem;
 use App\Models\Supplier;
@@ -15,11 +16,35 @@ class SupplyRepository
 {
     protected Supply $model;
 
-    public function __construct(Supply $model)
+    /**
+     * @var InventoryItemsController
+     */
+    protected InventoryItemsController $inventoryItemController;
+
+    /**
+     * @var InventoryItemRepository
+     */
+    protected InventoryItemRepository $inventoryItemRepository;
+
+    /**
+     * @param Supply $model
+     * @param InventoryItemsController $inventoryItemController
+     * @param InventoryItemRepository $inventoryItemRepository
+     */
+    public function __construct(Supply $model, InventoryItemsController $inventoryItemController, InventoryItemRepository $inventoryItemRepository)
     {
         $this->model =  $model;
+        $this->inventoryItemController = $inventoryItemController;
+        $this->inventoryItemRepository = $inventoryItemRepository;
     }
 
+    /**
+     * used to browse supplies
+     *
+     * @param array $inputs
+     * 
+     * @return Supply|collection
+     */
     public function browse($inputs)
     {
         $search_input = "";
@@ -39,6 +64,14 @@ class SupplyRepository
     public function read(array $data, Supply $supply)
     {
     }
+
+    /**
+     * used for inserting a supply
+     * 
+     * @param array $data
+     * 
+     * @return return Supply
+     */
     public function insert($data)
     {
         $supply = $this->model->fill($data);
@@ -47,7 +80,7 @@ class SupplyRepository
 
         try {
             $supply->save();
-            $this->syncRelations($data, $supply);
+            $supply = $this->syncRelations($data, $supply);
         } catch (\Throwable $th) {
             throw new Exception($th->getMessage(), 1);
         }
@@ -66,6 +99,14 @@ class SupplyRepository
     {
     }
 
+    /**
+     * Updating item quantity of a supply
+     *
+     * @param array $data
+     * @param SupplyItem $supply_item
+     * 
+     * @return bool
+     */
     function updateSupplyItemQuantity($data, SupplyItem $supply_item)
     {
         if ($quantity = Arr::get($data, 'quantity')) {
@@ -73,25 +114,54 @@ class SupplyRepository
         }
 
         try {
+            $this->updateInventoryItemStock($data, $supply_item);
+
             $supply_item->save();
+            return true;
         } catch (\Throwable $th) {
             throw new Exception($th->getMessage(), 1);
         }
 
-        return $supply_item;
+        return false;
     }
 
+    /**
+     * Deleting a specific supply item
+     *
+     * @param SupplyItem $supply_item
+     * @return void
+     */
     public function deleteSupplyitem(SupplyItem $supply_item)
     {
         try {
-            $result = $supply_item->delete();
+            return $supply_item->delete();
         } catch (\Throwable $th) {
             throw new Exception($th->getMessage(), 1);
         }
 
-        return $result;
+        return false;
     }
 
+    public function updateInventoryItemStock($data, $supply_item)
+    {
+        if ($quantity = Arr::get($data, 'quantity')) {
+
+            $new_stock = $quantity->$supply_item->quantity;
+            if ($new_stock > 0) {
+                $this->inventoryItemRepository->increaseStock($new_stock, $supply_item->inventory_item_id);
+            } else {
+                $this->inventoryItemRepository->decreaseStock(abs($new_stock), $supply_item->inventory_item_id);
+            }
+        }
+    }
+
+    /**
+     * fill the relations needed to complete the process of adding a supply
+     *
+     * @param array $data
+     * @param Supply $supply
+     * @return Supply
+     */
     function fillRelations($data, Supply $supply)
     {
         if ($supplier_id = Arr::get($data, 'supplier_id')) {
@@ -107,6 +177,12 @@ class SupplyRepository
         return $supply;
     }
 
+    /**
+     * @param array $data
+     * @param Supply $supply
+     * 
+     * @return Supply
+     */
     function syncRelations($data, Supply $supply)
     {
         if ($items = Arr::get($data, 'items')) {
@@ -119,11 +195,12 @@ class SupplyRepository
 
                 unset($items[$key]['id']);
 
-                $item->stock += $value['quantity'];
-                $item->save();
+                $this->inventoryItemRepository->increaseStock($value['quantity'], $item);
             }
 
             $supply->items()->sync($items);
         }
+
+        return $supply;
     }
 }

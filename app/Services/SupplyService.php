@@ -62,7 +62,11 @@ class SupplyService
 
     public function updateSupplyItemQuantity(array $data, SupplyItem $supply_item)
     {
-        return $this->repository->updateSupplyItemQuantity($data, $supply_item);
+        if($this->repository->updateSupplyItemQuantity($data, $supply_item)){
+            return ['success'=>'Supply item was successfully updated!'];
+        }
+
+        return ['error'=>'Unable to update supply item'];
     }
 
     public function deleteSupplyitem(SupplyItem $supply_item)

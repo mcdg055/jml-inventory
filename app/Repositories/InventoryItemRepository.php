@@ -3,7 +3,6 @@
 namespace App\Repositories;
 
 use App\Models\InventoryItem;
-use App\Models\InventoryItem;
 use Illuminate\Support\Facades\Request;
 
 class InventoryItemRepository
@@ -61,5 +60,31 @@ class InventoryItemRepository
 
     public function delete(Request $request, InventoryItem $inventory_item)
     {
+    }
+
+    public function increaseStock($new_stock, InventoryItem $inventory_item)
+    {
+        $new_stock += $inventory_item->stock;
+
+        $inventory_item->stock = $new_stock;
+
+        return $this->updateInventoryStock($inventory_item);
+    }
+
+    public function decreaseStock($quantity_used, InventoryItem $inventory_item)
+    {
+        $stock = $inventory_item->stock;
+        $inventory_item->stock = $stock - $quantity_used;
+
+        return $this->updateInventoryStock($inventory_item);
+    }
+
+    public function updateInventoryStock(InventoryItem $inventory_item)
+    {
+        try {
+            return $inventory_item->save();
+        } catch (\Throwable $th) {
+            return ["error" => $th->getMessage()];
+        }
     }
 }

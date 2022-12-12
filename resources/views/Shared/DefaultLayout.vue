@@ -28,23 +28,25 @@
         </div>
     </div>
 
+    <ui-panel v-if="visible" title="Edit Supply Item" @close="closePanel" :loading="loading">
+        <Component :is="component.value" v-bind="props"></Component>
+    </ui-panel>
+
     <ui-alert />
 </template>
 
-<script>
+<script setup>
 import Nav from "./Navigation/Nav.vue";
-import { UiBrand, UiAlert } from "./UI";
+import { UiBrand, UiAlert, UiPanel, panelScript } from "./UI";
+
 import { provide } from 'vue';
 import { notify, notify2, confirm } from "./UI/Alerts/notify";
-export default {
-    components: {
-        Nav, UiBrand, UiAlert
-    },
-    setup() {
-        provide('notify', notify);
-        provide('confirm', confirm);
-        provide('notify2', notify2);
-    }
-}
+
+const { visible, loading, closePanel, component, panel, props } = panelScript();
+
+provide('notify', notify);
+provide('confirm', confirm);
+provide('notify2', notify2);
+provide('panel', panel);
 
 </script>

@@ -18,7 +18,7 @@
                         <slot name="heading" />
                     </div>
                     <!-- panel body -->
-                    <div>
+                    <div class="h-full">
                         <slot />
                     </div>
                     <!-- panel footer -->

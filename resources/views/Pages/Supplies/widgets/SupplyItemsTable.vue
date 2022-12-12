@@ -31,7 +31,7 @@
         </template>
     </ui-table>
 
-    <ui-panel v-if="visible" title="Edit Supply Item" @close="handlePanelClose" :loading="loading">
+    <!-- <ui-panel v-if="visible" title="Edit Supply Item" @close="handlePanelClose" :loading="loading">
         <template #heading>
             <div>
                 <h4 class="text-lg font-semibold">Update {{ supply_item.inventory_item.name }} quantity</h4>
@@ -48,18 +48,21 @@
                 <ui-button variant="cancel" text="cancel" @click="handlePanelClose" />
             </div>
         </template>
-    </ui-panel>
+    </ui-panel> -->
 </template>
 
 <script setup>
+import EditSupplyItem from './EditSupplyItem.vue';
+
 import { Inertia } from '@inertiajs/inertia';
 import { UiButton, UiInput, UiApiTable, UiPanel, panelScript } from 'shared-ui';
 import { ref, inject, computed, reactive } from "vue";
 
 const axios = inject('axios');
 const notify = inject('notify2');
+const panel = inject('panel');
 
-const { visible, loading } = panelScript();
+const { openPanel, closePanel, visible, loading } = panelScript();
 
 let props = defineProps({
     supplyItems: Object,
@@ -80,19 +83,16 @@ function calculateSubtotal(item) {
 
 function handlePanelClose() {
     visible.value = false;
-
+    loading.value = false;
 }
 
 function handleEditAction(id) {
-    loading.value = true;
-    visible.value = true;
-
-    axios.get(`/supplies/${props.supplyId}/supply-item/${id}`).then((response) => {
-        supply_item = response.data;
-        form.quantity = response.data.quantity;
-        loading.value = false;
-    }, error => {
-        notify.alert(error.message, "error");
+    panel.open({
+        component: EditSupplyItem,
+        props: {
+            supplyId: props.supplyId,
+            itemId: id,
+        }
     });
 }
 
@@ -101,13 +101,15 @@ function handleSubmitEdit() {
     axios.post(`/supplies/${props.supplyId}/supply-item/${supply_item.id}/edit`, form).then((response) => {
         Inertia.post(`/supplies/${props.supplyId}`, {
             flash:
-                { success: "Supply was recorded successfully!" }
+                { success: response.data.success }
         });
-        visible.value = false;
-    }, errors => {
-        notify.alert(errors.message, "error");
-        form.errors = errors.response.data.errors;
+        closePanel();
+    }).catch((errors) => {
         loading.value = false;
+        notify.alert(errors.message, "error");
+        if (errors = errors.response.data.errors) {
+            form.errors = errors.response.data.errors;
+        }
     });
 }
 
