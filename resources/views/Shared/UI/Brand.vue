@@ -6,7 +6,7 @@
 
 <script>
 
-const logo = "../../../../storage/images/JML-LOGO--TRANSPARENT.png";
+import { logo } from "../../../assets/Images";
 
 export default {
     data() {
