@@ -29,7 +29,7 @@
     </div>
 
     <ui-panel v-if="visible" :title="props.title" @close="closePanel" :loading="loading">
-        <Component :is="component.value" v-bind="props"></Component>
+        <Component :is="component.value" v-bind="props" @close="closePanel"></Component>
     </ui-panel>
 
     <ui-alert />

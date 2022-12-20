@@ -23,8 +23,11 @@
 <script setup>
 import { BasicContainer, UiInput } from 'shared-ui';
 import { ref, inject, computed, reactive } from "vue";
+import { Inertia } from '@inertiajs/inertia';
 
 const axios = inject('axios');
+const notify = inject('notify2');
+const emit = defineEmits(['close']);
 
 let props = defineProps({
     supplyId: Number,
@@ -62,11 +65,11 @@ function handleSubmitEdit() {
             flash:
                 { success: response.data.success }
         });
-        closePanel();
+        emit('close');
     }).catch((errors) => {
         loading.value = false;
         notify.alert(errors.message, "error");
-        if (errors = errors.response.data.errors) {
+        if (errors = errors.response) {
             form.errors = errors.response.data.errors;
         }
     });
