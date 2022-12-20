@@ -48,6 +48,12 @@ class SuppliesController extends Controller
         return SupplyResource::collection($supplies);
     }
 
+    /**
+     * Undocumented function
+     *
+     * @param Request $request
+     * @return void
+     */
     public function create(Request $request)
     {
         $data['suppliers'] = $this->supplierController->getSuppliers();

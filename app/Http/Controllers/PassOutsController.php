@@ -261,8 +261,6 @@ class PassOutsController extends Controller
         $data = $request->validated();
 
         try {
-            $inventory_item = $this->updateInventoryItemStock($data['quantity'], $pass_out_item);
-
             $pass_out_item = $this->calculateNewQuantity($data['quantity'], $pass_out_item);
 
             $pass_out_item->save();
@@ -293,6 +291,9 @@ class PassOutsController extends Controller
         return $pass_out_item;
     }
 
+    /**
+     * Update the inventory item stock
+     */
     public function updateInventoryItemStock($newQuantity, PassOutItem $pass_out_item)
     {
         $oldQuantity = $pass_out_item->quantity;

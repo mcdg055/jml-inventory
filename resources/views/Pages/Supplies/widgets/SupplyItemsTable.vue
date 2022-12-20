@@ -31,24 +31,6 @@
         </template>
     </ui-table>
 
-    <!-- <ui-panel v-if="visible" title="Edit Supply Item" @close="handlePanelClose" :loading="loading">
-        <template #heading>
-            <div>
-                <h4 class="text-lg font-semibold">Update {{ supply_item.inventory_item.name }} quantity</h4>
-                <p class="text-sm">Lorem ipsum dolor sit amet consectetur, adipisicing elit. At provident quis omnis
-                    molestias! Suscipit, labore!</p>
-            </div>
-
-        </template>
-        <ui-input v-model="form.quantity" :error="form.errors.quantity" placeholder="quantity" label="Quantity"
-            type="number" />
-        <template #footer>
-            <div class="text-center flex flex-col gap-3">
-                <ui-button variant="primary" text="submit" @click="handleSubmitEdit" />
-                <ui-button variant="cancel" text="cancel" @click="handlePanelClose" />
-            </div>
-        </template>
-    </ui-panel> -->
 </template>
 
 <script setup>
@@ -90,6 +72,7 @@ function handleEditAction(id) {
     panel.open({
         component: EditSupplyItem,
         props: {
+            title: 'Edit Supply Item',
             supplyId: props.supplyId,
             itemId: id,
         }

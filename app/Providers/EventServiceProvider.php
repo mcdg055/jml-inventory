@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\SupplyEvent;
+use App\Events\SupplyItemEvent;
+use App\Listeners\SupplyCreatedListener;
+use App\Listeners\SupplyItemUpdated;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -18,6 +22,9 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
+        SupplyItemEvent::class=>[
+            SupplyItemUpdated::class,
+        ]
     ];
 
     /**

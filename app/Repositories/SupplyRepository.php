@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Events\SupplyItemEvent;
 use App\Http\Controllers\InventoryItemsController;
 use App\Models\Brand;
 use App\Models\InventoryItem;
@@ -109,13 +110,16 @@ class SupplyRepository
      */
     function updateSupplyItemQuantity($data, SupplyItem $supply_item)
     {
+        $old_supply_item = clone $supply_item;
         if ($quantity = Arr::get($data, 'quantity')) {
             $supply_item->quantity = $quantity;
         }
 
         try {
-            $this->updateInventoryItemStock($data, $supply_item);
+            //$this->updateInventoryItemStock($data, $supply_item);
 
+            event(new SupplyItemEvent($old_supply_item, $data));
+            
             $supply_item->save();
             return true;
         } catch (\Throwable $th) {

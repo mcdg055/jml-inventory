@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <ui-panel v-if="visible" title="Edit Supply Item" @close="closePanel" :loading="loading">
+    <ui-panel v-if="visible" :title="props.title" @close="closePanel" :loading="loading">
         <Component :is="component.value" v-bind="props"></Component>
     </ui-panel>
 
