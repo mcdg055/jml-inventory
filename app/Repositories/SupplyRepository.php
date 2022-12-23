@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Events\Supply\SupplyItemDeletedEvent;
 use App\Events\SupplyItemEvent;
 use App\Http\Controllers\InventoryItemsController;
 use App\Models\Brand;
@@ -119,7 +120,7 @@ class SupplyRepository
             //$this->updateInventoryItemStock($data, $supply_item);
 
             event(new SupplyItemEvent($old_supply_item, $data));
-            
+
             $supply_item->save();
             return true;
         } catch (\Throwable $th) {
@@ -137,8 +138,14 @@ class SupplyRepository
      */
     public function deleteSupplyitem(SupplyItem $supply_item)
     {
+        $old_supply_item = clone $supply_item;
         try {
-            return $supply_item->delete();
+            $supply_item->delete();
+
+            //fire an event
+            event(new SupplyItemDeletedEvent($old_supply_item));
+
+            return true;
         } catch (\Throwable $th) {
             throw new Exception($th->getMessage(), 1);
         }

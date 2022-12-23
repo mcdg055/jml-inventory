@@ -76,24 +76,6 @@
             </div>
         </div>
     </card-table>
-
-    <ui-panel v-if="visible" title="Edit Supply Item" @close="handlePanelClose" :loading="loading">
-        <template #heading>
-            <div>
-                <h4 class="text-lg font-semibold">Update [item] quantity</h4>
-                <p class="text-sm">Lorem ipsum dolor sit amet consectetur, adipisicing elit. At provident quis omnis
-                    molestias! Suscipit, labore!</p>
-            </div>
-
-        </template>
-        <ui-input placeholder="quantity" label="Quantity" type="number" />
-        <template #footer>
-            <div class="text-center flex flex-col gap-3">
-                <ui-button variant="primary" text="submit" @click="handleSubmitEdit(pass_out_item.id)" />
-                <ui-button variant="cancel" text="cancel" @click="() => visible = false" />
-            </div>
-        </template>
-    </ui-panel>
 </template>
 
 <script setup>

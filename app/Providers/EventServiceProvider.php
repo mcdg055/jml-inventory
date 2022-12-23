@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\Supply\SupplyItemDeletedEvent;
 use App\Events\SupplyEvent;
 use App\Events\SupplyItemEvent;
+use App\Listeners\Supply\SupplyItemDeletedListener;
 use App\Listeners\SupplyCreatedListener;
 use App\Listeners\SupplyItemUpdated;
 use Illuminate\Auth\Events\Registered;
@@ -22,8 +24,11 @@ class EventServiceProvider extends ServiceProvider
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
-        SupplyItemEvent::class=>[
+        SupplyItemEvent::class => [
             SupplyItemUpdated::class,
+        ],
+        SupplyItemDeletedEvent::class => [
+            SupplyItemDeletedListener::class,
         ]
     ];
 

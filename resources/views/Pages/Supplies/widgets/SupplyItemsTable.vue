@@ -37,36 +37,22 @@
 import EditSupplyItem from './EditSupplyItem.vue';
 
 import { Inertia } from '@inertiajs/inertia';
-import { UiButton, UiInput, UiApiTable, UiPanel, panelScript } from 'shared-ui';
-import { ref, inject, computed, reactive } from "vue";
+import { UiButton } from 'shared-ui';
+import { inject} from "vue";
 
 const axios = inject('axios');
 const notify = inject('notify2');
 const panel = inject('panel');
-
-const { openPanel, closePanel, visible, loading } = panelScript();
 
 let props = defineProps({
     supplyItems: Object,
     supplyId: Number,
 });
 
-let supply_item = reactive([]);
-let form = reactive({
-    quantity: 0,
-    errors: {
-        quantity: null,
-    }
-})
-
 function calculateSubtotal(item) {
     return (item.unit_price * item.quantity).toFixed(2);
 }
 
-function handlePanelClose() {
-    visible.value = false;
-    loading.value = false;
-}
 
 function handleEditAction(id) {
     panel.open({
@@ -75,23 +61,6 @@ function handleEditAction(id) {
             title: 'Edit Supply Item',
             supplyId: props.supplyId,
             itemId: id,
-        }
-    });
-}
-
-function handleSubmitEdit() {
-    loading.value = true;
-    axios.post(`/supplies/${props.supplyId}/supply-item/${supply_item.id}/edit`, form).then((response) => {
-        Inertia.post(`/supplies/${props.supplyId}`, {
-            flash:
-                { success: response.data.success }
-        });
-        closePanel();
-    }).catch((errors) => {
-        loading.value = false;
-        notify.alert(errors.message, "error");
-        if (errors = errors.response.data.errors) {
-            form.errors = errors.response.data.errors;
         }
     });
 }
