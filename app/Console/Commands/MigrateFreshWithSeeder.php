@@ -28,13 +28,13 @@ class MigrateFreshWithSeeder extends Command
      */
     public function handle()
     {
-        $this->info("running the command: php artisan migrate:fresh --seed");
+        $this->info("Running the command: php artisan migrate:fresh --seed");
         Artisan::call('migrate:fresh --seed');
 
         $this->line(Artisan::output());
 
         if (Command::SUCCESS == 0) {
-            $this->info("success running the command: php artisan migrate:fresh --seed");
+            $this->info("Success running the command: php artisan migrate:fresh --seed");
         }
     }
 }
