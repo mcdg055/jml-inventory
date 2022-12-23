@@ -229,7 +229,7 @@ class InventoryItemsController extends Controller
         return $inventory_item;
     }
 
-    public function getInventoryItems(Request $request)
+    public function getInventoryItems(Request $request, $limit = 10)
     {
         $inputs = $request->all();
         $search_input = "";
@@ -247,8 +247,7 @@ class InventoryItemsController extends Controller
                 $query->where('name', 'like', "%{$search}%");
             })
             ->whereNotIn('id', $selected)
-            ->limit(10)
-            ->get();
+            ->paginate($limit);
 
         return InventoryItemResource::collection($query);
     }

@@ -24,7 +24,7 @@
     }
 
     .btn-cancel {
-        @apply btn bg-gray-100 text-gray-400 hover:bg-gray-200 hover:shadow-lg focus:bg-gray-400 active:bg-gray-600
+        @apply btn bg-gray-100 text-gray-400 hover:bg-gray-200 hover:shadow-lg
     }
 }
 

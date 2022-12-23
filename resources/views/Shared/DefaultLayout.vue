@@ -28,7 +28,7 @@
         </div>
     </div>
 
-    <ui-panel v-if="visible" :title="props.title" @close="closePanel" :loading="loading">
+    <ui-panel v-if="visible" :title="title" @close="closePanel" :loading="loading">
         <Component :is="component.value" v-bind="props" @close="closePanel"></Component>
     </ui-panel>
 
@@ -42,7 +42,7 @@ import { UiBrand, UiAlert, UiPanel, panelScript } from "./UI";
 import { provide } from 'vue';
 import { notify, notify2, confirm } from "./UI/Alerts/notify";
 
-const { visible, loading, closePanel, component, panel, props } = panelScript();
+const { visible, loading, closePanel, component, title, panel, props } = panelScript();
 
 provide('notify', notify);
 provide('confirm', confirm);

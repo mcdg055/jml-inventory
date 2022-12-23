@@ -1,6 +1,11 @@
 <template>
-    <ui-api-table title="Select Items" uri="/inventory-items/get-inventory-items" :uri-params="uriParams" search-input
-        reload>
+    <ui-api-table 
+        title="Select Items" 
+        uri="/inventory-items/get-inventory-items" 
+        :uri-params="uriParams" 
+        search-input
+        reload
+    >
         <template #headerActions>
             <ui-button tooltip="Create new item" variant="bordered" icon="plus" @click="handleAddInventoryItem" />
         </template>

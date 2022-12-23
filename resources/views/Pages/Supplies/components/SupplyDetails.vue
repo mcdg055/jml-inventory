@@ -83,6 +83,8 @@ import { UiInput, UiPanel } from "shared-ui";
 import { CardTable } from '../../../Shared/UI';
 import { computed, ref } from 'vue';
 
+const emits = defineEmits(['edit'])
+
 let visible = ref(false);
 let loading = ref(true);
 
@@ -106,9 +108,8 @@ let computedTotalItems = computed(() => {
     return total;
 })
 
-function handleEditAction() {
-    loading.value = false;
-    visible.value = true;
+function handleEditAction(supply) {
+    emits("edit")
 }
 
 function handlePanelClose() {

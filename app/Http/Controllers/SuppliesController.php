@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\Supplier\UpdateSupplierRequest;
 use App\Http\Requests\Supplies\StoreSupplyRequest;
+use App\Http\Requests\Supplies\UpdateSupplyDetailsRequest;
 use App\Http\Requests\Supplies\UpdateSupplyItemQuantityRequest;
 use App\Http\Resources\SupplyItemResource;
 use App\Http\Resources\SupplyResource;
@@ -38,12 +39,9 @@ class SuppliesController extends Controller
         return Inertia::render("Supplies/SuppliesScreen", $data);
     }
 
-    public function browse(Request $request)
+    public function browse(Request $request, $limit = 10)
     {
-
-        $inputs = $request->all();
-
-        $supplies = $this->service->browse($inputs);
+        $supplies = $this->service->browse($request->all(), $limit);
 
         return SupplyResource::collection($supplies);
     }
@@ -79,14 +77,20 @@ class SuppliesController extends Controller
         return Inertia::render("Supplies/SupplyScreen", $data);
     }
 
+    public function read(Type $var = null)
+    {
+        # code...
+    }
+
 
     public function edit($id)
     {
     }
 
 
-    public function update(Request $request, $id)
+    public function updateSupplyDetails(UpdateSupplyDetailsRequest $request, Supply $supply)
     {
+        return new SupplyResource($this->service->updateSupplyDetails($request->all(), $supply));
     }
 
     public function destroy($id)

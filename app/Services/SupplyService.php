@@ -16,9 +16,9 @@ class SupplyService
         $this->repository = $repository;
     }
 
-    public function browse($data)
+    public function browse($data, $limit)
     {
-        $supplies = $this->repository->browse($data);
+        $supplies = $this->repository->browse($data, $limit);
 
         $supplies->load(['supplier', 'receiver', 'supply_items', 'supply_items.inventory_item']);
 
@@ -45,8 +45,9 @@ class SupplyService
         return $supply;
     }
 
-    public function update($data, $supply)
+    public function updateSupplyDetails($data, $supply)
     {
+        return $this->repository->updateSupplyDetails($data, $supply);
     }
 
     public function delete(Request $request, Supply $supply)
@@ -62,21 +63,19 @@ class SupplyService
 
     public function updateSupplyItemQuantity(array $data, SupplyItem $supply_item)
     {
-        if($this->repository->updateSupplyItemQuantity($data, $supply_item)){
-            return ['success'=>'Supply item was successfully updated!'];
+        if ($this->repository->updateSupplyItemQuantity($data, $supply_item)) {
+            return ['success' => 'Supply item was successfully updated!'];
         }
 
-        return ['error'=>'Unable to update supply item'];
+        return ['error' => 'Unable to update supply item'];
     }
 
     public function deleteSupplyitem(SupplyItem $supply_item)
     {
-        if($this->repository->deleteSupplyitem($supply_item))
-        {
-            return ['success'=>'Supply item was successfully deleted!'];
+        if ($this->repository->deleteSupplyitem($supply_item)) {
+            return ['success' => 'Supply item was successfully deleted!'];
         }
 
-        return ['error'=>'Unable to delete supply item'];
+        return ['error' => 'Unable to delete supply item'];
     }
-
 }

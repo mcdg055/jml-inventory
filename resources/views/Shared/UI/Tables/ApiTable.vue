@@ -37,10 +37,9 @@
         </div>
 
     </div>
+
     <!-- pagination -->
-
-
-    <div class="flex justify-center mt-3">
+    <div v-if="links" class="flex justify-center mt-3">
         <ui-pagination :links="links" @go-to-page="goToPage" />
     </div>
 </template>
@@ -49,7 +48,7 @@
 import UiPagination from "../Pagination.vue";
 import { ref, watch, inject, onMounted, reactive } from "vue";
 import debounce from "lodash/debounce";
-import { SearchInput, UiButton, UiInput, UiPanel, UiApiTable } from "../../../Shared/UI";
+import { SearchInput, UiButton } from 'shared-ui';
 
 const axios = inject("axios");
 

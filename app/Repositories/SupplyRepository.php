@@ -47,7 +47,7 @@ class SupplyRepository
      * 
      * @return Supply|collection
      */
-    public function browse($inputs)
+    public function browse($inputs, $limit)
     {
         $search_input = "";
 
@@ -56,10 +56,12 @@ class SupplyRepository
         }
 
         $supplies = $this->model->query()
-            ->when($search_input, function ($query, $search) {
-                //$query->where('name', 'like', "%{$search}%");
+            ->whereHas('supplier', function ($query) use ($search_input) {
+                $query->where('name', "LIKE", "%$search_input%");
             })
-            ->get();
+            ->orWhere('created_at', "LIKE", "%$search_input%")
+            ->orWhere('id', "LIKE", "%$search_input%")
+            ->paginate($limit);
         return $supplies;
     }
 
@@ -93,8 +95,19 @@ class SupplyRepository
     {
     }
 
-    public function update($brand, $data)
+    public function updateSupplyDetails($data, Supply $supply)
     {
+        if ($notes = Arr::get($data, 'notes')) {
+            $supply->notes = $notes;
+
+            try {
+                $supply->save();
+            } catch (\Throwable $th) {
+                throw new Exception($th->getMessage(), 1);
+            }
+        }
+
+        return $supply;
     }
 
     public function delete(Request $request, Brand $brand)

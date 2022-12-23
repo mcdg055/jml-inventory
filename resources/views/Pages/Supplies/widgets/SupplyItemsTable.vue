@@ -53,7 +53,6 @@ function calculateSubtotal(item) {
     return (item.unit_price * item.quantity).toFixed(2);
 }
 
-
 function handleEditAction(id) {
     panel.open({
         component: EditSupplyItem,
