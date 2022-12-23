@@ -23,7 +23,10 @@ class SupplierFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => fake()->name(),
+            'contact_person' => fake()->unique()->name(),
+            'contact_number' => fake()->unique()->phoneNumber(),
+            'is_active' => true,
         ];
     }
 }

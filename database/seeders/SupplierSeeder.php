@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Supplier;
+use Database\Factories\SupplierFactory;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -33,5 +34,7 @@ class SupplierSeeder extends Seeder
             'contact_number' => '+63987654321',
             'is_active' => true,
         ]);
+
+       Supplier::factory(10)->create();
     }
 }
