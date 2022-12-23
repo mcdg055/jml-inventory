@@ -28,7 +28,7 @@ class SupplierController extends Controller
         return Inertia::render("Suppliers/SuppliersScreen");
     }
 
-    public function browse(Request $request)
+    public function browse(Request $request, $limit = 6)
     {
 
         $inputs = $request->all();
@@ -43,15 +43,16 @@ class SupplierController extends Controller
                 $query->where('name', 'like', "%{$search}%");
                 $query->orWhere('contact_person', 'like', "%{$search}%");
                 $query->orWhere('contact_number', 'like', "%{$search}%");
-            })
-            ->get();
+            })->paginate($limit);
+
+           /*  dd(SupplierResource::collection($suppliers)); */
 
         return SupplierResource::collection($suppliers);
     }
 
     public function getSuppliers()
     {
-       return SupplierResource::collection($this->supplier->query()->get());
+        return SupplierResource::collection($this->supplier->query()->get());
     }
 
     /**

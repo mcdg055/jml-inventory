@@ -38,8 +38,10 @@
 
     </div>
     <!-- pagination -->
-    <div v-if="hasPagination" class="flex justify-center mt-3">
-        <ui-pagination :links="pagination" />
+
+
+    <div class="flex justify-center mt-3">
+        <ui-pagination :links="links" @go-to-page="goToPage" />
     </div>
 </template>
 
@@ -76,16 +78,26 @@ let props = defineProps({
     },
 })
 
+
+
 let data = ref(null);
 let loading = ref(false);
 let search = ref("");
+let links = ref(null);
+let page = ref(1);
+
+function goToPage(value) {
+    page.value = value;
+    loadData();
+}
 
 let loadData = debounce(function (value = "") {
-    let params = Object.assign({ search: value }, props.uriParams);
+    let params = Object.assign({ search: value, page: page.value }, props.uriParams);
     data.value = null;
     loading.value = true;
     axios.post(props.uri, params).then((response) => {
-        data.value = response.data;
+        data.value = response.data.data;
+        links.value = response.data.meta.links;
     }).finally(() => {
         loading.value = false;
     })

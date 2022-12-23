@@ -23,4 +23,9 @@ class Supplier extends Model
     {
         return $this->hasMany(Supplies::class);
     }
+
+    public function getNumberAttribute()
+    {
+        return str_pad($this->id, 6, '0', STR_PAD_LEFT);
+    }
 }

@@ -14,7 +14,7 @@
         <!-- content -->
         <template v-slot="{ data }">
             <tr v-for="(supplier, index) in data">
-                <ui-td class="text-gray-400"> {{ index + 1 }} </ui-td>
+                <ui-td class="text-gray-400"> {{ supplier.number }} </ui-td>
                 <ui-td> {{ supplier.name }} </ui-td>
                 <ui-td> {{ supplier.contact_number }}</ui-td>
                 <ui-td> {{ supplier.contact_person }} </ui-td>
