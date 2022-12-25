@@ -66,6 +66,12 @@ class RouteServiceProvider extends ServiceProvider
              */
             Route::middleware('web')
                 ->group(base_path('routes/supplies.php'));
+
+            /**
+             * Simulator
+             */
+            Route::middleware('web')
+                ->group(base_path('routes/simulator.php'));
         });
     }
 
