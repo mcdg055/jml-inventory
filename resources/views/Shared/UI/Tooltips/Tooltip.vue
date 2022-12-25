@@ -1,5 +1,5 @@
 <template>
-    <Popper :content="content" class="tooltip--dark" hover openDelay="300" closeDelay="100">
+    <Popper :content="tooltip" class="ui-tooltip tooltip--dark" hover openDelay="300" closeDelay="100">
 
         <slot />
     </Popper>
@@ -8,6 +8,6 @@
 <script setup>
 import Popper from "vue3-popper";
 let props = defineProps({
-    content: String,
+    tooltip: String,
 });
 </script>

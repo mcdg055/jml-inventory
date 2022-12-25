@@ -70,8 +70,7 @@ export default {
     setup(props) {
         const confirm = inject('confirm');
         let search = ref(props.filters.search);
-        const notify = inject('notify');
-
+        
         //watch search changes
         watch(search, debounce(
             function (value) {

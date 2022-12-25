@@ -129,5 +129,5 @@ export {
     /**
      * Tooltips
      */
-    Tooltip as UiToolTip,
+    Tooltip as UiTooltip,
 }

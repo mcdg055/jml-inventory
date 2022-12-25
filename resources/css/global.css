@@ -25,4 +25,8 @@
     section{
         @apply w-full mx-auto
     }
+
+    .ui-tooltip{
+        @apply text-sm
+    }
 }

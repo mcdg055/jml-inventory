@@ -6,8 +6,9 @@
                     <h4 class="font-medium text-xl"> {{ supply.supplier.name }}</h4>
                     <div class="font-regular">#{{ supply.number }}</div>
                 </div>
-                <div class="ml-auto">
-                    <ui-button variant="bordered" icon="edit" @click="handleEditAction" />
+                <div class="ml-auto flex gap-2">
+                    <ui-button tooltip="Export as PDF" :uri="`/supplies/${supply.id}/export`" variant="bordered" icon="file-export" />
+                    <ui-button tooltip="Edit supply details" variant="bordered" icon="edit" @click="handleEditAction" />
                 </div>
             </div>
         </template>
@@ -79,7 +80,6 @@
 </template>
 
 <script setup>
-import { UiInput, UiPanel } from "shared-ui";
 import { CardTable } from '../../../Shared/UI';
 import { computed, ref } from 'vue';
 

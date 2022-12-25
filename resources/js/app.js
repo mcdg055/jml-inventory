@@ -15,7 +15,7 @@ import {
     UiButton,
     UiLink,
     UiLoading,
-    UiToolTip,
+    UiTooltip,
 } from "../views/Shared/UI";
 
 import Layout from "../views/Shared/DefaultLayout.vue";
@@ -68,7 +68,7 @@ createInertiaApp({
             /**
              * Tooltips
              */
-            .component('ui-tooltip', UiToolTip)
+            .component('ui-tooltip', UiTooltip)
 
 
         myApp.provide('axios', myApp.config.globalProperties.axios);

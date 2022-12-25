@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Supplier\UpdateSupplierRequest;
+use Exception;
+use Inertia\Inertia;
+use App\Models\Supply;
+use PDF;
+use App\Models\SupplyItem;
+use Illuminate\Support\Arr;
+use Illuminate\Http\Request;
+use App\Services\SupplyService;
+use App\Http\Traits\FlashMessage;
+use App\Http\Resources\SupplyResource;
+use App\Http\Resources\SupplyItemResource;
 use App\Http\Requests\Supplies\StoreSupplyRequest;
 use App\Http\Requests\Supplies\UpdateSupplyDetailsRequest;
 use App\Http\Requests\Supplies\UpdateSupplyItemQuantityRequest;
-use App\Http\Resources\SupplyItemResource;
-use App\Http\Resources\SupplyResource;
-use App\Http\Traits\FlashMessage;
-use App\Models\Supply;
-use App\Models\SupplyItem;
-use App\Services\SupplyService;
-use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Arr;
-use Inertia\Inertia;
 
 class SuppliesController extends Controller
 {
@@ -77,7 +77,7 @@ class SuppliesController extends Controller
         return Inertia::render("Supplies/SupplyScreen", $data);
     }
 
-    public function read(Type $var = null)
+    public function read(Request $request, Supply $supply)
     {
         # code...
     }
@@ -112,5 +112,12 @@ class SuppliesController extends Controller
     public function deleteSupplyItem(Request $requset, Supply $supply, SupplyItem $supply_item)
     {
         return $this->service->deleteSupplyitem($supply_item);
+    }
+
+    public function export(Request $request, Supply $supply)
+    {
+        $pdf = PDF::loadView('pdf.supplies.supply', []);
+
+        return $pdf->download('Supplies.pdf');
     }
 }

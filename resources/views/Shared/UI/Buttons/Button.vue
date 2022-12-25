@@ -1,6 +1,6 @@
 <template>
-    <ui-tooltip :content="tooltip">
-        <Component :is="variant === 'link' ? 'Link' : 'button'" type="submit" :href="uri" data-mdb-ripple="true"
+    <ui-tooltip :tooltip="tooltip">
+        <Component :is="variant === 'link' ? 'Link' : 'a'" :href="uri" data-mdb-ripple="true"
             data-mdb-ripple-color="light" :class="'btn-' + variant">
             <icon v-if="icon" :icon="icon" />
             {{ text }}
