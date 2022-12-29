@@ -5,7 +5,7 @@
 - [Download nodejs](https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi)
 - [Download composer](https://getcomposer.org/Composer-Setup.exe)
 - [Download Github Desktop](https://central.github.com/deployments/desktop/desktop/latest/win32)
-- Install all download programs
+- Install all downloaded programs
 ## Clone the Repository
 
 - Install github desktop (skip if already installed)
