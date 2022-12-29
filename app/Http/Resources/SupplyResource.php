@@ -20,6 +20,8 @@ class SupplyResource extends JsonResource
             'updated_at' => $this->updated_at->toDateString(),
             'number' => $this->number,
             'notes' => $this->notes,
+            'total_items' => $this->total_items,
+            'total' => $this->total,
             'supply_items' => SupplyItemResource::collection($this->whenLoaded('supply_items')),
             'supplier' => new SupplierResource($this->whenLoaded('supplier')),
             'receiver' => new UserResource($this->whenLoaded('receiver')),

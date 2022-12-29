@@ -116,7 +116,13 @@ class SuppliesController extends Controller
 
     public function export(Request $request, Supply $supply)
     {
-        $pdf = PDF::loadView('pdf.supplies.supply', []);
+        $supply->load(['supplier', 'receiver', 'supply_items', 'supply_items.inventory_item']);
+        
+        $data = [
+            "supply" => $supply->toArray()
+        ];
+
+        $pdf = PDF::loadView('pdf.supplies.supply', $data);
 
         return $pdf->download('Supplies.pdf');
     }
