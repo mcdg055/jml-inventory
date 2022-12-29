@@ -1,32 +1,35 @@
 
-Setup Environment
-1. download laragon - https://github.com/leokhoa/laragon/releases/download/6.0.0/laragon-wamp.exe
-1.1 install
-2. download nodejs - https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi
-2.1 install
-3. download composer - https://getcomposer.org/Composer-Setup.exe
-3.1 install
+## Setup Environment
 
-Clone the project
-1. download github desktop -  https://central.github.com/deployments/desktop/desktop/latest/win32
-2. install github desktop
-3. Signin to github
-4. clone the repository
-5. change the clone directory into C:\laragon\www
+- [Download laragon](https://github.com/leokhoa/laragon/releases/download/6.0.0/laragon-wamp.exe)
+- [Download nodejs](https://nodejs.org/dist/v18.12.1/node-v18.12.1-x64.msi)
+- [Download composer](https://getcomposer.org/Composer-Setup.exe)
+- [Download Github Desktop](https://central.github.com/deployments/desktop/desktop/latest/win32)
+- Install all download programs
+## Clone the Repository
 
-Generate the Database
-1. open Laragon
-2. install phpmyadmin
-    right click on the panel > tools > quick add
+- Install github desktop (skip if already installed)
+- Signin to github
+- Clone the repository
+- Change the clone directory into C:\laragon\www
 
-Run the project
-1. Open project using the editor you prefer
-2. Open terminal
-3. run the following commands below
-    cp env/env.text .env
-    composer install
-    php artisan key:generate
-    php artisan migrate --seed
-    php artisan storage:link
-    npm install
-    npm run dev
+## Generate the Database
+
+- Open Laragon
+- Install phpmyadmin right click on the panel > tools > quick add
+
+## Running the project
+
+- Open project using the editor you prefer
+- Open terminal
+- Run the following commands below 
+
+```bash
+cp env/env.text .env 
+composer install 
+php artisan key:generate 
+php artisan app:demo
+php artisan storage:link 
+npm install && npm run dev
+
+```
