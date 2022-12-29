@@ -3,4 +3,6 @@
 use App\Http\Controllers\Simulator\SimulatorController;
 use Illuminate\Support\Facades\Route;
 
-Route::match(["GET", "POST"],   '/simulator/export',                             [SimulatorController::class,     'export'])->name('supplies.update');
+Route::group(["prefix" => "simulator", "middleware" => "auth"], function () {
+    Route::match(["GET", "POST"],   '/supplies/{supply}/export',                             [SimulatorController::class,     'exportSupply'])->name('supplies.supply.export');
+});
