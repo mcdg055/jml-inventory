@@ -31,4 +31,5 @@ php artisan key:generate
 php artisan app:demo
 php artisan storage:link 
 npm install && npm run dev
+
 ```
