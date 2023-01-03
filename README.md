@@ -13,11 +13,6 @@
 - Clone the repository
 - Change the clone directory into C:\laragon\www
 
-## Generate the Database
-
-- Open Laragon
-- Install phpmyadmin right click on the panel > tools > quick add
-
 ## Running the project
 
 - Open project using the editor you prefer
@@ -28,6 +23,7 @@
 cp env/env.text .env 
 composer install 
 php artisan key:generate 
+php artisan mysql:create-db
 php artisan app:demo
 php artisan storage:link 
 npm install && npm run dev
